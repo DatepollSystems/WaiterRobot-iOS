@@ -5,6 +5,11 @@ fileGroups:
   - README.md
   - project.yml
 
+packages:
+  shared:
+    url: https://github.com/DatepollSystems/waiterrobot-mobile_android-shared.git
+    from: 0.1.0
+
 targets:
   WaiterRobot:
     type: application
@@ -16,13 +21,17 @@ targets:
       testTargets:
         - "WaiterRobotTests"
         - "WaiterRobotUITests"
-
+        
+    dependencies:
+      - package: shared
+        
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: "org.datepollsystems.waiterrobot"
         IPHONEOS_DEPLOYMENT_TARGET: "15.0"
         INFOPLIST_FILE: "WaiterRobot/SupportingFiles/Info.plist"
         CODE_SIGN_STYLE: "Automatic"
+        CODE_SIGN_ENTITLEMENTS: "WaiterRobot/SupportingFiles/WaiterRobot.entitlements"
         DEVELOPMENT_TEAM: "28TM58T3GZ"
         PRODUCT_NAME: "$(TARGET_NAME)"
         ENABLE_PREVIEWS: "YES"
