@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  WaiterRobot
-//
-//  Created by Fabian Schedler on 22.11.22.
-//
-
 import SwiftUI
 import shared
 

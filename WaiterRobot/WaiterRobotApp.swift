@@ -1,17 +1,12 @@
-//
-//  WaiterRobotApp.swift
-//  WaiterRobot
-//
-//  Created by Fabian Schedler on 22.11.22.
-//
-
 import SwiftUI
 
 @main
 struct WaiterRobotApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
+  
+  var body: some Scene {
+    WindowGroup {
+      ContentView()
     }
+  }
 }
