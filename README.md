@@ -19,11 +19,14 @@ This command must also be run after switching branches and it's advisable to als
 3. Open the `WaiterRobot.xcodeproj` in xCode and start coding :)
 
 ## Dev with local KMM module version
-For a guide to use a local version of the KMM module see [KMMBridge local dev spm](https://touchlab.github.io/KMMBridge/spm/IOS_LOCAL_DEV_SPM)
+
+For a guide to use a local version of the KMM module
+see [KMMBridge local dev spm](https://touchlab.github.io/KMMBridge/spm/IOS_LOCAL_DEV_SPM)
 
 ### Short version
+
 1. `./gradlew spmDevBuild` (must be run after each change in the KMM module)
-2. Drag the whole KMM project folder into the WaiterRobot project in Xcode
+2. Drag the whole KMM project folder (top level git folder) into the WaiterRobot project in Xcode
 3. Start programming :)
-4. When finished delete folder, make sure to select "Remove References"!!! (otherwise the whole KMM project will be deleted locally)
-5. Do not push the changes of Package.swift file!
+4. When finished delete folder, make sure to select "Remove References"!!! (otherwise the whole KMM
+   project will be deleted locally)
