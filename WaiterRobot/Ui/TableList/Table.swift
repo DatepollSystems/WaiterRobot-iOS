@@ -2,7 +2,7 @@ import SwiftUI
 
 struct Table: View {
   let text: String
-  var size: CGFloat = 30
+  var size: CGFloat = 80
   let onClick: () -> Void
   
   var body: some View {

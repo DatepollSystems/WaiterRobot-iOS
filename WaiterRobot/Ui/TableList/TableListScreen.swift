@@ -1,4 +1,5 @@
 import SwiftUI
+import shared
 
 struct TableListScreen: View {
   
@@ -25,7 +26,7 @@ struct TableListScreen: View {
     
     ScreenContainer(vm.state) {
       if vm.state.tables.isEmpty {
-        Text("No tables")
+        Text(S.tableList.noTableFound())
       } else {
         ScrollView {
           LazyVGrid(columns: layout, spacing: 30) {
