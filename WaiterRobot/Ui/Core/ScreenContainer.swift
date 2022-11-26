@@ -6,7 +6,6 @@ struct ScreenContainer<Content: View>: View {
   private let content: () -> Content
   private let state: ViewModelState
   
-  
   init(_ state: ViewModelState, @ViewBuilder content: @escaping () -> Content) {
     self.content = content
     self.state = state
