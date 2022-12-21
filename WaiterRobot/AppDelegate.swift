@@ -11,6 +11,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     KMMResourcesLocalizationKt.localizationBundle = Bundle(for: L.self)
     logger.d { "init localization finished" }
     
+    AppInfo.shared.doInit(
+      appVersion: readFromInfoPlist(withKey: "CFBundleShortVersionString")!,
+      phoneModel: UIDevice.current.deviceType,
+      os: OS.Ios(version: UIDevice.current.systemVersion)
+    )
+    
     return true
+  }
+  
+  private func readFromInfoPlist(withKey key: String) -> String? {
+    Bundle.main.infoDictionary?[key] as? String
   }
 }
