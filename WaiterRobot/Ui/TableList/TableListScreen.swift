@@ -1,7 +1,9 @@
 import SwiftUI
 import shared
+import UIPilot
 
 struct TableListScreen: View {
+  @EnvironmentObject var navigator: UIPilot<Screen>
   
   @StateObject private var strongVM = ObservableViewModel(vm: koin.tableListVM())
   
@@ -32,11 +34,23 @@ struct TableListScreen: View {
           LazyVGrid(columns: layout, spacing: 30) {
             ForEach(vm.state.tables, id: \.id) { table in
               Table(text: table.number.description, size: columnSize, onClick: {
-                /* TODO */
+                vm.actual.onTableClick(table: table)
               })
             }
           }
           .padding()
+        }
+      }
+    }
+    .navigationTitle(CommonApp.shared.settings.eventName)
+    .navigationBarTitleDisplayMode(.inline)
+    .onReceive(vm.sideEffect) { effect in
+      switch effect {
+      case let navEffect as NavigationEffect:
+        handleNavigation(navEffect.action, navigator)
+      default:
+        koin.logger(tag: "TableListScreen").w {
+          "No action defined for sideEffect \(effect.self.description)"
         }
       }
     }
