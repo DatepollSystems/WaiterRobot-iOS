@@ -31,21 +31,8 @@ struct TableDetailScreen: View {
       }
     }
     .navigationTitle(S.tableDetail.title(value0: table.number.description))
-    .toolbar {
-      ToolbarItemGroup(placement: .bottomBar) {
-        Spacer()
-        Button {
-          vm.actual.openOrderScreen(initialItemId: nil)
-        } label: {
-          Image(systemName: "plus")
-            .font(.system(.title))
-            .padding()
-            .tint(.white)
-        }
-        .background(.blue)
-        .mask(Circle())
-        .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
-      }
+    .floatingActionButton(icon: "plus") {
+      vm.actual.openOrderScreen(initialItemId: nil)
     }
     .onReceive(vm.sideEffect) { effect in
       switch effect {

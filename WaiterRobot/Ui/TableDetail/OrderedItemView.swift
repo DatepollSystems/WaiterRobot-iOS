@@ -21,6 +21,8 @@ struct OrderedItemView: View {
 
 struct OrderedItemView_Previews: PreviewProvider {
     static var previews: some View {
-      OrderedItemView(item: OrderedItem(id: 1, name: "Test", amount: 2), tabbed: {})
+      List {
+        OrderedItemView(item: OrderedItem(id: 1, name: "Test", amount: 2), tabbed: {})
+      }
     }
 }

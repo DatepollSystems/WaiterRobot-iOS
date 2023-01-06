@@ -21,3 +21,18 @@ func handleNavigation(_ navAction: NavAction, _ navigator: UIPilot<Screen>) {
     }
   }
 }
+
+extension View {
+  func customBackNavigation(title: String = S.navigation.back(), icon: String? = "chevron.left", action: @escaping () -> Void) -> some View {
+    navigationBarBackButtonHidden(true).toolbar {
+      ToolbarItem(placement: .navigationBarLeading) {
+        Button(action: action) {
+          if let icon = icon {
+            Image(systemName: icon)
+          }
+          Text(title)
+        }
+      }
+    }
+  }
+}
