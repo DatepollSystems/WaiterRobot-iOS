@@ -37,35 +37,40 @@ struct OrderListItem: View {
       }
       .foregroundColor(Color("textColor"))
     }
-    .popover(isPresented: $editNote) {
-      VStack {
-        Text(S.order.addNoteDialog.title(value0: name))
-        TextEditor(text: $editedNote)
-          .frame(maxHeight: 150)
-          .border(.gray)
-          .onChange(of: editedNote) { _ in
-            if(editedNote.count > 120) {
-              editedNote = String(editedNote.prefix(120))
+    .sheet(isPresented: $editNote) {
+      NavigationView {
+        VStack {
+          TextEditorWithPlaceholder(
+            text: $editedNote,
+            lable: S.order.addNoteDialog.inputLabel(),
+            placeHolder: S.order.addNoteDialog.inputPlaceholder(),
+            editorHeight: 110,
+            maxLength: 120
+          )
+          
+          HStack{
+            Button(S.dialog.cancel(), role: .cancel) {
+              editNote = false
+            }
+            Spacer()
+            Button(S.dialog.clear()) {
+              onSaveNote(nil)
+              editNote = false
+            }
+            Spacer()
+            Button(S.dialog.save()) {
+              onSaveNote(editedNote)
+              editNote = false
             }
           }
-        Text("\(editedNote.count)/120")
-        
-        HStack{
-          Button(S.dialog.cancel(), role: .cancel) {
-            editNote = false
-          }
+          .padding(.top)
+          
           Spacer()
-          Button(S.dialog.clear()) {
-            onSaveNote(nil)
-            editNote = false
-          }
-          Spacer()
-          Button(S.dialog.save()) {
-            onSaveNote(editedNote)
-            editNote = false
-          }
         }
-      }.padding()
+        .padding()
+        .navigationTitle(S.order.addNoteDialog.title(value0: name))
+        .navigationBarTitleDisplayMode(.inline)
+      }
     }
     .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
       HStack {
