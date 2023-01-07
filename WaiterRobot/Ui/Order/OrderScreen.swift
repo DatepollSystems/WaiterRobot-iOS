@@ -52,7 +52,7 @@ struct OrderScreen: View {
           vm.actual.sendOrder()
         } label: {
           Image(systemName: "paperplane.fill")
-        }.disabled(vm.state.currentOrder.isEmpty || vm.state.viewState == ViewState.Loading.shared)
+        }.disabled(vm.state.currentOrder.isEmpty || vm.state.viewState != ViewState.Idle.shared)
       }
     }
     .customBackNavigation(title: S.dialog.cancel(), icon: nil, action: vm.actual.goBack)
