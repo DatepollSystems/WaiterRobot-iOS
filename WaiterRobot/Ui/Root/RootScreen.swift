@@ -16,7 +16,5 @@ struct RootScreen: View {
     } else {
       TableListScreen()
     }
-    
-    // TODO snackbar support
   }
 }
