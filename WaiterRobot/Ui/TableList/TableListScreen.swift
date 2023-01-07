@@ -29,6 +29,8 @@ struct TableListScreen: View {
     ScreenContainer(vm.state) {
       if vm.state.tables.isEmpty {
         Text(S.tableList.noTableFound())
+          .multilineTextAlignment(.center)
+          .padding()
       } else {
         ScrollView {
           LazyVGrid(columns: layout, spacing: 30) {

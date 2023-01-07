@@ -23,6 +23,8 @@ struct OrderScreen: View {
     ScreenContainer(vm.state) {
       if(vm.state.currentOrder.isEmpty) {
         Text(S.order.addProduct())
+          .multilineTextAlignment(.center)
+          .padding()
       } else {
         List {
           ForEach(vm.state.currentOrder, id: \.product.id) { orderItem in

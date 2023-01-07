@@ -23,6 +23,7 @@ struct WaiterRobotApp: App {
           case let s as Screen.RegisterScreen: RegisterScreen(createToken: s.createToken)
           case let s as Screen.TableDetailScreen: TableDetailScreen(table: s.table)
           case let s as Screen.OrderScreen: OrderScreen(table: s.table, initialItemId: s.initialItemId)
+          case let s as Screen.BillingScreen: BillingScreen(table: s.table)
           default:
             Text("No view defined for \(route.self.description)") // TODO
             Button {

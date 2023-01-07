@@ -20,6 +20,8 @@ struct TableDetailScreen: View {
     ScreenContainer(vm.state) {
       if vm.state.orderedItems.isEmpty {
         Text(S.tableDetail.noOrder(value0: table.number.description))
+          .multilineTextAlignment(.center)
+          .padding()
       } else {
         List {
           ForEach(vm.state.orderedItems, id: \.id) { item in
@@ -33,6 +35,15 @@ struct TableDetailScreen: View {
     .navigationTitle(S.tableDetail.title(value0: table.number.description))
     .floatingActionButton(icon: "plus") {
       vm.actual.openOrderScreen(initialItemId: nil)
+    }
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button {
+          vm.actual.openBillingScreen()
+        } label: {
+          Image(systemName: "creditcard")
+        }.disabled(vm.state.orderedItems.isEmpty)
+      }
     }
     .onReceive(vm.sideEffect) { effect in
       switch effect {
