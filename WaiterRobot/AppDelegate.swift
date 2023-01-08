@@ -13,6 +13,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     AppInfo.shared.doInit(
       appVersion: readFromInfoPlist(withKey: "CFBundleShortVersionString")!,
+      appBuild: Int32(readFromInfoPlist(withKey: "CFBundleVersion")!)!,
       phoneModel: UIDevice.current.deviceType,
       os: OS.Ios(version: UIDevice.current.systemVersion)
     )

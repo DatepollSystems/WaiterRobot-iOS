@@ -46,6 +46,15 @@ struct TableListScreen: View {
     }
     .navigationTitle(CommonApp.shared.settings.eventName)
     .navigationBarTitleDisplayMode(.inline)
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button {
+          vm.actual.openSettings()
+        } label: {
+          Image(systemName: "gear")
+        }
+      }
+    }
     .onReceive(vm.sideEffect) { effect in
       switch effect {
       case let navEffect as NavigationEffect:

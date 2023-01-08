@@ -10,6 +10,17 @@ struct WaiterRobotApp: App {
   @StateObject private var navigator: UIPilot<Screen> = UIPilot(initial: Screen.RootScreen.shared, debug: true)
   @StateObject private var strongVM = ObservableViewModel(vm: koin.rootVM())
   
+  private var selectedScheme: ColorScheme? {
+    switch strongVM.state.selectedTheme {
+    case .dark:
+      return .dark
+    case .light:
+      return .light
+    default:
+      return nil
+    }
+  }
+  
   var body: some Scene {
     unowned let vm = strongVM
     
@@ -20,6 +31,7 @@ struct WaiterRobotApp: App {
           case is Screen.RootScreen: RootScreen(strongVM: vm)
           case is Screen.LoginScannerScreen: LoginScannerScreen()
           case is Screen.SwitchEventScreen: SwitchEventScreen()
+          case is Screen.SettingsScreen: SettingsScreen()
           case let s as Screen.RegisterScreen: RegisterScreen(createToken: s.createToken)
           case let s as Screen.TableDetailScreen: TableDetailScreen(table: s.table)
           case let s as Screen.OrderScreen: OrderScreen(table: s.table, initialItemId: s.initialItemId)
@@ -36,6 +48,7 @@ struct WaiterRobotApp: App {
           }
         }
       }
+      .preferredColorScheme(selectedScheme)
       .overlay(alignment: .bottom) {
         if let message = snackBarMessage {
           ZStack {
