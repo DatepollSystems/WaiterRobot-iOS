@@ -26,14 +26,12 @@ struct SwitchEventScreen: View {
         
         Divider()
         
-        if vm.state.events.isEmpty {
-          Text(S.switchEvent.noEventFound())
-            .multilineTextAlignment(.center)
-            .padding()
-          
-          Spacer()
-        } else {
-          ScrollView {
+        ScrollView {
+          if vm.state.events.isEmpty {
+            Text(S.switchEvent.noEventFound())
+              .multilineTextAlignment(.center)
+              .padding()
+          } else {
             LazyVStack {
               ForEach(vm.state.events, id: \.id) { event in
                 Button {
@@ -47,8 +45,10 @@ struct SwitchEventScreen: View {
             }
           }
         }
+        .refreshable {
+          vm.actual.loadEvents()
+        }
       }
-      .navigationBarHidden(true)
       .onReceive(vm.sideEffect) { effect in
         switch effect {
         case let navEffect as NavigationEffect:

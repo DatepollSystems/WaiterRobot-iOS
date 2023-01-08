@@ -27,12 +27,12 @@ struct TableListScreen: View {
     unowned let vm = strongVM
     
     ScreenContainer(vm.state) {
-      if vm.state.tables.isEmpty {
-        Text(S.tableList.noTableFound())
-          .multilineTextAlignment(.center)
-          .padding()
-      } else {
-        ScrollView {
+      ScrollView {
+        if vm.state.tables.isEmpty {
+            Text(S.tableList.noTableFound())
+              .multilineTextAlignment(.center)
+              .padding()
+        } else {
           LazyVGrid(columns: layout, spacing: 30) {
             ForEach(vm.state.tables, id: \.id) { table in
               Table(text: table.number.description, size: columnSize, onClick: {
@@ -54,6 +54,9 @@ struct TableListScreen: View {
           Image(systemName: "gear")
         }
       }
+    }
+    .refreshable {
+      vm.actual.loadTables(forceUpdate: true)
     }
     .onReceive(vm.sideEffect) { effect in
       switch effect {

@@ -20,12 +20,11 @@ struct BillingScreen: View {
     
     ScreenContainer(vm.state) {
       VStack {
-        if vm.state.billItems.isEmpty {
-          Text(S.billing.noOpenBill(value0: table.number.description))
-            .multilineTextAlignment(.center)
-            .padding()
-        } else {
-          List {
+        List {
+          if vm.state.billItems.isEmpty {
+            Text(S.billing.noOpenBill(value0: table.number.description))
+              .multilineTextAlignment(.center)
+          } else {
             Section {
               ForEach(vm.state.billItems, id: \.self) { item in
                 BillListItem(
@@ -52,28 +51,31 @@ struct BillingScreen: View {
               }
             }
           }
-          
-          HStack {
-            Text("\(S.billing.total()):")
-            Spacer()
-            Text("\(vm.state.priceSum)")
+        }
+        .refreshable {
+          vm.actual.loadBill()
+        }
+        
+        HStack {
+          Text("\(S.billing.total()):")
+          Spacer()
+          Text("\(vm.state.priceSum)")
+        }
+        .font(.title2)
+        .padding()
+        .overlay(alignment: .bottom) {
+          Button {
+            vm.actual.paySelection()
+          } label: {
+            Image(systemName: "dollarsign")
+              .font(.system(.title))
+              .padding()
+              .tint(.white)
           }
-          .font(.title2)
-          .padding()
-          .overlay(alignment: .bottom) {
-            Button {
-              vm.actual.paySelection()
-            } label: {
-              Image(systemName: "dollarsign")
-                .font(.system(.title))
-                .padding()
-                .tint(.white)
-            }
-            .background(.blue)
-            .mask(Circle())
-            .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
-            .disabled(vm.state.viewState != ViewState.Idle.shared || !vm.state.hasSelectedItems)
-          }
+          .background(.blue)
+          .mask(Circle())
+          .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
+          .disabled(vm.state.viewState != ViewState.Idle.shared || !vm.state.hasSelectedItems)
         }
       }
     }

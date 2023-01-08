@@ -15,6 +15,7 @@ struct ScreenContainer<Content: View>: View {
     switch state.viewState {
     case is ViewState.Loading:
       ProgressView()
+        .scaleEffect(2)
     case is ViewState.Idle:
       content()
     case let error as ViewState.Error:

@@ -18,12 +18,11 @@ struct TableDetailScreen: View {
     unowned let vm = strongVM
     
     ScreenContainer(vm.state) {
-      if vm.state.orderedItems.isEmpty {
-        Text(S.tableDetail.noOrder(value0: table.number.description))
-          .multilineTextAlignment(.center)
-          .padding()
-      } else {
-        List {
+      List {
+        if vm.state.orderedItems.isEmpty {
+          Text(S.tableDetail.noOrder(value0: table.number.description))
+            .multilineTextAlignment(.center)
+        } else {
           ForEach(vm.state.orderedItems, id: \.id) { item in
             OrderedItemView(item: item) {
               vm.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
@@ -31,6 +30,9 @@ struct TableDetailScreen: View {
           }
         }
       }
+    }
+    .refreshable {
+      vm.actual.loadOrder()
     }
     .navigationTitle(S.tableDetail.title(value0: table.number.description))
     .floatingActionButton(icon: "plus") {
