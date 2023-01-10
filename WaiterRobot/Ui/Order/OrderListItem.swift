@@ -31,8 +31,11 @@ struct OrderListItem: View {
             Image(systemName: "pencil")
           }.foregroundColor(.accentColor)
         }
+        
         if let note = note {
-          Text(note).padding(.top, 1)
+          Text(note)
+            .foregroundColor(.secondary)
+            .font(.caption)
         }
       }
       .foregroundColor(Color("textColor"))

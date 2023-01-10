@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct TextEditorWithPlaceholder: View {
-  @FocusState private var isFocused: Bool
-  
   @Binding var text: String
   let lable: String
   let placeHolder: String
@@ -14,15 +12,14 @@ struct TextEditorWithPlaceholder: View {
       Text(lable)
       
       TextEditor(text: $text)
-        .focused($isFocused)
         .border(.gray)
         .frame(maxHeight: editorHeight)
         .overlay(alignment: .topLeading) {
-          if(text.isEmpty && !isFocused) {
+          if(text.isEmpty) {
             Text(placeHolder)
               .foregroundColor(.gray.opacity(0.3))
-              .padding(.leading)
-              .padding(.top)
+              .padding(.leading, 5)
+              .padding(.top, 9)
           }
         }
         .onChange(of: text) { _ in
