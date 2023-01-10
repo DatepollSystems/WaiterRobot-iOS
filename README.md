@@ -7,15 +7,15 @@ The KMM module is integrated as an SPM Package (shared).
 
 ## Getting started
 
-This project uses xcodegen for generating the Xcode project.
+This project uses XcodeGen for generating the Xcode project.
 
-1. If not installed, you can install xcode gen using brew:
+1. If not installed, you can install XcodeGen using brew:
 
 ```bash
 brew install xcodegen
 ```
 
-2. Generate the xcode project (run in root folder, where the `project.yml` lives):
+2. Generate the Xcode project (run in root folder, where the `project.yml` lives):
 
 ```bash
 xcodegen
@@ -23,7 +23,7 @@ xcodegen
 
 This command must also be run after switching branches and it's advisable to also run it after a `git pull`
 
-3. Open the `WaiterRobot.xcodeproj` in xCode and start coding :)
+3. Open the `WaiterRobot.xcodeproj` in Xcode and start coding :)
 
 ## Dev with local KMM module version
 
@@ -32,7 +32,7 @@ see [KMMBridge local dev spm](https://touchlab.github.io/KMMBridge/spm/IOS_LOCAL
 
 ### Short version
 
-1. `./gradlew spmDevBuild` (must be run after each change in the KMM module)
+1. Run `./gradlew spmDevBuild` in the KMM project (must be run after each change in the KMM module)
 2. Drag the whole KMM project folder (top level git folder) into the WaiterRobot project in Xcode
 3. Start programming :)
 4. When finished delete folder, make sure to select "Remove References"!!! (otherwise the whole KMM
