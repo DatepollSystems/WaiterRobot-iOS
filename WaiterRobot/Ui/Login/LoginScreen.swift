@@ -40,7 +40,6 @@ struct LoginScreen: View {
         Spacer()
       }
     }
-    .navigationBarHidden(true)
     .onReceive(vm.sideEffect) { effect in
       switch effect {
       case let navEffect as NavigationEffect:

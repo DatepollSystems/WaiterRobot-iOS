@@ -11,10 +11,13 @@ struct RootScreen: View {
     
     if (!vm.state.isLoggedIn) {
       LoginScreen()
+        .navigationBarHidden(true)
     } else if(!vm.state.hasEventSelected) {
       SwitchEventScreen()
+        .navigationBarHidden(false)
     } else {
       TableListScreen()
+        .navigationBarHidden(false)
     }
   }
 }
