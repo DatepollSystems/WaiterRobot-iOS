@@ -1,9 +1,9 @@
 # WaiterRobot iOS
 
-This Repository include the iOS version of the WaiterRobot App. It is based on a shared Kotlin-Multiplatform (KMM)
+This Repository includes the iOS version of the WaiterRobot App. It is based on a shared Kotlin-Multiplatform (KMM)
 module, which can be found [here](https://github.com/DatepollSystems/waiterrobot-mobile_android-shared) (there you can
 also find the Android version of the app).
-The KMM module is integrated as an SPM Package (shared).
+The KMM module is integrated as a Swift-Package (shared).
 
 ## Getting started
 
