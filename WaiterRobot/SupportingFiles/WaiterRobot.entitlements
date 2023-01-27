@@ -5,7 +5,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:lava.kellner.team</string>
-		<string>applinks:kellner.team</string>
+		<string>applinks:my.kellner.team</string>
 	</array>
 </dict>
 </plist>
