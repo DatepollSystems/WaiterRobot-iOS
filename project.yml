@@ -16,32 +16,70 @@ packages:
     url: https://github.com/twostraws/CodeScanner
     from: 2.2.1
 
-targets:
+targetTemplates:
   WaiterRobot:
     type: application
     platform: iOS
     sources:
       - path: "WaiterRobot"
-
-    scheme:
-      testTargets:
-        - "WaiterRobotTests"
-        - "WaiterRobotUITests"
+      - path: "TargetSpecificResources/${target_name}"
+        group: "WaiterRobot/Resources"
         
     dependencies:
       - package: shared
       - package: UIPilot
       - package: CodeScanner
+    
+    info:
+      path: ".generated/${target_name}.plist"
+      properties:
+        CFBundleShortVersionString: "2.0.1"
+        CFBundleVersion: "20001"
+        API_BASE: "${apiBase}"
+
+        CFBundleDevelopmentRegion: "$(DEVELOPMENT_LANGUAGE)"
+        CFBundleDisplayName: "${displayName}"
+        CFBundleExecutable: "$(EXECUTABLE_NAME)"
+        CFBundleIdentifier: "${identifier}"
+        CFBundleInfoDictionaryVersion: "6.0"
+        CFBundleLocalizations:
+          - en
+          - de
+        CFBundleName: "${target_name}"
+        CFBundlePackageType: "$(PRODUCT_BUNDLE_PACKAGE_TYPE)"
+        ITSAppUsesNonExemptEncryption: false
+        LSRequiresIPhoneOS: true
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        NSCameraUsageDescription: "Camera is needed to scan QR-Codes"
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UILaunchStoryboardName: "LaunchScreen"
+        UIRequiredDeviceCapabilities:
+          - armv7
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+          
+    entitlements:
+      path: ".generated/${target_name}.entitlements"
+      properties:
+        com.apple.developer.associated-domains:
+          - "applinks:${deeplinkDomain}"
         
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: "org.datepollsystems.waiterrobot"
+        PRODUCT_BUNDLE_IDENTIFIER: "${identifier}"
         IPHONEOS_DEPLOYMENT_TARGET: "15.0"
-        INFOPLIST_FILE: "WaiterRobot/SupportingFiles/Info.plist"
+        INFOPLIST_FILE: ".generated/${target_name}.plist"
         CODE_SIGN_STYLE: "Automatic"
-        CODE_SIGN_ENTITLEMENTS: "WaiterRobot/SupportingFiles/WaiterRobot.entitlements"
+        CODE_SIGN_ENTITLEMENTS: ".generated/${target_name}.entitlements"
         DEVELOPMENT_TEAM: "28TM58T3GZ"
-        PRODUCT_NAME: "$(TARGET_NAME)"
+        PRODUCT_NAME: "${displayName}"
         ENABLE_PREVIEWS: "YES"
       configs:
         RELEASE:
@@ -49,36 +87,22 @@ targets:
         DEBUG:
           ONLY_ACTIVE_ARCH: "YES"
 
-  WaiterRobotTests:
-    type: bundle.unit-test
-    platform: iOS
-    sources:
-      - path: "WaiterRobotTests"
-    dependencies:
-      - target: "WaiterRobot"
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: "org.datepollsystems.waiterrobot.WaiterRobotTests"
-        GENERATE_INFOPLIST_FILE: "YES"
-        IPHONEOS_DEPLOYMENT_TARGET: "15.5"
-        SWIFT_VERSION: "5.0"
-        TARGETED_DEVICE_FAMILY: "1,2"
-        CODE_SIGN_STYLE: "Automatic"
-        DEVELOPMENT_TEAM: "28TM58T3GZ"
-
-  WaiterRobotUITests:
-    type: bundle.ui-testing
-    platform: iOS
-    sources:
-      - path: "WaiterRobotUITests"
-    dependencies:
-      - target: "WaiterRobot"
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: "org.datepollsystems.waiterrobot.WaiterRobotUITests"
-        GENERATE_INFOPLIST_FILE: "YES"
-        IPHONEOS_DEPLOYMENT_TARGET: "15.5"
-        SWIFT_VERSION: "5.0"
-        TARGETED_DEVICE_FAMILY: "1,2"
-        CODE_SIGN_STYLE: "Automatic"
-        DEVELOPMENT_TEAM: "28TM58T3GZ"
+targets:
+  WaiterRobot:
+    templates:
+      - WaiterRobot
+    templateAttributes:
+      identifier: "org.datepollsystems.waiterrobot"
+      displayName: "WaiterRobot"
+      deeplinkDomain: "my.kellner.team"
+      apiBase: "https://my.kellner.team/api"
+  
+  WaiterRobotLava:
+    templates:
+      - WaiterRobot
+    templateAttributes:
+      identifier: "org.datepollsystems.waiterrobot.beta"
+      displayName: "WaiterRobot Lava"
+      deeplinkDomain: "lava.kellner.team"
+      apiBase: "https://lava.kellner.team/api"
+  
