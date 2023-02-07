@@ -6,11 +6,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     // Init CommonApp right at the start as e.g. koin might depend on some properties of it
     CommonApp.shared.doInit(
-      appVersion: readFromInfoPlist(withKey: "CFBundleShortVersionString")!,
-      appBuild: Int32(readFromInfoPlist(withKey: "CFBundleVersion")!)!,
+      appVersion: readFromInfoPlist(withKey: "CFBundleShortVersionString"),
+      appBuild: Int32(readFromInfoPlist(withKey: "CFBundleVersion"))!,
       phoneModel: UIDevice.current.deviceType,
       os: OS.Ios(version: UIDevice.current.systemVersion),
-      apiBaseUrl: "https://my.kellner.team/"
+      apiBaseUrl: readFromInfoPlist(withKey: "API_BASE")
     )
     
     KoinKt.doInitKoinIos()
@@ -23,7 +23,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     return true
   }
   
-  private func readFromInfoPlist(withKey key: String) -> String? {
-    Bundle.main.infoDictionary?[key] as? String
+  private func readFromInfoPlist(withKey key: String) -> String {
+    guard let value = Bundle.main.infoDictionary?[key] as? String else {
+      fatalError("Could not find key '\(key)' in info.plist file.")
+    }
+    
+    return value
   }
 }

@@ -1,5 +1,6 @@
 # xcodegen
 WaiterRobot.xcodeproj/
+.generated/
 
 # Created by https://www.toptal.com/developers/gitignore/api/fastlane,xcode,intellij,appcode,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=fastlane,xcode,intellij,appcode,macos
