@@ -255,3 +255,9 @@ xcuserdata/
 *.dSYM
 
 # End of https://www.toptal.com/developers/gitignore/api/fastlane,xcode,intellij,appcode,macos
+
+.keys*
+.env.*
+!.env.example
+
+.idea

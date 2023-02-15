@@ -4,6 +4,9 @@ fileGroups:
   - .gitignore
   - README.md
   - project.yml
+  - fastlane
+  - Gemfile
+  - .github/workflows
 
 packages:
   shared:
@@ -33,8 +36,11 @@ targetTemplates:
     info:
       path: ".generated/${target_name}.plist"
       properties:
-        CFBundleShortVersionString: "2.0.1"
-        CFBundleVersion: "20001"
+        CFBundleShortVersionString: "2.0.2"
+        # Generate VersionCode from VersionName (major * 10_000 + minor * 100 + patch, e.g. 1.2.3 -> 10203, 1.23.45 -> 12345)
+        # Only used for prod releases. Lava uses epochMinute (same as on Android)
+        CFBundleVersion: "20002"
+
         API_BASE: "${apiBase}"
 
         CFBundleDevelopmentRegion: "$(DEVELOPMENT_LANGUAGE)"
@@ -76,7 +82,7 @@ targetTemplates:
         PRODUCT_BUNDLE_IDENTIFIER: "${identifier}"
         IPHONEOS_DEPLOYMENT_TARGET: "15.0"
         INFOPLIST_FILE: ".generated/${target_name}.plist"
-        CODE_SIGN_STYLE: "Automatic"
+        CODE_SIGN_STYLE: "Manual"
         CODE_SIGN_ENTITLEMENTS: ".generated/${target_name}.entitlements"
         DEVELOPMENT_TEAM: "28TM58T3GZ"
         PRODUCT_NAME: "${displayName}"
@@ -84,13 +90,18 @@ targetTemplates:
       configs:
         RELEASE:
           ONLY_ACTIVE_ARCH: "NO"
+          PROVISIONING_PROFILE_SPECIFIER: "match AppStore ${identifier}"
+          CODE_SIGN_IDENTITY: "iPhone Distribution"
         DEBUG:
           ONLY_ACTIVE_ARCH: "YES"
+          PROVISIONING_PROFILE_SPECIFIER: "match Development ${identifier}"
+          CODE_SIGN_IDENTITY: "iPhone Developer"
 
 targets:
   WaiterRobot:
     templates:
       - WaiterRobot
+    scheme: {}
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot"
       displayName: "WaiterRobot"
@@ -100,6 +111,7 @@ targets:
   WaiterRobotLava:
     templates:
       - WaiterRobot
+    scheme: {}
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot.beta"
       displayName: "WaiterRobot Lava"
