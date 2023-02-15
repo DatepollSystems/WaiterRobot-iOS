@@ -24,6 +24,7 @@ jobs:
           echo "${{ secrets.KEYS_TAR_ASC }}" > .keys.tar.gz.asc
           gpg -d --passphrase "${{ secrets.KEYS_PASSPHRASE }}" --batch .keys.tar.gz.asc > .keys.tar.gz
           tar xzf .keys.tar.gz
+          chmod 600 .keys/github-deploy-key
           cd ..
 
       - name: Setup xcodegen and init xcode project
