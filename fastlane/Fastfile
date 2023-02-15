@@ -20,6 +20,21 @@ before_all do |lane, options|
     env_vars: ["FASTLANE_APPLE_ID", "FASTLANE_CERTIFICATES_GIT_URL", "FASTLANE_KEY_ID", "FASTLANE_ISSUER_ID"]
   )
 
+  if ENV["CI"]
+    ensure_env_vars(
+      env_vars: ["KEYCHAIN_PASSWORD"]
+    )
+
+    create_keychain(
+      name: "WaiterRobot_iOS_keychain",
+      password: ENV["KEYCHAIN_PASSWORD"],
+      default_keychain: true,
+      unlock: true,
+      timeout: 3600,
+      lock_when_sleeps: false
+    )
+  end
+
   app_store_connect_api_key(
     key_id: ENV["FASTLANE_KEY_ID"],
     issuer_id: ENV["FASTLANE_ISSUER_ID"],
@@ -32,11 +47,15 @@ platform :ios do
   lane :sync_certificates do
     match(
       type: "appstore",
-      git_private_key: "./fastlane/.keys/github-deploy-key"
+      git_private_key: "./fastlane/.keys/github-deploy-key",
+      keychain_name: "WaiterRobot_iOS_keychain",
+      keychain_password: ENV["KEYCHAIN_PASSWORD"]
     )
     match(
       type: "development",
       git_private_key: "./fastlane/.keys/github-deploy-key"
+      keychain_name: "WaiterRobot_iOS_keychain",
+      keychain_password: ENV["KEYCHAIN_PASSWORD"]
     )
   end
 
