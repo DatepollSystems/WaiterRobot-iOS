@@ -45,18 +45,29 @@ end
 platform :ios do
   desc "Sync certificates"
   lane :sync_certificates do
-    match(
-      type: "appstore",
-      git_private_key: "./fastlane/.keys/github-deploy-key",
-      keychain_name: "WaiterRobot_iOS_keychain",
-      keychain_password: ENV["KEYCHAIN_PASSWORD"]
-    )
-    match(
-      type: "development",
-      git_private_key: "./fastlane/.keys/github-deploy-key",
-      keychain_name: "WaiterRobot_iOS_keychain",
-      keychain_password: ENV["KEYCHAIN_PASSWORD"]
-    )
+    if ENV["CI"]
+      match(
+        type: "appstore",
+        git_private_key: "./fastlane/.keys/github-deploy-key",
+        keychain_name: "WaiterRobot_iOS_keychain",
+        keychain_password: ENV["KEYCHAIN_PASSWORD"]
+      )
+      match(
+        type: "development",
+        git_private_key: "./fastlane/.keys/github-deploy-key",
+        keychain_name: "WaiterRobot_iOS_keychain",
+        keychain_password: ENV["KEYCHAIN_PASSWORD"]
+      )
+    else
+      match(
+        type: "appstore",
+        git_private_key: "./fastlane/.keys/github-deploy-key",
+      )
+      match(
+        type: "development",
+        git_private_key: "./fastlane/.keys/github-deploy-key",
+      )
+    end
   end
 
   desc "Push a new lava build to TestFlight"
@@ -74,7 +85,8 @@ platform :ios do
         project: "WaiterRobot.xcodeproj",
         scheme: "WaiterRobotLava",
         output_name: "WaiterRobotLava.ipa",
-        output_directory: "./build/"
+        output_directory: "./build/",
+        export_method: "app-store"
     )
 
     upload_to_testflight(
@@ -101,7 +113,8 @@ platform :ios do
           project: "WaiterRobot.xcodeproj",
           scheme: "WaiterRobot",
           output_name: "WaiterRobot.ipa",
-          output_directory: "./build/"
+          output_directory: "./build/",
+          export_method: "app-store"
       )
 
       upload_to_testflight(
