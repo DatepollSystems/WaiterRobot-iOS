@@ -27,6 +27,20 @@ jobs:
           chmod 600 .keys/github-deploy-key
           cd ..
 
+      - name: Netrc github.com
+        uses: extractions/netrc@v1
+        with:
+          machine: github.com
+          username: ${{ secrets.NETRC_USERNAME }}
+          password: ${{ secrets.NETRC_TOKEN }}
+
+      - name: Netrc api.github.com
+        uses: extractions/netrc@v1
+        with:
+          machine: api.github.com
+          username: ${{ secrets.NETRC_USERNAME }}
+          password: ${{ secrets.NETRC_TOKEN }}
+
       - name: Setup xcodegen and init xcode project
         uses: xavierLowmiller/xcodegen-action@1.1.2
         with:
