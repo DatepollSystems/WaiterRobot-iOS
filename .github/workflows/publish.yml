@@ -33,7 +33,7 @@ jobs:
           use-cache: true
 
       - name: Publish to TestFlight
-        run: bundle exec fastlane publishWaiterRobot_${{ github.ref_name }}
+        run: bundle exec fastlane releaseWaiterRobot_${{ github.ref_name }}
         env:
           FASTLANE_APPLE_ID: ${{ secrets.FASTLANE_APPLE_ID }}
           FASTLANE_CERTIFICATES_GIT_URL: ${{ secrets.FASTLANE_CERTIFICATES_GIT_URL }}
