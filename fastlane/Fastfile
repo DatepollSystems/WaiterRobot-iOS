@@ -1,0 +1,102 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+before_all do |lane, options|
+  ensure_env_vars(
+    env_vars: ["FASTLANE_APPLE_ID", "FASTLANE_CERTIFICATES_GIT_URL", "FASTLANE_KEY_ID", "FASTLANE_ISSUER_ID"]
+  )
+
+  app_store_connect_api_key(
+    key_id: ENV["FASTLANE_KEY_ID"],
+    issuer_id: ENV["FASTLANE_ISSUER_ID"],
+    key_filepath: "./fastlane/.keys/api_key.p8",
+  )
+end
+
+platform :ios do
+  desc "Sync certificates"
+  lane :sync_certificates do
+    match(
+      type: "appstore",
+      git_private_key: "./fastlane/.keys/github-deploy-key"
+    )
+    match(
+      type: "development",
+      git_private_key: "./fastlane/.keys/github-deploy-key"
+    )
+  end
+
+  desc "Push a new lava build to TestFlight"
+  lane :releaseWaiterRobot_develop do
+    sync_certificates
+
+    # Use the current time (epochMinutes) as build number for lava target (same as on Android)
+    build_number = Time.now.to_i / 60
+    increment_build_number(
+      xcodeproj: "WaiterRobot.xcodeproj",
+      build_number: build_number
+    )
+
+    build_app(
+        project: "WaiterRobot.xcodeproj",
+        scheme: "WaiterRobotLava",
+        output_name: "WaiterRobotLava.ipa",
+        output_directory: "./build/"
+    )
+
+    upload_to_testflight(
+      ipa: "./build/WaiterRobotLava.ipa",
+      skip_waiting_for_build_processing: true
+    )
+
+    version = get_version_number(
+      xcodeproj:"WaiterRobot.xcodeproj",
+      target:"WaiterRobotLava"
+    )
+
+    # e.g. 2.0.2-lava-2
+    version_tag = version + "-lava-" + build_number.to_s
+    add_git_tag(tag: version_tag)
+    push_git_tags(tag: version_tag)
+  end
+
+  desc "Push a new prod build to TestFlight"
+    lane :releaseWaiterRobot_main do
+      sync_certificates
+
+      build_app(
+          project: "WaiterRobot.xcodeproj",
+          scheme: "WaiterRobot",
+          output_name: "WaiterRobot.ipa",
+          output_directory: "./build/"
+      )
+
+      upload_to_testflight(
+        ipa: "./build/WaiterRobot.ipa",
+        skip_waiting_for_build_processing: true
+      )
+
+      version = get_version_number(
+        xcodeproj:"WaiterRobot.xcodeproj",
+        target:"WaiterRobot"
+      )
+
+      # e.g. 2.0.2
+      add_git_tag(tag: version)
+      push_git_tags(tag: version)
+    end
+end

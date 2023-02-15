@@ -1,0 +1,42 @@
+name: Publish to TestFlight
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  publish:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Ruby 2.7.4
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '2.7.4'
+          bundler-cache: true
+
+      - name: Extract secrets
+        run: |
+          cd fastlane
+          echo "${{ secrets.KEYS_TAR_ASC }}" > .keys.tar.gz.asc
+          gpg -d --passphrase "${{ secrets.KEYS_PASSPHRASE }}" --batch .keys.tar.gz.asc > .keys.tar.gz
+          tar xzf .keys.tar.gz
+          cd ..
+
+      - name: Setup xcodegen and init xcode project
+        uses: xavierLowmiller/xcodegen-action@1.1.2
+        with:
+          spec: project.yml
+          use-cache: true
+
+      - name: Publish to TestFlight
+        run: bundle exec fastlane publishWaiterRobot_${{ github.ref_name }}
+        env:
+          FASTLANE_APPLE_ID: ${{ secrets.FASTLANE_APPLE_ID }}
+          FASTLANE_CERTIFICATES_GIT_URL: ${{ secrets.FASTLANE_CERTIFICATES_GIT_URL }}
+          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
+          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
