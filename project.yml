@@ -11,7 +11,7 @@ fileGroups:
 packages:
   shared:
     url: https://github.com/DatepollSystems/waiterrobot-mobile_android-shared.git
-    version: "1.0.2-lava-1676311565"
+    version: "1.0.2-lava-1676624683"
   UIPilot:
     url: https://github.com/canopas/UIPilot.git
     from: 1.3.1
