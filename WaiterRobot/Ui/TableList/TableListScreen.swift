@@ -31,6 +31,7 @@ struct TableListScreen: View {
         if vm.state.tables.isEmpty {
           Text(S.tableList.noTableFound())
             .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
             .padding()
         } else {
           LazyVGrid(columns: layout, spacing: 30) {

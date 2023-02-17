@@ -22,6 +22,8 @@ struct TableDetailScreen: View {
         if vm.state.orderedItems.isEmpty {
           Text(S.tableDetail.noOrder(value0: table.number.description))
             .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding()
         } else {
           ForEach(vm.state.orderedItems, id: \.id) { item in
             OrderedItemView(item: item) {

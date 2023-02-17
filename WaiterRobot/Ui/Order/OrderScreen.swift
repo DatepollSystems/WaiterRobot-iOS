@@ -24,6 +24,7 @@ struct OrderScreen: View {
       if(vm.state.currentOrder.isEmpty) {
         Text(S.order.addProduct())
           .multilineTextAlignment(.center)
+          .frame(maxWidth: .infinity)
           .padding()
       } else {
         List {

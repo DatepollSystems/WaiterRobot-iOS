@@ -24,6 +24,8 @@ struct BillingScreen: View {
           if vm.state.billItems.isEmpty {
             Text(S.billing.noOpenBill(value0: table.number.description))
               .multilineTextAlignment(.center)
+              .frame(maxWidth: .infinity)
+              .padding()
           } else {
             Section {
               ForEach(vm.state.billItems, id: \.self) { item in
