@@ -42,6 +42,7 @@ targetTemplates:
         CFBundleVersion: "20002"
 
         API_BASE: "${apiBase}"
+        VERSION_SUFFIX: "${versionSuffix}"
 
         CFBundleDevelopmentRegion: "$(DEVELOPMENT_LANGUAGE)"
         CFBundleDisplayName: "${displayName}"
@@ -107,6 +108,7 @@ targets:
       displayName: "WaiterRobot"
       deeplinkDomain: "my.kellner.team"
       apiBase: "https://my.kellner.team/api"
+      versionSuffix: ""
   
   WaiterRobotLava:
     templates:
@@ -117,4 +119,11 @@ targets:
       displayName: "WaiterRobot Lava"
       deeplinkDomain: "lava.kellner.team"
       apiBase: "https://lava.kellner.team/api"
+      versionSuffix: "lava"
+    preBuildScripts:
+      - name: Set BuildNumber to epochMinute
+        basedOnDependencyAnalysis: false # run for each build
+        script: |
+                # Lava uses the epochMinute as buildNumber
+                /usr/libexec/PlistBuddy -c "Set CFBundleVersion $(($(date +"%s")/60))" ".generated/WaiterRobotLava.plist"
   

@@ -74,13 +74,6 @@ platform :ios do
   lane :releaseWaiterRobot_develop do
     sync_certificates
 
-    # Use the current time (epochMinutes) as build number for lava target (same as on Android)
-    build_number = Time.now.to_i / 60
-    increment_build_number(
-      xcodeproj: "WaiterRobot.xcodeproj",
-      build_number: build_number
-    )
-
     build_app(
         project: "WaiterRobot.xcodeproj",
         scheme: "WaiterRobotLava",
@@ -98,8 +91,10 @@ platform :ios do
       xcodeproj:"WaiterRobot.xcodeproj",
       target:"WaiterRobotLava"
     )
+    # Build number gets set to epochMinute by a preBuildScript (see project.yml)
+    build_number = get_ipa_info_plist_value(ipa: "build/WaiterRobotLava.ipa", key: "CFBundleVersion")
 
-    # e.g. 2.0.2-lava-2
+    # e.g. 2.0.2-lava-27943760
     version_tag = version + "-lava-" + build_number.to_s
     add_git_tag(tag: version_tag)
     push_git_tags(tag: version_tag)
