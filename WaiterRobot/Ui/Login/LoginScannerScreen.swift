@@ -7,7 +7,7 @@ struct LoginScannerScreen: View {
   @EnvironmentObject var navigator: UIPilot<Screen>
   
   @StateObject private var strongVM = ObservableViewModel(vm: koin.loginScannerVM())
-  
+
   var body: some View {
     unowned let vm = strongVM
     
@@ -15,7 +15,7 @@ struct LoginScannerScreen: View {
       VStack {
         CodeScannerView(
           codeTypes: [.qr],
-          simulatedData: "https://lava.kellner.team/ml/signIn?token=sONDq4mMVVAwUY2AvkmBDAfI5DM&purpose=CREATE"
+          simulatedData: ""
         ) { result in
           switch result {
           case .success(let result):
