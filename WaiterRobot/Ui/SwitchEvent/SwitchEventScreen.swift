@@ -22,6 +22,7 @@ struct SwitchEventScreen: View {
         
         Text(S.switchEvent.desc())
           .multilineTextAlignment(.center)
+          .frame(maxWidth: .infinity)
           .padding()
         
         Divider()
@@ -30,6 +31,7 @@ struct SwitchEventScreen: View {
           if vm.state.events.isEmpty {
             Text(S.switchEvent.noEventFound())
               .multilineTextAlignment(.center)
+              .frame(maxWidth: .infinity)
               .padding()
           } else {
             LazyVStack {

@@ -1,0 +1,2 @@
+team_id "28TM58T3GZ"
+apple_id ENV["FASTLANE_APPLE_ID"]
