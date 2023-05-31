@@ -46,9 +46,6 @@ struct OrderScreen: View {
     }
     .navigationTitle(S.order.title(value0: table.number.description))
     .navigationBarTitleDisplayMode(.inline)
-    .floatingActionButton(icon: "plus") {
-      showProductSearch = true
-    }
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
         Button {
@@ -56,6 +53,13 @@ struct OrderScreen: View {
         } label: {
           Image(systemName: "paperplane.fill")
         }.disabled(vm.state.currentOrder.isEmpty || vm.state.viewState != ViewState.Idle.shared)
+      }
+      ToolbarItem(placement: .bottomBar) {
+        Button {
+          showProductSearch = true
+        } label: {
+          Image(systemName: "plus")
+        }
       }
     }
     .customBackNavigation(title: S.dialog.cancel(), icon: nil, action: vm.actual.goBack)
