@@ -37,9 +37,6 @@ struct TableDetailScreen: View {
       vm.actual.loadOrder()
     }
     .navigationTitle(S.tableDetail.title(value0: table.number.description))
-    .floatingActionButton(icon: "plus") {
-      vm.actual.openOrderScreen(initialItemId: nil)
-    }
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
         Button {
@@ -47,6 +44,14 @@ struct TableDetailScreen: View {
         } label: {
           Image(systemName: "creditcard")
         }.disabled(vm.state.orderedItems.isEmpty)
+      }
+      
+      ToolbarItem(placement: .bottomBar) {
+        Button {
+          vm.actual.openOrderScreen(initialItemId: nil)
+        } label: {
+          Image(systemName: "plus")
+        }
       }
     }
     .onReceive(vm.sideEffect) { effect in
