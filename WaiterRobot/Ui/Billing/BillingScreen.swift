@@ -105,15 +105,6 @@ struct BillingScreen: View {
         }
       }
     }
-    .onReceive(vm.sideEffect) { effect in
-      switch effect {
-      case let navEffect as NavigationEffect:
-        handleNavigation(navEffect.action, navigator)
-      default:
-        koin.logger(tag: "BillingScreen").w {
-          "No action defined for sideEffect \(effect.self.description)"
-        }
-      }
-    }
+    .handleSideEffects(of: vm, navigator)
   }
 }

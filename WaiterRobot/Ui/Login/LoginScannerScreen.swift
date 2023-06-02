@@ -15,7 +15,7 @@ struct LoginScannerScreen: View {
       VStack {
         CodeScannerView(
           codeTypes: [.qr],
-          simulatedData: ""
+          simulatedData: "https://my.kellner.team/ml/signIn?token=gj8TeJ4eQ0oRhD5yw8THx5OFhjQ&purpose=SIGN_IN"
         ) { result in
           switch result {
           case .success(let result):
@@ -36,16 +36,7 @@ struct LoginScannerScreen: View {
         }
       }
     }
-    .onReceive(vm.sideEffect) { effect in
-      switch effect {
-      case let navEffect as NavigationEffect:
-        handleNavigation(navEffect.action, navigator)
-      default:
-        koin.logger(tag: "LoginScannerScreen").w {
-          "No action defined for sideEffect \(effect.self.description)"
-        }
-      }
-    }
+    .handleSideEffects(of: vm, navigator)
   }
 }
 

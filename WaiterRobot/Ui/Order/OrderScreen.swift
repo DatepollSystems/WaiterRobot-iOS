@@ -72,15 +72,6 @@ struct OrderScreen: View {
     .sheet(isPresented: $showProductSearch) {
       ProductSearch(vm: vm)
     }
-    .onReceive(vm.sideEffect) { effect in
-      switch effect {
-      case let navEffect as NavigationEffect:
-        handleNavigation(navEffect.action, navigator)
-      default:
-        koin.logger(tag: "OrderScreen").w {
-          "No action defined for sideEffect \(effect.self.description)"
-        }
-      }
-    }
+    .handleSideEffects(of: vm, navigator)
   }
 }

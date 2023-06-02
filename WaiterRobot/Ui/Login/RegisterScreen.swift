@@ -45,16 +45,7 @@ struct RegisterScreen: View {
       .padding()
     }
     .navigationBarHidden(true)
-    .onReceive(vm.sideEffect) { effect in
-      switch effect {
-      case let navEffect as NavigationEffect:
-        handleNavigation(navEffect.action, navigator)
-      default:
-        koin.logger(tag: "LoginScreen").w {
-          "No action defined for sideEffect \(effect.self.description)"
-        }
-      }
-    }
+    .handleSideEffects(of: vm, navigator)
   }
 }
 
