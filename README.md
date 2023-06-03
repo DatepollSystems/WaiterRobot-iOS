@@ -31,6 +31,16 @@ This command must also be run after switching branches and it's advisable to als
 
 3. Open the `WaiterRobot.xcodeproj` in Xcode and start coding :)
 
+> If the Build fails with an exception that the binaries for the shared library couldn't be downloaded, you need to add 
+> the following to your `~/.netrc` file (create the file if it doesn't exist) to allow accessing the GitHub API.
+> The personal access token can be created under [Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens](https://github.com/settings/tokens?type=beta). "Public Repositories (read-only)" permission should be enougth.
+
+```
+machine maven.pkg.github.com
+  login [github username]
+  password [your new personal access token]
+```
+
 ## Dev with local KMM module version
 
 For a guide to use a local version of the KMM module

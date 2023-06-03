@@ -11,7 +11,7 @@ struct ProductSearch: View {
   var body: some View {
     NavigationView {
       List {
-        ForEach(vm.state.products, id: \.id) { product in
+        ForEach(vm.state.productGroups.first!.products, id: \.id) { product in
           ProductListItem(product: product) {
             vm.actual.addItem(product: product, amount: 1)
             dismiss()

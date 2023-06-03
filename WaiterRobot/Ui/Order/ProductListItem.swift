@@ -54,8 +54,7 @@ struct ProductListItem_Previews: PreviewProvider {
           name: "Beer",
           price: Money(cents: 390),
           soldOut: false,
-          allergens: [Allergen(id: 1, name: "Egg", shortName: "E")],
-          productGroup: ProductGroup(id: 1, name: "Test Group")
+          allergens: [Allergen(id: 1, name: "Egg", shortName: "E")]
         ),
         onClick: {}
       )
@@ -65,8 +64,7 @@ struct ProductListItem_Previews: PreviewProvider {
           name: "Beer",
           price: Money(cents: 390),
           soldOut: false,
-          allergens: [],
-          productGroup: ProductGroup(id: 1, name: "Test Group")
+          allergens: []
         ),
         onClick: {}
       )
@@ -82,8 +80,7 @@ struct ProductListItem_Previews: PreviewProvider {
             Allergen(id: 3, name: "Egg3", shortName: "B"),
             Allergen(id: 4, name: "Egg4", shortName: "C"),
             Allergen(id: 5, name: "Egg5", shortName: "D"),
-          ],
-          productGroup: ProductGroup(id: 1, name: "Test Group")
+          ]
         ),
         onClick: {}
       )
