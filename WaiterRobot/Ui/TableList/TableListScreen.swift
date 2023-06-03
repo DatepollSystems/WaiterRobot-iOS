@@ -35,7 +35,7 @@ struct TableListScreen: View {
             .padding()
         } else {
           LazyVGrid(columns: layout, spacing: 30) {
-            ForEach(vm.state.tables, id: \.id) { table in
+              ForEach(vm.state.tables.sorted { $0.number < $1.number }, id: \.id) { table in
               Table(text: table.number.description, size: columnSize, onClick: {
                 vm.actual.onTableClick(table: table)
               })
