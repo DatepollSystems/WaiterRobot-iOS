@@ -10,7 +10,7 @@ import shared
 @MainActor
 class ObservableViewModel<S: ViewModelState, E: ViewModelEffect, VM: AbstractViewModel<S, E>>: ObservableObject {
   @Published public private(set) var state: S
-  public private(set) var sideEffect: AnyPublisher<E, Never>
+  public private(set) var sideEffect: AnyPublisher<NavOrViewModelEffect<E>, Never>
   
   public let actual: VM
   
@@ -18,7 +18,7 @@ class ObservableViewModel<S: ViewModelState, E: ViewModelEffect, VM: AbstractVie
     self.actual = vm
     // This is save, as the constraint is required by the generics (S must be the state of the provided VM)
     self.state = actual.container.stateFlow.value as! S
-    self.sideEffect = actual.container.sideEffectFlow.asPublisher() as AnyPublisher<E, Never>
+    self.sideEffect = actual.container.sideEffectFlow.asPublisher() as AnyPublisher<NavOrViewModelEffect<E>, Never>
     
     (actual.container.stateFlow.asPublisher() as AnyPublisher<S, Never>)
       .receive(on: RunLoop.main)

@@ -70,18 +70,17 @@ struct WaiterRobotApp: App {
           .padding()
         }
       }
-      .onReceive(vm.sideEffect) { effect in
+      .handleSideEffects(of: vm, navigator) { effect in
         switch effect {
-        case let navEffect as NavigationEffect:
-          handleNavigation(navEffect.action, navigator)
         case let snackBar as RootEffect.ShowSnackBar:
           snackBarMessage = snackBar.message
           DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             snackBarMessage = nil
           }
         default:
-          koin.logger(tag: "WaiterRobotApp").w { "No action defined for sideEffect \(effect.self.description)"}
+          return false
         }
+        return true
       }
       .onOpenURL { url in
         vm.actual.onDeepLink(url: url.absoluteString)
