@@ -21,9 +21,7 @@ struct ProductSearch: View {
           ScrollView {
             LazyVGrid(columns: layout) {
               ForEach(vm.state.productGroups, id: \.group.id) { groupWithProducts in
-                if(groupWithProducts.products.isEmpty) {
-                  // Nothing
-                } else {
+                if(!groupWithProducts.products.isEmpty) {
                   Section {
                     ForEach(groupWithProducts.products, id: \.id) { product in
                       ProductListItem(product: product) {
