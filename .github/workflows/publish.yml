@@ -8,6 +8,7 @@ on:
       - 'project.yml'
       - 'WaiterRobot/**'
       - 'TargetSpecificResources/**'
+      - '.github/workflows/publish.yml'
 
 jobs:
   publish:
