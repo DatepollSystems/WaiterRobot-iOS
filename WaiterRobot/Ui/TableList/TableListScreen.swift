@@ -54,21 +54,23 @@ struct TableListScreen: View {
           } else {
             LazyVGrid(columns: layout) {
               ForEach(vm.state.filteredTableGroups, id: \.group.id) { groupWithTables in
-                Section {
-                  ForEach(groupWithTables.tables, id: \.id) { table in
-                    Table(
-                      text: table.number.description,
-                      onClick: {
-                        vm.actual.onTableClick(table: table)
-                      }
-                    )
-                    .padding(10)
-                  }
-                }  header: {
-                  HStack {
-                    Color(UIColor.lightGray).frame(height: 1)
-                    Text(groupWithTables.group.name)
-                    Color(UIColor.lightGray).frame(height: 1)
+                if(!groupWithTables.tables.isEmpty) {
+                  Section {
+                    ForEach(groupWithTables.tables, id: \.id) { table in
+                      Table(
+                        text: table.number.description,
+                        onClick: {
+                          vm.actual.onTableClick(table: table)
+                        }
+                      )
+                      .padding(10)
+                    }
+                  }  header: {
+                    HStack {
+                      Color(UIColor.lightGray).frame(height: 1)
+                      Text(groupWithTables.group.name)
+                      Color(UIColor.lightGray).frame(height: 1)
+                    }
                   }
                 }
               }
