@@ -34,7 +34,7 @@ jobs:
       - name: Netrc api.github.com
         uses: extractions/netrc@v1
         with:
-          machine: machine maven.pkg.github.com
+          machine: maven.pkg.github.com
           username: ${{ secrets.NETRC_USERNAME }}
           password: ${{ secrets.NETRC_TOKEN }}
 
