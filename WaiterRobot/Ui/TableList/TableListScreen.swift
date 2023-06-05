@@ -16,35 +16,14 @@ struct TableListScreen: View {
     
     ScreenContainer(vm.state) {
       VStack {
-        HStack {
-          ScrollView(.horizontal) {
-            HStack {
-              ForEach(Array(vm.state.selectedTableGroups), id: \.id) { group in
-                Button {
-                  vm.actual.toggleFilter(tableGroup: group)
-                } label: {
-                  Text(group.name)
-                }
-                .buttonStyle(.bordered)
-                .tint(.blue)
-              }
-              
-              ForEach(Array(vm.state.unselectedTableGroups), id: \.id) { group in
-                Button {
-                  vm.actual.toggleFilter(tableGroup: group)
-                } label: {
-                  Text(group.name)
-                }
-                .buttonStyle(.bordered)
-              }
-            }.padding(.horizontal)
-          }
-          Button {
-            vm.actual.clearFilter()
-          } label: {
-            Image(systemName: "xmark")
-          }.padding()
-        }
+        
+        TableListFilterRow(
+          selectedTableGroups: Array(vm.state.selectedTableGroups),
+          unselectedTableGroups: Array(vm.state.unselectedTableGroups),
+          onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0)},
+          onClearFilter: vm.actual.clearFilter
+        )
+        
         ScrollView {
           if vm.state.filteredTableGroups.isEmpty {
             Text(S.tableList.noTableFound())
@@ -55,23 +34,10 @@ struct TableListScreen: View {
             LazyVGrid(columns: layout) {
               ForEach(vm.state.filteredTableGroups, id: \.group.id) { groupWithTables in
                 if(!groupWithTables.tables.isEmpty) {
-                  Section {
-                    ForEach(groupWithTables.tables, id: \.id) { table in
-                      Table(
-                        text: table.number.description,
-                        onClick: {
-                          vm.actual.onTableClick(table: table)
-                        }
-                      )
-                      .padding(10)
-                    }
-                  }  header: {
-                    HStack {
-                      Color(UIColor.lightGray).frame(height: 1)
-                      Text(groupWithTables.group.name)
-                      Color(UIColor.lightGray).frame(height: 1)
-                    }
-                  }
+                  TableGroupSection(
+                    groupWithTables: groupWithTables,
+                    onTableClick: vm.actual.onTableClick
+                  )
                 }
               }
             }
@@ -79,6 +45,7 @@ struct TableListScreen: View {
           }
         }
       }
+      
     }
     .navigationTitle(CommonApp.shared.settings.eventName)
     .navigationBarTitleDisplayMode(.inline)

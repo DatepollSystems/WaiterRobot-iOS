@@ -26,51 +26,35 @@ struct ProductSearch: View {
           ProducSearchTabBarHeader(currentTab: $selectedTab, tabBarOptions: getGroupNames(vm.state.productGroups))
           
           TabView(selection: $selectedTab) {
-            ScrollView {
-              LazyVGrid(columns: layout) {
-                ForEach(vm.state.productGroups, id: \.group.id) { groupWithProducts in
-                  if(!groupWithProducts.products.isEmpty) {
-                    Section {
-                      ForEach(groupWithProducts.products, id: \.id) { product in
-                        ProductListItem(product: product) {
-                          vm.actual.addItem(product: product, amount: 1)
-                          dismiss()
-                        }
-                        .foregroundColor(Color("textColor"))
-                        .padding(10)
-                      }
-                    } header: {
-                      HStack {
-                        Color(UIColor.lightGray).frame(height: 1)
-                        Text(groupWithProducts.group.name)
-                        Color(UIColor.lightGray).frame(height: 1)
-                      }
-                    }
-                  }
-                }
-                Spacer()
+            
+            ProductSearchAllTab(
+              productGroups: vm.state.productGroups,
+              columns: layout,
+              onProductClick: {
+                vm.actual.addItem(product: $0, amount: 1)
+                dismiss()
               }
-              .padding()
-            }
+            )
             .tag(0)
+            .padding()
             
             ForEach(Array(vm.state.productGroups.enumerated()), id: \.element.group.id) { index, groupWithProducts in
               ScrollView {
                 LazyVGrid(columns: layout, spacing: 0) {
-                  ForEach(groupWithProducts.products, id: \.id) { product in
-                    ProductListItem(product: product) {
-                      vm.actual.addItem(product: product, amount: 1)
+                  ProductSearchGroupList(
+                    products: groupWithProducts.products,
+                    onProductClick: {
+                      vm.actual.addItem(product: $0, amount: 1)
                       dismiss()
                     }
-                    .foregroundColor(Color("textColor"))
-                    .padding(10)
-                  }
+                  )
                   Spacer()
                 }
                 .padding()
               }
               .tag(index + 1)
             }
+            
           }
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
