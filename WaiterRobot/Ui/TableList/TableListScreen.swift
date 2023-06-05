@@ -52,9 +52,9 @@ struct TableListScreen: View {
               .frame(maxWidth: .infinity)
               .padding()
           } else {
-            LazyVGrid(columns: layout, spacing: 10) {
+            LazyVGrid(columns: layout) {
               ForEach(vm.state.filteredTableGroups, id: \.group.id) { groupWithTables in
-                Section(groupWithTables.group.name) {
+                Section {
                   ForEach(groupWithTables.tables, id: \.id) { table in
                     Table(
                       text: table.number.description,
@@ -63,6 +63,12 @@ struct TableListScreen: View {
                       }
                     )
                     .padding(10)
+                  }
+                }  header: {
+                  HStack {
+                    Color(UIColor.lightGray).frame(height: 1)
+                    Text(groupWithTables.group.name)
+                    Color(UIColor.lightGray).frame(height: 1)
                   }
                 }
               }
