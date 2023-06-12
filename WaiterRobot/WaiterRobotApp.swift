@@ -33,6 +33,7 @@ struct WaiterRobotApp: App {
           case is Screen.LoginScannerScreen: LoginScannerScreen()
           case is Screen.SwitchEventScreen: SwitchEventScreen()
           case is Screen.SettingsScreen: SettingsScreen()
+          case is Screen.UpdateApp: UpdateAppScreen()
           case let s as Screen.RegisterScreen: RegisterScreen(createToken: s.createToken)
           case let s as Screen.TableDetailScreen: TableDetailScreen(table: s.table)
           case let s as Screen.OrderScreen: OrderScreen(table: s.table, initialItemId: s.initialItemId)
