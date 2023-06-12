@@ -6,6 +6,11 @@ var koin: IosKoinComponent {
 }
 
 // Shortcut for localization
-var S: L.Companion {
-  get { L.Companion.shared }
+@available(*, deprecated, renamed: "L")
+var S: shared.L.Companion {
+  get { shared.L.Companion.shared }
+}
+
+var L: shared.L.Companion {
+  get { shared.L.Companion.shared }
 }
