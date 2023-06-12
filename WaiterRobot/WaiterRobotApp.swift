@@ -7,6 +7,7 @@ struct WaiterRobotApp: App {
   @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
   
   @State private var snackBarMessage: String? = nil
+  @State private var showUpdateAvailableAlert: Bool = false
   @StateObject private var navigator: UIPilot<Screen> = UIPilot(initial: Screen.RootScreen.shared, debug: true)
   @StateObject private var strongVM = ObservableViewModel(vm: koin.rootVM())
   
@@ -84,6 +85,33 @@ struct WaiterRobotApp: App {
       }
       .onOpenURL { url in
         vm.actual.onDeepLink(url: url.absoluteString)
+      }
+      .alert(
+        S.app.updateAvailable.title(),
+        isPresented: $showUpdateAvailableAlert
+      ) {
+        Button(S.dialog.cancel(), role: .cancel) {
+          showUpdateAvailableAlert = false
+        }
+        
+        Button (S.app.forceUpdate.openStore(value0: "App Store")) {
+          guard let storeUrl = VersionChecker.shared.storeUrl,
+                let url = URL(string: storeUrl)
+          else {
+            return
+          }
+          
+          DispatchQueue.main.async {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+          }
+        }
+      } message: {
+        Text(S.app.updateAvailable.message())
+      }
+      .onAppear {
+        VersionChecker.shared.checkVersion {
+          showUpdateAvailableAlert = true
+        }
       }
     }
   }

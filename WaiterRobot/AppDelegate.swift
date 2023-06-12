@@ -24,7 +24,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     let logger = koin.logger(tag: "AppDelegate")
     logger.d { "initialized Koin" }
     
-    KMMResourcesLocalizationKt.localizationBundle = Bundle(for: L.self)
+    KMMResourcesLocalizationKt.localizationBundle = Bundle(for: shared.L.self)
     logger.d { "initialized localization bundle" }
     
     return true
