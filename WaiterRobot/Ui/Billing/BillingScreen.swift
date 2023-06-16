@@ -67,7 +67,7 @@ struct BillingScreen: View {
         .padding()
         .overlay(alignment: .bottom) {
           Button {
-            vm.actual.paySelection()
+            showPayDialog = true
           } label: {
             Image(systemName: "dollarsign")
               .font(.system(.title))
@@ -104,6 +104,9 @@ struct BillingScreen: View {
           Image(systemName: "xmark")
         }
       }
+    }
+    .sheet(isPresented: $showPayDialog) {
+      PayDialog(vm: vm)
     }
     .handleSideEffects(of: vm, navigator)
   }
