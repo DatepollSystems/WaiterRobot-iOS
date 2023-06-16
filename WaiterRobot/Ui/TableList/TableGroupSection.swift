@@ -34,10 +34,10 @@ struct TableGroupSection_Previews: PreviewProvider {
         groupWithTables: TableGroupWithTables(
           group: TableGroup(id: 1, name: "Test Group"),
           tables: [
-            shared.Table(id: 1, number: 1),
-            shared.Table(id: 2, number: 2),
-            shared.Table(id: 3, number: 3),
-            shared.Table(id: 4, number: 4),
+            shared.Table(id: 1, number: 1, groupName: "Test Group"),
+            shared.Table(id: 2, number: 2, groupName: "Test Group"),
+            shared.Table(id: 3, number: 3, groupName: "Test Group"),
+            shared.Table(id: 4, number: 4, groupName: "Test Group"),
           ]),
         onTableClick: { _ in }
       )

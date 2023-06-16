@@ -36,7 +36,9 @@ struct TableListFilterRow: View {
         onClearFilter()
       } label: {
         Image(systemName: "xmark")
-      }.padding()
+      }
+      .padding()
+      .disabled(selectedTableGroups.isEmpty)
     }
   }
 }

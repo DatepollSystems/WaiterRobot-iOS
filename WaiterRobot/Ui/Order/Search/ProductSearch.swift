@@ -16,7 +16,7 @@ struct ProductSearch: View {
   var body: some View {
     NavigationView {
       if(vm.state.productGroups.isEmpty) {
-        Text(S.productSearch.noProductFound())
+        Text(L.productSearch.noProductFound())
           .multilineTextAlignment(.center)
           .frame(maxWidth: .infinity)
           .padding()
@@ -62,7 +62,7 @@ struct ProductSearch: View {
         .onChange(of: search, perform: vm.actual.filterProducts)
         .toolbar {
           ToolbarItem(placement: .navigationBarLeading) {
-            Button(S.dialog.cancel()) {
+            Button(L.dialog.cancel()) {
               dismiss()
             }
           }
@@ -75,7 +75,7 @@ struct ProductSearch: View {
     var groupNames = productGroups.map { groupWithProducts in
       groupWithProducts.group.name
     }
-    groupNames.insert(S.productSearch.allGroups(), at: 0)
+    groupNames.insert(L.productSearch.allGroups(), at: 0)
     return groupNames
   }
 }

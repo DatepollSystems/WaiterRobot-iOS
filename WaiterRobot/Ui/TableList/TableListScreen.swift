@@ -18,15 +18,15 @@ struct TableListScreen: View {
       VStack {
         
         TableListFilterRow(
-          selectedTableGroups: Array(vm.state.selectedTableGroups),
-          unselectedTableGroups: Array(vm.state.unselectedTableGroups),
+          selectedTableGroups: vm.state.selectedTableGroupList,
+          unselectedTableGroups: vm.state.unselectedTableGroupList,
           onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0)},
           onClearFilter: vm.actual.clearFilter
         )
         
         ScrollView {
           if vm.state.filteredTableGroups.isEmpty {
-            Text(S.tableList.noTableFound())
+            Text(L.tableList.noTableFound())
               .multilineTextAlignment(.center)
               .frame(maxWidth: .infinity)
               .padding()
