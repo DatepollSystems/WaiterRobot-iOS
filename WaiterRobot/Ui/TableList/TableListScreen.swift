@@ -7,43 +7,45 @@ struct TableListScreen: View {
   
   @StateObject private var strongVM = ObservableViewModel(vm: koin.tableListVM())
   
-  private var idiom: UIUserInterfaceIdiom {
-    UIDevice.current.userInterfaceIdiom
-  }
-  
-  private var columnSize: CGFloat {
-    if idiom == .pad || idiom == .mac {
-      return UIScreen.main.bounds.size.width / 6
-    }
-    
-    return UIScreen.main.bounds.size.width / 4
-  }
-  
   private let layout = [
-    GridItem(.adaptive(minimum: UIScreen.main.bounds.size.width / 4))
+    GridItem(.adaptive(minimum: 100))
   ]
   
   var body: some View {
     unowned let vm = strongVM
     
     ScreenContainer(vm.state) {
-      ScrollView {
-        if vm.state.tables.isEmpty {
-          Text(S.tableList.noTableFound())
-            .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity)
-            .padding()
-        } else {
-          LazyVGrid(columns: layout, spacing: 30) {
-            ForEach(vm.state.tables, id: \.id) { table in
-              Table(text: table.number.description, size: columnSize, onClick: {
-                vm.actual.onTableClick(table: table)
-              })
+      VStack {
+        
+        TableListFilterRow(
+          selectedTableGroups: vm.state.selectedTableGroupList,
+          unselectedTableGroups: vm.state.unselectedTableGroupList,
+          onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0)},
+          onClearFilter: vm.actual.clearFilter
+        )
+        
+        ScrollView {
+          if vm.state.filteredTableGroups.isEmpty {
+            Text(L.tableList.noTableFound())
+              .multilineTextAlignment(.center)
+              .frame(maxWidth: .infinity)
+              .padding()
+          } else {
+            LazyVGrid(columns: layout) {
+              ForEach(vm.state.filteredTableGroups, id: \.group.id) { groupWithTables in
+                if(!groupWithTables.tables.isEmpty) {
+                  TableGroupSection(
+                    groupWithTables: groupWithTables,
+                    onTableClick: vm.actual.onTableClick
+                  )
+                }
+              }
             }
+            .padding()
           }
-          .padding()
         }
       }
+      
     }
     .navigationTitle(CommonApp.shared.settings.eventName)
     .navigationBarTitleDisplayMode(.inline)
@@ -59,15 +61,6 @@ struct TableListScreen: View {
     .refreshable {
       vm.actual.loadTables(forceUpdate: true)
     }
-    .onReceive(vm.sideEffect) { effect in
-      switch effect {
-      case let navEffect as NavigationEffect:
-        handleNavigation(navEffect.action, navigator)
-      default:
-        koin.logger(tag: "TableListScreen").w {
-          "No action defined for sideEffect \(effect.self.description)"
-        }
-      }
-    }
+    .handleSideEffects(of: vm, navigator)
   }
 }

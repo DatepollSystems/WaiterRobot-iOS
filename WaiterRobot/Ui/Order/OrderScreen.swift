@@ -22,7 +22,7 @@ struct OrderScreen: View {
     
     ScreenContainer(vm.state) {
       if(vm.state.currentOrder.isEmpty) {
-        Text(S.order.addProduct())
+        Text(L.order.addProduct())
           .multilineTextAlignment(.center)
           .frame(maxWidth: .infinity)
           .padding()
@@ -44,7 +44,7 @@ struct OrderScreen: View {
         }
       }
     }
-    .navigationTitle(S.order.title(value0: table.number.description))
+    .navigationTitle(L.order.title(value0: table.number.description, value1: table.groupName))
     .navigationBarTitleDisplayMode(.inline)
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
@@ -62,25 +62,16 @@ struct OrderScreen: View {
         }
       }
     }
-    .customBackNavigation(title: S.dialog.cancel(), icon: nil, action: vm.actual.goBack)
-    .confirmationDialog(S.order.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
-      Button(S.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortOrder)
-      Button(S.order.keepOrder(), role: .cancel, action: vm.actual.keepOrder)
+    .customBackNavigation(title: L.dialog.cancel(), icon: nil, action: vm.actual.goBack)
+    .confirmationDialog(L.order.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
+      Button(L.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortOrder)
+      Button(L.order.keepOrder(), role: .cancel, action: vm.actual.keepOrder)
     } message: {
-      Text(S.order.notSent.desc())
+      Text(L.order.notSent.desc())
     }
     .sheet(isPresented: $showProductSearch) {
       ProductSearch(vm: vm)
     }
-    .onReceive(vm.sideEffect) { effect in
-      switch effect {
-      case let navEffect as NavigationEffect:
-        handleNavigation(navEffect.action, navigator)
-      default:
-        koin.logger(tag: "OrderScreen").w {
-          "No action defined for sideEffect \(effect.self.description)"
-        }
-      }
-    }
+    .handleSideEffects(of: vm, navigator)
   }
 }

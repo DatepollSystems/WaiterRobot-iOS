@@ -7,6 +7,7 @@ struct WaiterRobotApp: App {
   @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
   
   @State private var snackBarMessage: String? = nil
+  @State private var showUpdateAvailableAlert: Bool = false
   @StateObject private var navigator: UIPilot<Screen> = UIPilot(initial: Screen.RootScreen.shared, debug: true)
   @StateObject private var strongVM = ObservableViewModel(vm: koin.rootVM())
   
@@ -32,6 +33,7 @@ struct WaiterRobotApp: App {
           case is Screen.LoginScannerScreen: LoginScannerScreen()
           case is Screen.SwitchEventScreen: SwitchEventScreen()
           case is Screen.SettingsScreen: SettingsScreen()
+          case is Screen.UpdateApp: UpdateAppScreen()
           case let s as Screen.RegisterScreen: RegisterScreen(createToken: s.createToken)
           case let s as Screen.TableDetailScreen: TableDetailScreen(table: s.table)
           case let s as Screen.OrderScreen: OrderScreen(table: s.table, initialItemId: s.initialItemId)
@@ -70,21 +72,47 @@ struct WaiterRobotApp: App {
           .padding()
         }
       }
-      .onReceive(vm.sideEffect) { effect in
+      .handleSideEffects(of: vm, navigator) { effect in
         switch effect {
-        case let navEffect as NavigationEffect:
-          handleNavigation(navEffect.action, navigator)
         case let snackBar as RootEffect.ShowSnackBar:
           snackBarMessage = snackBar.message
           DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             snackBarMessage = nil
           }
         default:
-          koin.logger(tag: "WaiterRobotApp").w { "No action defined for sideEffect \(effect.self.description)"}
+          return false
         }
+        return true
       }
       .onOpenURL { url in
         vm.actual.onDeepLink(url: url.absoluteString)
+      }
+      .alert(
+        S.app.updateAvailable.title(),
+        isPresented: $showUpdateAvailableAlert
+      ) {
+        Button(S.dialog.cancel(), role: .cancel) {
+          showUpdateAvailableAlert = false
+        }
+        
+        Button (S.app.forceUpdate.openStore(value0: "App Store")) {
+          guard let storeUrl = VersionChecker.shared.storeUrl,
+                let url = URL(string: storeUrl)
+          else {
+            return
+          }
+          
+          DispatchQueue.main.async {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+          }
+        }
+      } message: {
+        Text(S.app.updateAvailable.message())
+      }
+      .onAppear {
+        VersionChecker.shared.checkVersion {
+          showUpdateAvailableAlert = true
+        }
       }
     }
   }

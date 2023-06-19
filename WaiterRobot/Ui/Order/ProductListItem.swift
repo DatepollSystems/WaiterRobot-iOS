@@ -25,68 +25,47 @@ struct ProductListItem: View {
   }
   
   var body: some View {
-    Button {
-      onClick()
-    } label: {
-      HStack {
-        VStack(alignment: .leading) {
+    ZStack {
+      RoundedRectangle(cornerRadius: 10, style: .continuous)
+        .fill(product.soldOut ? Color.gray.opacity(0.1) : Color(.systemBackground))
+        .shadow(radius: 2)
+      
+      Button {
+        onClick()
+      } label: {
+        VStack {
           Text(product.name)
+            .strikethrough(product.soldOut)
           Text(allergens)
             .foregroundColor(.gray)
+          Text(product.price.description())
         }
-        Spacer()
-        Text(product.price.description())
+        .foregroundColor(Color("textColor"))
+        .frame(maxWidth: .infinity)
+        .padding(5)
       }
-      .foregroundColor(Color("textColor"))
-    }.disabled(product.soldOut)
-      .conditionalModifier(product.soldOut) { view in
-        view.listRowBackground(Color.gray.opacity(0.3))
-      }
+      .disabled(product.soldOut)
+    }
   }
 }
 
 struct ProductListItem_Previews: PreviewProvider {
   static var previews: some View {
-    List {
-      ProductListItem(
-        product: Product(
-          id: 1,
-          name: "Beer",
-          price: Money(cents: 390),
-          soldOut: false,
-          allergens: [Allergen(id: 1, name: "Egg", shortName: "E")],
-          productGroup: ProductGroup(id: 1, name: "Test Group")
-        ),
-        onClick: {}
-      )
-      ProductListItem(
-        product: Product(
-          id: 1,
-          name: "Beer",
-          price: Money(cents: 390),
-          soldOut: false,
-          allergens: [],
-          productGroup: ProductGroup(id: 1, name: "Test Group")
-        ),
-        onClick: {}
-      )
-      ProductListItem(
-        product: Product(
-          id: 2,
-          name: "Wine",
-          price: Money(cents: 290),
-          soldOut: true,
-          allergens: [
-            Allergen(id: 1, name: "Egg", shortName: "E"),
-            Allergen(id: 2, name: "Egg2", shortName: "A"),
-            Allergen(id: 3, name: "Egg3", shortName: "B"),
-            Allergen(id: 4, name: "Egg4", shortName: "C"),
-            Allergen(id: 5, name: "Egg5", shortName: "D"),
-          ],
-          productGroup: ProductGroup(id: 1, name: "Test Group")
-        ),
-        onClick: {}
-      )
-    }
+    ProductListItem(
+      product: Product(
+        id: 2,
+        name: "Wine",
+        price: Money(cents: 290),
+        soldOut: true,
+        allergens: [
+          Allergen(id: 1, name: "Egg", shortName: "E"),
+          Allergen(id: 2, name: "Egg2", shortName: "A"),
+          Allergen(id: 3, name: "Egg3", shortName: "B"),
+          Allergen(id: 4, name: "Egg4", shortName: "C"),
+          Allergen(id: 5, name: "Egg5", shortName: "D"),
+        ]
+      ),
+      onClick: {}
+    )
   }
 }

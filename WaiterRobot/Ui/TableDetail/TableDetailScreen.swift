@@ -20,7 +20,7 @@ struct TableDetailScreen: View {
     ScreenContainer(vm.state) {
       List {
         if vm.state.orderedItems.isEmpty {
-          Text(S.tableDetail.noOrder(value0: table.number.description))
+          Text(L.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
             .padding()
@@ -36,7 +36,7 @@ struct TableDetailScreen: View {
     .refreshable {
       vm.actual.loadOrder()
     }
-    .navigationTitle(S.tableDetail.title(value0: table.number.description))
+    .navigationTitle(L.tableDetail.title(value0: table.number.description, value1: table.groupName))
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
         Button {
@@ -54,15 +54,6 @@ struct TableDetailScreen: View {
         }
       }
     }
-    .onReceive(vm.sideEffect) { effect in
-      switch effect {
-      case let navEffect as NavigationEffect:
-        handleNavigation(navEffect.action, navigator)
-      default:
-        koin.logger(tag: "TableDetailScreen").w {
-          "No action defined for sideEffect \(effect.self.description)"
-        }
-      }
-    }
+    .handleSideEffects(of: vm, navigator)
   }
 }

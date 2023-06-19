@@ -22,7 +22,7 @@ struct BillingScreen: View {
       VStack {
         List {
           if vm.state.billItems.isEmpty {
-            Text(S.billing.noOpenBill(value0: table.number.description))
+            Text(L.billing.noOpenBill(value0: table.number.description, value1: table.groupName))
               .multilineTextAlignment(.center)
               .frame(maxWidth: .infinity)
               .padding()
@@ -59,7 +59,7 @@ struct BillingScreen: View {
         }
         
         HStack {
-          Text("\(S.billing.total()):")
+          Text("\(L.billing.total()):")
           Spacer()
           Text("\(vm.state.priceSum)")
         }
@@ -67,7 +67,7 @@ struct BillingScreen: View {
         .padding()
         .overlay(alignment: .bottom) {
           Button {
-            vm.actual.paySelection()
+            showPayDialog = true
           } label: {
             Image(systemName: "dollarsign")
               .font(.system(.title))
@@ -81,14 +81,14 @@ struct BillingScreen: View {
         }
       }
     }
-    .navigationTitle(S.billing.title(value0: table.number.description))
+    .navigationTitle(L.billing.title(value0: table.number.description, value1: table.groupName))
     .navigationBarTitleDisplayMode(.inline)
-    .customBackNavigation(title: S.dialog.cancel(), icon: nil, action: vm.actual.goBack) // TODO
-    .confirmationDialog(S.billing.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
-      Button(S.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortBill)
-      Button(S.dialog.cancel(), role: .cancel, action: vm.actual.keepBill)
+    .customBackNavigation(title: L.dialog.cancel(), icon: nil, action: vm.actual.goBack) // TODO
+    .confirmationDialog(L.billing.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
+      Button(L.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortBill)
+      Button(L.dialog.cancel(), role: .cancel, action: vm.actual.keepBill)
     } message: {
-      Text(S.billing.notSent.desc())
+      Text(L.billing.notSent.desc())
     }
     .toolbar {
       ToolbarItemGroup(placement: .navigationBarTrailing) {
@@ -105,15 +105,9 @@ struct BillingScreen: View {
         }
       }
     }
-    .onReceive(vm.sideEffect) { effect in
-      switch effect {
-      case let navEffect as NavigationEffect:
-        handleNavigation(navEffect.action, navigator)
-      default:
-        koin.logger(tag: "BillingScreen").w {
-          "No action defined for sideEffect \(effect.self.description)"
-        }
-      }
+    .sheet(isPresented: $showPayDialog) {
+      PayDialog(vm: vm)
     }
+    .handleSideEffects(of: vm, navigator)
   }
 }
