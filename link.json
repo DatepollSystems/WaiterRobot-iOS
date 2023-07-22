@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "28TM58T3GZ.org.datepollsystems.waiterrobot",
+                "paths": ["/mobile-link/*", "/ml/*"]
+            }
+        ]
+    }
+}

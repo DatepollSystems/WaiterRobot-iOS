@@ -7,6 +7,10 @@ fileGroups:
   - fastlane
   - Gemfile
   - .github/workflows
+  - command-line-tools
+  - .swiftformat
+  - .swiftlint.yml
+  - setup.sh
 
 packages:
   shared:

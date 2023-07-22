@@ -3,21 +3,20 @@ import shared
 import SwiftUI
 
 struct RootScreen: View {
-  
-  @ObservedObject var strongVM: ObservableViewModel<RootState, RootEffect, RootViewModel>
-  
-  var body: some View {
-    unowned let vm = strongVM
-    
-    if (!vm.state.isLoggedIn) {
-      LoginScreen()
-        .navigationBarHidden(true)
-    } else if(!vm.state.hasEventSelected) {
-      SwitchEventScreen()
-        .navigationBarHidden(false)
-    } else {
-      TableListScreen()
-        .navigationBarHidden(false)
+    @ObservedObject var strongVM: ObservableViewModel<RootState, RootEffect, RootViewModel>
+
+    var body: some View {
+        unowned let vm = strongVM
+
+        if !vm.state.isLoggedIn {
+            LoginScreen()
+                .navigationBarHidden(true)
+        } else if !vm.state.hasEventSelected {
+            SwitchEventScreen()
+                .navigationBarHidden(false)
+        } else {
+            TableListScreen()
+                .navigationBarHidden(false)
+        }
     }
-  }
 }
