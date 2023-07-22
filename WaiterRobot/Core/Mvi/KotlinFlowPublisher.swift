@@ -8,53 +8,53 @@ import Foundation
 import shared
 
 public extension Kotlinx_coroutines_coreFlow {
-	func asPublisher<T: Any>() -> AnyPublisher<T, Never> {
-		(KotlinFlowPublisher(flow: self) as KotlinFlowPublisher<T>).eraseToAnyPublisher()
-	}
+    func asPublisher<T: Any>() -> AnyPublisher<T, Never> {
+        (KotlinFlowPublisher(flow: self) as KotlinFlowPublisher<T>).eraseToAnyPublisher()
+    }
 }
 
 private struct KotlinFlowPublisher<T: Any>: Publisher {
-	public typealias Output = T
-	public typealias Failure = Never
-	private let flow: Kotlinx_coroutines_coreFlow
+    public typealias Output = T
+    public typealias Failure = Never
+    private let flow: Kotlinx_coroutines_coreFlow
 
-	public init(flow: Kotlinx_coroutines_coreFlow) {
-		self.flow = flow
-	}
+    public init(flow: Kotlinx_coroutines_coreFlow) {
+        self.flow = flow
+    }
 
-	public func receive<S: Subscriber>(subscriber: S) where S.Input == T, S.Failure == Failure {
-		let subscription = FlowSubscription(flow: flow, subscriber: subscriber)
-		subscriber.receive(subscription: subscription)
-	}
+    public func receive<S: Subscriber>(subscriber: S) where S.Input == T, S.Failure == Failure {
+        let subscription = FlowSubscription(flow: flow, subscriber: subscriber)
+        subscriber.receive(subscription: subscription)
+    }
 
-	final class FlowSubscription<S: Subscriber>: Subscription where S.Input == T, S.Failure == Failure {
-		private var subscriber: S?
-		private let job: Kotlinx_coroutines_coreJob?
-		private let flow: Kotlinx_coroutines_coreFlow
+    final class FlowSubscription<S: Subscriber>: Subscription where S.Input == T, S.Failure == Failure {
+        private var subscriber: S?
+        private let job: Kotlinx_coroutines_coreJob?
+        private let flow: Kotlinx_coroutines_coreFlow
 
-		init(flow: Kotlinx_coroutines_coreFlow, subscriber: S) {
-			self.flow = flow
-			self.subscriber = subscriber
-			job = FlowUtilsKt.subscribe(
-				flow,
-				onEach: { position in
-					if let position = position as? T {
-						_ = subscriber.receive(position)
-					}
-				},
-				onComplete: { subscriber.receive(completion: .finished) },
-				onThrow: { _ in
-					// TODO:
-					// logger.error(message: "got error in Flow subscription", throwable: error)
-				}
-			)
-		}
+        init(flow: Kotlinx_coroutines_coreFlow, subscriber: S) {
+            self.flow = flow
+            self.subscriber = subscriber
+            job = FlowUtilsKt.subscribe(
+                flow,
+                onEach: { position in
+                    if let position = position as? T {
+                        _ = subscriber.receive(position)
+                    }
+                },
+                onComplete: { subscriber.receive(completion: .finished) },
+                onThrow: { _ in
+                    // TODO:
+                    // logger.error(message: "got error in Flow subscription", throwable: error)
+                }
+            )
+        }
 
-		func cancel() {
-			subscriber = nil
-			job?.cancel(cause: nil)
-		}
+        func cancel() {
+            subscriber = nil
+            job?.cancel(cause: nil)
+        }
 
-		func request(_: Subscribers.Demand) {}
-	}
+        func request(_: Subscribers.Demand) {}
+    }
 }
