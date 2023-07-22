@@ -47,6 +47,14 @@ Push a new lava build to TestFlight
 
 Push a new prod build to TestFlight
 
+### ios setupFastlaneSecrets
+
+```sh
+[bundle exec] fastlane ios setupFastlaneSecrets
+```
+
+
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

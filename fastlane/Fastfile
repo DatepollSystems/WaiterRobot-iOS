@@ -15,33 +15,6 @@
 
 default_platform(:ios)
 
-before_all do |lane, options|
-  ensure_env_vars(
-    env_vars: ["FASTLANE_APPLE_ID", "FASTLANE_CERTIFICATES_GIT_URL", "FASTLANE_KEY_ID", "FASTLANE_ISSUER_ID"]
-  )
-
-  if ENV["CI"]
-    ensure_env_vars(
-      env_vars: ["KEYCHAIN_PASSWORD"]
-    )
-
-    create_keychain(
-      name: "WaiterRobot_iOS_keychain",
-      password: ENV["KEYCHAIN_PASSWORD"],
-      default_keychain: true,
-      unlock: true,
-      timeout: 3600,
-      lock_when_sleeps: false
-    )
-  end
-
-  app_store_connect_api_key(
-    key_id: ENV["FASTLANE_KEY_ID"],
-    issuer_id: ENV["FASTLANE_ISSUER_ID"],
-    key_filepath: "./fastlane/.keys/api_key.p8",
-  )
-end
-
 platform :ios do
   desc "Run all iOS unit and ui tests."
   lane :test do
@@ -76,7 +49,8 @@ platform :ios do
   end
 
   desc "Push a new lava build to TestFlight"
-  lane :releaseWaiterRobot_develop do
+  lane :releaseWaiterRobot_develop do |options|
+    setupFastlaneSecrets
     sync_certificates
 
     build_app(
@@ -106,7 +80,8 @@ platform :ios do
   end
 
   desc "Push a new prod build to TestFlight"
-    lane :releaseWaiterRobot_main do
+    lane :releaseWaiterRobot_main do |options|
+      setupFastlaneSecrets
       sync_certificates
 
       build_app(
@@ -130,5 +105,32 @@ platform :ios do
       # e.g. 2.0.2
       add_git_tag(tag: version)
       push_git_tags(tag: version)
+    end
+    
+    lane :setupFastlaneSecrets do |options|
+      ensure_env_vars(
+        env_vars: ["FASTLANE_APPLE_ID", "FASTLANE_CERTIFICATES_GIT_URL", "FASTLANE_KEY_ID", "FASTLANE_ISSUER_ID"]
+      )
+
+      if ENV["CI"]
+        ensure_env_vars(
+          env_vars: ["KEYCHAIN_PASSWORD"]
+        )
+
+        create_keychain(
+          name: "WaiterRobot_iOS_keychain",
+          password: ENV["KEYCHAIN_PASSWORD"],
+          default_keychain: true,
+          unlock: true,
+          timeout: 3600,
+          lock_when_sleeps: false
+        )
+      end
+
+      app_store_connect_api_key(
+        key_id: ENV["FASTLANE_KEY_ID"],
+        issuer_id: ENV["FASTLANE_ISSUER_ID"],
+        key_filepath: "./fastlane/.keys/api_key.p8",
+      )
     end
 end

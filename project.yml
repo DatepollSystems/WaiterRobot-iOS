@@ -23,6 +23,10 @@ packages:
     url: https://github.com/twostraws/CodeScanner
     from: 2.2.1
 
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: '15.0'
+        
 targetTemplates:
   WaiterRobot:
     type: application
@@ -85,7 +89,6 @@ targetTemplates:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: "${identifier}"
-        IPHONEOS_DEPLOYMENT_TARGET: "15.0"
         INFOPLIST_FILE: ".generated/${target_name}.plist"
         CODE_SIGN_STYLE: "Manual"
         CODE_SIGN_ENTITLEMENTS: ".generated/${target_name}.entitlements"
