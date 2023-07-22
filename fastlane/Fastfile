@@ -43,6 +43,11 @@ before_all do |lane, options|
 end
 
 platform :ios do
+  desc "Run all iOS unit and ui tests."
+  lane :test do
+    run_tests(scheme: "WaiterRobotLava")
+  end
+  
   desc "Sync certificates"
   lane :sync_certificates do
     if ENV["CI"]
