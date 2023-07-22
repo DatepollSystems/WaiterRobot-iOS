@@ -15,10 +15,9 @@ The KMM module is integrated as a Swift-Package (shared).
 
 This project uses XcodeGen for generating the Xcode project.
 
-1. If not installed, you can install XcodeGen using brew:
-
+1. Execute setup script
 ```bash
-brew install xcodegen
+bash setup.sh
 ```
 
 2. Generate the Xcode project (run in root folder, where the `project.yml` lives):

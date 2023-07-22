@@ -10,6 +10,7 @@ fileGroups:
   - command-line-tools
   - .swiftformat
   - .swiftlint.yml
+  - setup.sh
 
 packages:
   shared:
