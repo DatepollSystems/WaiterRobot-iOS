@@ -7,24 +7,31 @@ struct PayDialog: View {
 
     @ObservedObject var vm: ObservableViewModel<BillingState, BillingEffect, BillingViewModel>
 
-    @State private var moneyGiven: String = ""
+    @State private var moneyGiven: String = "" {
+        didSet {
+            let range = NSRange(location: 0, length: moneyGiven.utf16.count)
+            guard let regex = try? NSRegularExpression(pattern: "^(\\d+([.,]\\d{0,2})?)?$") else {
+                return
+            }
+
+            isInputInvalid = vm.state.changeText == "NaN" || vm.state.changeText.hasPrefix("-") || regex.firstMatch(in: moneyGiven, options: [], range: range) == nil
+        }
+    }
+
+    @State private var isInputInvalid = false
 
     var body: some View {
-        let range = NSRange(location: 0, length: moneyGiven.utf16.count)
-        let regex = try! NSRegularExpression(pattern: "^(\\d+([.,]\\d{0,2})?)?$")
-        let isInputInvalid = vm.state.changeText == "NaN" || vm.state.changeText.hasPrefix("-") || regex.firstMatch(in: moneyGiven, options: [], range: range) == nil
-
         NavigationView {
             VStack {
                 HStack {
-                    Text(L.billing.total() + ":")
+                    Text(localize.billing.total() + ":")
                         .font(.title2)
                     Spacer()
                     Text(vm.state.priceSum.description)
                         .font(.title2)
                 }
 
-                TextField(L.billing.given(), text: $moneyGiven)
+                TextField(localize.billing.given(), text: $moneyGiven)
                     .font(.title)
                     .keyboardType(.numbersAndPunctuation)
                     .onChange(of: moneyGiven, perform: vm.actual.moneyGiven)
@@ -37,7 +44,7 @@ struct PayDialog: View {
                     )
 
                 HStack {
-                    Text(L.billing.change() + ":")
+                    Text(localize.billing.change() + ":")
                         .font(.title2)
                     Spacer()
                     Text(vm.state.changeText)
@@ -49,12 +56,12 @@ struct PayDialog: View {
             .padding()
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button(L.dialog.cancel()) {
+                    Button(localize.dialog.cancel()) {
                         dismiss()
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(L.billing.pay()) {
+                    Button(localize.billing.pay()) {
                         vm.actual.paySelection()
                         dismiss()
                     }

@@ -25,7 +25,7 @@ struct TableListScreen: View {
 
                 ScrollView {
                     if vm.state.filteredTableGroups.isEmpty {
-                        Text(L.tableList.noTableFound())
+                        Text(localize.tableList.noTableFound())
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity)
                             .padding()

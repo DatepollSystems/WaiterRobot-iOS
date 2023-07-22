@@ -16,7 +16,7 @@ struct SettingsScreen: View {
                 Section {
                     SettingsItem(
                         icon: "rectangle.portrait.and.arrow.right",
-                        title: S.settings.logout.action(),
+                        title: localizeString.settings.logout.action(),
                         subtitle: "\"\(CommonApp.shared.settings.organisationName)\" / \"\(CommonApp.shared.settings.waiterName)\"",
                         action: {
                             showConfirmLogout = true
@@ -25,14 +25,14 @@ struct SettingsScreen: View {
 
                     SettingsItem(
                         icon: "arrow.triangle.2.circlepath",
-                        title: S.settings.refresh.title(),
-                        subtitle: S.settings.refresh.desc(),
+                        title: localizeString.settings.refresh.title(),
+                        subtitle: localizeString.settings.refresh.desc(),
                         action: vm.actual.refreshAll
                     )
 
                     SettingsItem(
                         icon: "person.3",
-                        title: S.switchEvent.title(),
+                        title: localizeString.switchEvent.title(),
                         subtitle: CommonApp.shared.settings.eventName,
                         action: vm.actual.switchEvent
                     )
@@ -43,7 +43,7 @@ struct SettingsScreen: View {
                 }
 
                 Section {
-                    Link(S.settings.privacyPolicy(), destination: URL(string: CommonApp.shared.privacyPolicyUrl)!)
+                    Link(localizeString.settings.privacyPolicy(), destination: URL(string: CommonApp.shared.privacyPolicyUrl)!)
                 }
 
                 HStack {
@@ -55,7 +55,7 @@ struct SettingsScreen: View {
                 .listRowBackground(Color.clear)
             }
         }
-        .navigationTitle(S.settings.title())
+        .navigationTitle(localizeString.settings.title())
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -65,11 +65,11 @@ struct SettingsScreen: View {
                 }
             }
         }
-        .confirmationDialog(S.settings.logout.title(value0: CommonApp.shared.settings.organisationName), isPresented: $showConfirmLogout, titleVisibility: .visible) {
-            Button(S.settings.logout.action(), role: .destructive, action: vm.actual.logout)
-            Button(S.settings.keepLoggedIn(), role: .cancel, action: { showConfirmLogout = false })
+        .confirmationDialog(localizeString.settings.logout.title(value0: CommonApp.shared.settings.organisationName), isPresented: $showConfirmLogout, titleVisibility: .visible) {
+            Button(localizeString.settings.logout.action(), role: .destructive, action: vm.actual.logout)
+            Button(localizeString.settings.keepLoggedIn(), role: .cancel, action: { showConfirmLogout = false })
         } message: {
-            Text(S.settings.logout.desc(value0: CommonApp.shared.settings.organisationName))
+            Text(localizeString.settings.logout.desc(value0: CommonApp.shared.settings.organisationName))
         }
         .handleSideEffects(of: vm, navigator)
     }

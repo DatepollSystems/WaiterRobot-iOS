@@ -25,14 +25,14 @@ struct LoginScannerScreen: View {
                     }
                 }
 
-                Text(S.login.scanner.desc())
+                Text(localizeString.login.scanner.desc())
                     .padding()
                     .multilineTextAlignment(.center)
 
                 Button {
                     vm.actual.goBack()
                 } label: {
-                    Text(S.dialog.cancel())
+                    Text(localizeString.dialog.cancel())
                 }
             }
         }

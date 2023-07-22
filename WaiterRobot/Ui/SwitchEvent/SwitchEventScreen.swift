@@ -7,7 +7,7 @@ struct SwitchEventScreen: View {
 
     @StateObject private var strongVM = ObservableViewModel(vm: koin.switchEventVM())
 
-    @SwiftUI.State private var selectedEvent: Event? = nil
+    @SwiftUI.State private var selectedEvent: Event?
 
     var body: some View {
         unowned let vm = strongVM
@@ -20,7 +20,7 @@ struct SwitchEventScreen: View {
                     .frame(maxHeight: 100)
                     .padding()
 
-                Text(S.switchEvent.desc())
+                Text(localizeString.switchEvent.desc())
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -29,7 +29,7 @@ struct SwitchEventScreen: View {
 
                 ScrollView {
                     if vm.state.events.isEmpty {
-                        Text(S.switchEvent.noEventFound())
+                        Text(localizeString.switchEvent.noEventFound())
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity)
                             .padding()
