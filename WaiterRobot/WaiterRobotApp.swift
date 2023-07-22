@@ -88,14 +88,14 @@ struct WaiterRobotApp: App {
                 vm.actual.onDeepLink(url: url.absoluteString)
             }
             .alert(
-                localizeString.app.updateAvailable.title(),
+                localize.app.updateAvailable.title(),
                 isPresented: $showUpdateAvailableAlert
             ) {
-                Button(localizeString.dialog.cancel(), role: .cancel) {
+                Button(localize.dialog.cancel(), role: .cancel) {
                     showUpdateAvailableAlert = false
                 }
 
-                Button(localizeString.app.forceUpdate.openStore(value0: "App Store")) {
+                Button(localize.app.forceUpdate.openStore(value0: "App Store")) {
                     guard let storeUrl = VersionChecker.shared.storeUrl,
                           let url = URL(string: storeUrl)
                     else {
@@ -107,7 +107,7 @@ struct WaiterRobotApp: App {
                     }
                 }
             } message: {
-                Text(localizeString.app.updateAvailable.message())
+                Text(localize.app.updateAvailable.message())
             }
             .onAppear {
                 VersionChecker.shared.checkVersion {

@@ -20,7 +20,7 @@ struct SwitchEventScreen: View {
                     .frame(maxHeight: 100)
                     .padding()
 
-                Text(localizeString.switchEvent.desc())
+                Text(localize.switchEvent.desc())
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -29,7 +29,7 @@ struct SwitchEventScreen: View {
 
                 ScrollView {
                     if vm.state.events.isEmpty {
-                        Text(localizeString.switchEvent.noEventFound())
+                        Text(localize.switchEvent.noEventFound())
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity)
                             .padding()
