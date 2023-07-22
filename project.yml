@@ -116,7 +116,10 @@ targets:
   WaiterRobotLava:
     templates:
       - WaiterRobot
-    scheme: {}
+    scheme:
+      testTargets:
+        - name: WaiterRobotLavaTests
+          randomExecutionOrder: true
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot.beta"
       displayName: "WaiterRobot Lava"
@@ -129,4 +132,16 @@ targets:
         script: |
                 # Lava uses the epochMinute as buildNumber
                 /usr/libexec/PlistBuddy -c "Set CFBundleVersion $(($(date +"%s")/60))" ".generated/WaiterRobotLava.plist"
-  
+        
+  WaiterRobotLavaTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - WaiterRobotLavaTests
+    dependencies:
+      - target: WaiterRobotLava
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: true
+        TEST_TARGET_NAME: WaiterRobotLavaTests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/WaiterRobot Lava.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/WaiterRobot Lava"
