@@ -2,6 +2,9 @@ name: Run unit and ui tests
 
 on:
   push:
+    branches-ignore:
+      - 'develop'
+      - 'main'
   
 jobs:
   test:
