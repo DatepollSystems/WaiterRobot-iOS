@@ -6,7 +6,7 @@ import UIPilot
 struct WaiterRobotApp: App {
     @UIApplicationDelegateAdaptor var appDelegate: AppDelegate
 
-    @State private var snackBarMessage: String? = nil
+    @State private var snackBarMessage: String?
     @State private var showUpdateAvailableAlert: Bool = false
     @StateObject private var navigator: UIPilot<Screen> = UIPilot(initial: Screen.RootScreen.shared, debug: true)
     @StateObject private var strongVM = ObservableViewModel(vm: koin.rootVM())
@@ -34,10 +34,10 @@ struct WaiterRobotApp: App {
                     case is Screen.SwitchEventScreen: SwitchEventScreen()
                     case is Screen.SettingsScreen: SettingsScreen()
                     case is Screen.UpdateApp: UpdateAppScreen()
-                    case let s as Screen.RegisterScreen: RegisterScreen(createToken: s.createToken)
-                    case let s as Screen.TableDetailScreen: TableDetailScreen(table: s.table)
-                    case let s as Screen.OrderScreen: OrderScreen(table: s.table, initialItemId: s.initialItemId)
-                    case let s as Screen.BillingScreen: BillingScreen(table: s.table)
+                    case let screen as Screen.RegisterScreen: RegisterScreen(createToken: screen.createToken)
+                    case let screen as Screen.TableDetailScreen: TableDetailScreen(table: screen.table)
+                    case let screen as Screen.OrderScreen: OrderScreen(table: screen.table, initialItemId: screen.initialItemId)
+                    case let screen as Screen.BillingScreen: BillingScreen(table: screen.table)
                     default:
                         Text("No view defined for \(route.self.description)") // TODO:
                         Button {
@@ -88,14 +88,14 @@ struct WaiterRobotApp: App {
                 vm.actual.onDeepLink(url: url.absoluteString)
             }
             .alert(
-                S.app.updateAvailable.title(),
+                localize.app.updateAvailable.title(),
                 isPresented: $showUpdateAvailableAlert
             ) {
-                Button(S.dialog.cancel(), role: .cancel) {
+                Button(localize.dialog.cancel(), role: .cancel) {
                     showUpdateAvailableAlert = false
                 }
 
-                Button(S.app.forceUpdate.openStore(value0: "App Store")) {
+                Button(localize.app.forceUpdate.openStore(value0: "App Store")) {
                     guard let storeUrl = VersionChecker.shared.storeUrl,
                           let url = URL(string: storeUrl)
                     else {
@@ -107,7 +107,7 @@ struct WaiterRobotApp: App {
                     }
                 }
             } message: {
-                Text(S.app.updateAvailable.message())
+                Text(localize.app.updateAvailable.message())
             }
             .onAppear {
                 VersionChecker.shared.checkVersion {

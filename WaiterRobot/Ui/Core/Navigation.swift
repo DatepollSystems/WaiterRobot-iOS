@@ -25,7 +25,7 @@ extension UIPilot<Screen> {
 }
 
 extension View {
-    func customBackNavigation(title: String = S.navigation.back(), icon: String? = "chevron.left", action: @escaping () -> Void) -> some View {
+    func customBackNavigation(title: String = localize.navigation.back(), icon: String? = "chevron.left", action: @escaping () -> Void) -> some View {
         navigationBarBackButtonHidden(true).toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: action) {

@@ -15,10 +15,10 @@ struct RegisterScreen: View {
 
         ScreenContainer(vm.state) {
             VStack {
-                Text(S.register_.name.desc())
+                Text(localize.register_.name.desc())
                     .font(.body)
 
-                TextField(S.register_.name.title(), text: $name)
+                TextField(localize.register_.name.title(), text: $name)
                     .font(.body)
                     .fixedSize()
                     .padding()
@@ -27,7 +27,7 @@ struct RegisterScreen: View {
                     Button {
                         vm.actual.cancel()
                     } label: {
-                        Text(S.dialog.cancel())
+                        Text(localize.dialog.cancel())
                     }
 
                     Spacer()
@@ -35,12 +35,12 @@ struct RegisterScreen: View {
                     Button {
                         vm.actual.onRegister(name: name, createToken: createToken)
                     } label: {
-                        Text(S.register_.login())
+                        Text(localize.register_.login())
                     }
                 }
                 .padding()
 
-                Label(S.register_.alreadyRegisteredInfo(), systemImage: "info.circle.fill")
+                Label(localize.register_.alreadyRegisteredInfo(), systemImage: "info.circle.fill")
             }
             .padding()
         }

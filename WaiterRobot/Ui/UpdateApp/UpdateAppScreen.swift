@@ -4,7 +4,7 @@ import SwiftUI
 struct UpdateAppScreen: View {
     var body: some View {
         VStack {
-            Text(L.app.forceUpdate.message())
+            Text(localize.app.forceUpdate.message())
                 .multilineTextAlignment(.center)
 
             Button {
@@ -18,11 +18,11 @@ struct UpdateAppScreen: View {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
             } label: {
-                Text(L.app.forceUpdate.openStore(value0: "App Store"))
+                Text(localize.app.forceUpdate.openStore(value0: "App Store"))
             }.padding()
         }
         .padding()
-        .navigationTitle(L.app.forceUpdate.title())
+        .navigationTitle(localize.app.forceUpdate.title())
         .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -20,11 +20,11 @@ struct LoginScreen: View {
                     .scaledToFit()
                     .frame(maxWidth: 250)
                     .padding()
-                Text(S.login.title())
+                Text(localize.login.title())
                     .font(.title)
                     .padding()
 
-                Text(S.login.desc())
+                Text(localize.login.desc())
                     .font(.body)
                     .padding()
                     .multilineTextAlignment(.center)
@@ -32,7 +32,7 @@ struct LoginScreen: View {
                 Button {
                     vm.actual.openScanner()
                 } label: {
-                    Label(S.login.withQrCode(), systemImage: "qrcode.viewfinder")
+                    Label(localize.login.withQrCode(), systemImage: "qrcode.viewfinder")
                         .font(.title3)
                 }
                 .padding()

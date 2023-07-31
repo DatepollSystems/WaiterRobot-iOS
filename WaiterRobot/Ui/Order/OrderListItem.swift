@@ -44,23 +44,23 @@ struct OrderListItem: View {
                 VStack {
                     TextEditorWithPlaceholder(
                         text: $editedNote,
-                        lable: S.order.addNoteDialog.inputLabel(),
-                        placeHolder: S.order.addNoteDialog.inputPlaceholder(),
+                        lable: localize.order.addNoteDialog.inputLabel(),
+                        placeHolder: localize.order.addNoteDialog.inputPlaceholder(),
                         editorHeight: 110,
                         maxLength: 120
                     )
 
                     HStack {
-                        Button(S.dialog.cancel(), role: .cancel) {
+                        Button(localize.dialog.cancel(), role: .cancel) {
                             editNote = false
                         }
                         Spacer()
-                        Button(S.dialog.clear()) {
+                        Button(localize.dialog.clear()) {
                             onSaveNote(nil)
                             editNote = false
                         }
                         Spacer()
-                        Button(S.dialog.save()) {
+                        Button(localize.dialog.save()) {
                             onSaveNote(editedNote)
                             editNote = false
                         }
@@ -70,7 +70,7 @@ struct OrderListItem: View {
                     Spacer()
                 }
                 .padding()
-                .navigationTitle(S.order.addNoteDialog.title(value0: name))
+                .navigationTitle(localize.order.addNoteDialog.title(value0: name))
                 .navigationBarTitleDisplayMode(.inline)
             }
         }

@@ -22,7 +22,7 @@ struct OrderScreen: View {
 
         ScreenContainer(vm.state) {
             if vm.state.currentOrder.isEmpty {
-                Text(L.order.addProduct())
+                Text(localize.order.addProduct())
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -44,7 +44,7 @@ struct OrderScreen: View {
                 }
             }
         }
-        .navigationTitle(L.order.title(value0: table.number.description, value1: table.groupName))
+        .navigationTitle(localize.order.title(value0: table.number.description, value1: table.groupName))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
@@ -62,12 +62,12 @@ struct OrderScreen: View {
                 }
             }
         }
-        .customBackNavigation(title: L.dialog.cancel(), icon: nil, action: vm.actual.goBack)
-        .confirmationDialog(L.order.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
-            Button(L.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortOrder)
-            Button(L.order.keepOrder(), role: .cancel, action: vm.actual.keepOrder)
+        .customBackNavigation(title: localize.dialog.cancel(), icon: nil, action: vm.actual.goBack)
+        .confirmationDialog(localize.order.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
+            Button(localize.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortOrder)
+            Button(localize.order.keepOrder(), role: .cancel, action: vm.actual.keepOrder)
         } message: {
-            Text(L.order.notSent.desc())
+            Text(localize.order.notSent.desc())
         }
         .sheet(isPresented: $showProductSearch) {
             ProductSearch(vm: vm)

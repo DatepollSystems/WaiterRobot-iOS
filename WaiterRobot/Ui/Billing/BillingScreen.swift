@@ -22,7 +22,7 @@ struct BillingScreen: View {
             VStack {
                 List {
                     if vm.state.billItems.isEmpty {
-                        Text(L.billing.noOpenBill(value0: table.number.description, value1: table.groupName))
+                        Text(localize.billing.noOpenBill(value0: table.number.description, value1: table.groupName))
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity)
                             .padding()
@@ -59,7 +59,7 @@ struct BillingScreen: View {
                 }
 
                 HStack {
-                    Text("\(L.billing.total()):")
+                    Text("\(localize.billing.total()):")
                     Spacer()
                     Text("\(vm.state.priceSum)")
                 }
@@ -81,14 +81,14 @@ struct BillingScreen: View {
                 }
             }
         }
-        .navigationTitle(L.billing.title(value0: table.number.description, value1: table.groupName))
+        .navigationTitle(localize.billing.title(value0: table.number.description, value1: table.groupName))
         .navigationBarTitleDisplayMode(.inline)
-        .customBackNavigation(title: L.dialog.cancel(), icon: nil, action: vm.actual.goBack) // TODO:
-        .confirmationDialog(L.billing.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
-            Button(L.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortBill)
-            Button(L.dialog.cancel(), role: .cancel, action: vm.actual.keepBill)
+        .customBackNavigation(title: localize.dialog.cancel(), icon: nil, action: vm.actual.goBack) // TODO:
+        .confirmationDialog(localize.billing.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
+            Button(localize.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortBill)
+            Button(localize.dialog.cancel(), role: .cancel, action: vm.actual.keepBill)
         } message: {
-            Text(L.billing.notSent.desc())
+            Text(localize.billing.notSent.desc())
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
