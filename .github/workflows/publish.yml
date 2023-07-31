@@ -9,6 +9,9 @@ on:
       - 'WaiterRobot/**'
       - 'TargetSpecificResources/**'
       - '.github/workflows/publish.yml'
+      - 'fastlane/**'
+      - 'Gemfile'
+      - 'Gemfile.lock'
 
 jobs:
   publish:
@@ -17,10 +20,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Setup Ruby 2.7.4
+      - name: Setup Ruby 3.2.1
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.4'
+          ruby-version: '3.2.1'
           bundler-cache: true
 
       - name: Extract secrets
