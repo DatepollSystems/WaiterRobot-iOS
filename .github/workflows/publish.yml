@@ -9,6 +9,9 @@ on:
       - 'WaiterRobot/**'
       - 'TargetSpecificResources/**'
       - '.github/workflows/publish.yml'
+      - 'fastlane/**'
+      - 'Gemfile'
+      - 'Gemfile.lock'
 
 jobs:
   publish:
