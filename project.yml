@@ -163,5 +163,4 @@ targets:
     settings:
       base:
         GENERATE_INFOPLIST_FILE: true
-        IPHONEOS_DEPLOYMENT_TARGET: '15.0'
         TEST_TARGET_NAME: WaiterRobotLava
