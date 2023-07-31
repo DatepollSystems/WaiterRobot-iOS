@@ -1,6 +1,7 @@
 name: Run unit and ui tests
 
 on:
+  workflow_call:
   push:
     branches-ignore:
       - 'develop'

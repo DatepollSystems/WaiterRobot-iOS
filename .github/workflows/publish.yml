@@ -14,8 +14,12 @@ on:
       - 'Gemfile.lock'
 
 jobs:
+  test:
+    uses: ./.github/workflows/test.yml
+    
   publish:
     runs-on: macos-latest
+    needs: test
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
