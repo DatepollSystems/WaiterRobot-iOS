@@ -13,10 +13,7 @@ on:
       - 'Gemfile'
       - 'Gemfile.lock'
 
-jobs:
-  test:
-    uses: ./.github/workflows/test.yml
-    
+jobs:    
   publish:
     runs-on: macos-latest
     needs: test
@@ -30,6 +27,15 @@ jobs:
           ruby-version: '3.2.1'
           bundler-cache: true
 
+      - name: Setup xcodegen and init xcode project
+        uses: xavierLowmiller/xcodegen-action@1.1.2
+        with:
+          spec: project.yml
+          use-cache: true
+      
+      - name: Run tests with fastlane
+        run: bundle exec fastlane test
+        
       - name: Extract secrets
         run: |
           cd fastlane
@@ -45,12 +51,6 @@ jobs:
           machine: maven.pkg.github.com
           username: ${{ secrets.NETRC_USERNAME }}
           password: ${{ secrets.NETRC_TOKEN }}
-
-      - name: Setup xcodegen and init xcode project
-        uses: xavierLowmiller/xcodegen-action@1.1.2
-        with:
-          spec: project.yml
-          use-cache: true
 
       - name: Publish to TestFlight
         run: bundle exec fastlane releaseWaiterRobot_${{ github.ref_name }}
