@@ -19,13 +19,20 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-
+          
       - name: Setup Ruby 3.2.1
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2.1'
           bundler-cache: true
-
+      
+      - name: Netrc api.github.com
+        uses: extractions/netrc@v1
+        with:
+          machine: maven.pkg.github.com
+          username: ${{ secrets.NETRC_USERNAME }}
+          password: ${{ secrets.NETRC_TOKEN }}
+          
       - name: Setup xcodegen and init xcode project
         uses: xavierLowmiller/xcodegen-action@1.1.2
         with:
@@ -43,13 +50,6 @@ jobs:
           tar xzf .keys.tar.gz
           chmod 600 .keys/github-deploy-key
           cd ..
-      
-      - name: Netrc api.github.com
-        uses: extractions/netrc@v1
-        with:
-          machine: maven.pkg.github.com
-          username: ${{ secrets.NETRC_USERNAME }}
-          password: ${{ secrets.NETRC_TOKEN }}
 
       - name: Publish to TestFlight
         run: bundle exec fastlane releaseWaiterRobot_${{ github.ref_name }}
