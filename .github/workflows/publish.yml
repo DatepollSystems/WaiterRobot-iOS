@@ -16,7 +16,6 @@ on:
 jobs:    
   publish:
     runs-on: macos-latest
-    needs: test
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
