@@ -43,6 +43,9 @@ struct TableListScreen: View {
                         .padding()
                     }
                 }
+                .refreshable {
+                    vm.actual.loadTables(forceUpdate: true)
+                }
             }
         }
         .navigationTitle(CommonApp.shared.settings.eventName)
@@ -55,9 +58,6 @@ struct TableListScreen: View {
                     Image(systemName: "gear")
                 }
             }
-        }
-        .refreshable {
-            vm.actual.loadTables(forceUpdate: true)
         }
         .handleSideEffects(of: vm, navigator)
     }
