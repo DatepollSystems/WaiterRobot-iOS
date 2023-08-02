@@ -16,12 +16,14 @@ struct TableListScreen: View {
 
         ScreenContainer(vm.state) {
             VStack {
-                TableListFilterRow(
-                    selectedTableGroups: vm.state.selectedTableGroupList,
-                    unselectedTableGroups: vm.state.unselectedTableGroupList,
-                    onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0) },
-                    onClearFilter: vm.actual.clearFilter
-                )
+                if (vm.state.unselectedTableGroupList.count + vm.state.selectedTableGroupList.count) > 1 {
+                    TableListFilterRow(
+                        selectedTableGroups: vm.state.selectedTableGroupList,
+                        unselectedTableGroups: vm.state.unselectedTableGroupList,
+                        onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0) },
+                        onClearFilter: vm.actual.clearFilter
+                    )
+                }
 
                 ScrollView {
                     if vm.state.filteredTableGroups.isEmpty {
