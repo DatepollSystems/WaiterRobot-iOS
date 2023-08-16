@@ -113,7 +113,7 @@ targets:
     scheme: {}
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot"
-      displayName: "WaiterRobot"
+      displayName: "kellner.team"
       deeplinkDomain: "my.kellner.team"
       apiBase: "https://my.kellner.team/api"
       versionSuffix: ""
@@ -129,7 +129,7 @@ targets:
           randomExecutionOrder: true
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot.beta"
-      displayName: "WaiterRobot Lava"
+      displayName: "lava kellner.team"
       deeplinkDomain: "lava.kellner.team"
       apiBase: "https://lava.kellner.team/api"
       versionSuffix: "lava"
