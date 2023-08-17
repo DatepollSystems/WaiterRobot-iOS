@@ -21,48 +21,51 @@ struct OrderScreen: View {
         unowned let vm = strongVM
 
         ScreenContainer(vm.state) {
-            if vm.state.currentOrder.isEmpty {
-                Text(localize.order.addProduct())
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-            } else {
-                List {
-                    ForEach(vm.state.currentOrder, id: \.product.id) { orderItem in
-                        OrderListItem(
-                            name: orderItem.product.name,
-                            amount: orderItem.amount,
-                            note: orderItem.note,
-                            addOne: { vm.actual.addItem(product: orderItem.product, amount: 1) },
-                            removeOne: { vm.actual.addItem(product: orderItem.product, amount: -1) },
-                            removeAll: { vm.actual.removeAllOfProduct(productId: orderItem.product.id) },
-                            onSaveNote: { note in
-                                vm.actual.addItemNote(item: orderItem, note: note)
+            ZStack {
+                VStack {
+                    if vm.state.currentOrder.isEmpty {
+                        Text(localize.order.addProduct())
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                    } else {
+                        List {
+                            ForEach(vm.state.currentOrder, id: \.product.id) { orderItem in
+                                OrderListItem(
+                                    name: orderItem.product.name,
+                                    amount: orderItem.amount,
+                                    note: orderItem.note,
+                                    addOne: { vm.actual.addItem(product: orderItem.product, amount: 1) },
+                                    removeOne: { vm.actual.addItem(product: orderItem.product, amount: -1) },
+                                    removeAll: { vm.actual.removeAllOfProduct(productId: orderItem.product.id) },
+                                    onSaveNote: { note in
+                                        vm.actual.addItemNote(item: orderItem, note: note)
+                                    }
+                                )
                             }
-                        )
+                        }
                     }
+                }
+
+                EmbeddedFloatingActionButton(icon: "plus") {
+                    showProductSearch = true
                 }
             }
         }
         .navigationTitle(localize.order.title(value0: table.number.description, value1: table.groupName))
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
+        .navigationBarBackButtonHidden()
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
                     vm.actual.sendOrder()
                 } label: {
                     Image(systemName: "paperplane.fill")
-                }.disabled(vm.state.currentOrder.isEmpty || vm.state.viewState != ViewState.Idle.shared)
-            }
-            ToolbarItem(placement: .bottomBar) {
-                Button {
-                    showProductSearch = true
-                } label: {
-                    Image(systemName: "plus")
                 }
+                .disabled(vm.state.currentOrder.isEmpty || vm.state.viewState != ViewState.Idle.shared)
             }
         }
-        .customBackNavigation(title: localize.dialog.cancel(), icon: nil, action: vm.actual.goBack)
+        .customBackNavigation(title: localize.dialog.cancel(), icon: "chevron.backward", action: vm.actual.goBack)
         .confirmationDialog(localize.order.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
             Button(localize.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortOrder)
             Button(localize.order.keepOrder(), role: .cancel, action: vm.actual.keepOrder)

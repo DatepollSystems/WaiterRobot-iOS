@@ -25,17 +25,31 @@ extension UIPilot<Screen> {
 }
 
 extension View {
-    func customBackNavigation(title: String = localize.navigation.back(), icon: String? = "chevron.left", action: @escaping () -> Void) -> some View {
-        navigationBarBackButtonHidden(true).toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: action) {
-                    if let icon = icon {
-                        Image(systemName: icon)
+    func customBackNavigation(
+        title: String = localize.navigation.back(),
+        icon: String? = "chevron.left",
+        action: @escaping () -> Void
+    ) -> some View {
+        navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: action) {
+                        HStack(spacing: 0) {
+                            if let icon = icon {
+                                HStack {
+                                    Image(systemName: icon)
+                                        .fontWeight(.semibold)
+                                }
+                                .padding(.trailing, 4)
+                            }
+
+                            Text(title)
+                        }
                     }
-                    Text(title)
+                    .buttonStyle(.plain)
+                    .foregroundStyle(Color("primaryColor"))
                 }
             }
-        }
     }
 
     @MainActor
