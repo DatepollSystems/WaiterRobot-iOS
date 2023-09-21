@@ -15,6 +15,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
+### ios test
+
+```sh
+[bundle exec] fastlane ios test
+```
+
+Run all iOS unit and ui tests.
+
 ### ios sync_certificates
 
 ```sh
@@ -38,6 +46,14 @@ Push a new lava build to TestFlight
 ```
 
 Push a new prod build to TestFlight
+
+### ios setupFastlaneSecrets
+
+```sh
+[bundle exec] fastlane ios setupFastlaneSecrets
+```
+
+
 
 ----
 

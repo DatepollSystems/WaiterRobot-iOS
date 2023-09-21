@@ -1,4 +1,7 @@
 name: Publish to TestFlight
+concurrency: # Cancel currently running releases when a new one is started
+  group: publish-android-${{ github.ref_name }}
+  cancel-in-progress: true
 on:
   push:
     branches:
@@ -9,20 +12,39 @@ on:
       - 'WaiterRobot/**'
       - 'TargetSpecificResources/**'
       - '.github/workflows/publish.yml'
+      - 'fastlane/**'
+      - 'Gemfile'
+      - 'Gemfile.lock'
 
-jobs:
+jobs:    
   publish:
     runs-on: macos-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-
-      - name: Setup Ruby 2.7.4
+          
+      - name: Setup Ruby 3.2.1
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.4'
+          ruby-version: '3.2.1'
           bundler-cache: true
-
+      
+      - name: Netrc api.github.com
+        uses: extractions/netrc@v1
+        with:
+          machine: maven.pkg.github.com
+          username: ${{ secrets.NETRC_USERNAME }}
+          password: ${{ secrets.NETRC_TOKEN }}
+          
+      - name: Setup xcodegen and init xcode project
+        uses: xavierLowmiller/xcodegen-action@1.1.2
+        with:
+          spec: project.yml
+          use-cache: true
+      
+      - name: Run tests with fastlane
+        run: bundle exec fastlane test
+        
       - name: Extract secrets
         run: |
           cd fastlane
@@ -31,19 +53,6 @@ jobs:
           tar xzf .keys.tar.gz
           chmod 600 .keys/github-deploy-key
           cd ..
-      
-      - name: Netrc api.github.com
-        uses: extractions/netrc@v1
-        with:
-          machine: maven.pkg.github.com
-          username: ${{ secrets.NETRC_USERNAME }}
-          password: ${{ secrets.NETRC_TOKEN }}
-
-      - name: Setup xcodegen and init xcode project
-        uses: xavierLowmiller/xcodegen-action@1.1.2
-        with:
-          spec: project.yml
-          use-cache: true
 
       - name: Publish to TestFlight
         run: bundle exec fastlane releaseWaiterRobot_${{ github.ref_name }}
