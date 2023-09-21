@@ -16,7 +16,7 @@ fileGroups:
 packages:
   shared:
     url: https://github.com/DatepollSystems/waiterrobot-mobile_android-shared.git
-    version: "1.0.5-lava-1690737806"
+    version: "1.0.5-lava-1692722479"
   UIPilot:
     url: https://github.com/canopas/UIPilot.git
     from: 1.3.1
@@ -26,7 +26,7 @@ packages:
 
 settings:
   base:
-    IPHONEOS_DEPLOYMENT_TARGET: '16.0'
+    IPHONEOS_DEPLOYMENT_TARGET: '15.0'
         
 targetTemplates:
   WaiterRobot:

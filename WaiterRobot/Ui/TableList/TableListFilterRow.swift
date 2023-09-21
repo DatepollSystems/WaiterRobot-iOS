@@ -18,7 +18,7 @@ struct TableListFilterRow: View {
                             Text(group.name)
                         }
                         .buttonStyle(.bordered)
-                        .tint(Color("primaryColor"))
+                        .tint(.blue)
                     }
 
                     ForEach(unselectedTableGroups, id: \.id) { group in
@@ -28,7 +28,7 @@ struct TableListFilterRow: View {
                             Text(group.name)
                         }
                         .buttonStyle(.bordered)
-                        .foregroundColor(Color("primaryColor"))
+                        .tint(.primary)
                     }
                 }.padding(.horizontal)
             }

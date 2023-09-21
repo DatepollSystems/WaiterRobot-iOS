@@ -45,7 +45,7 @@ struct FloatingActionButton: View {
                 Image(systemName: icon)
                     .imageScale(.large)
                     .foregroundColor(.white)
-                    .fontWeight(.semibold)
+                // .fontWeight(.semibold) // TODO enable when dropped ios 15
             }
         }
         .buttonStyle(FloatingActionButtonStyle())

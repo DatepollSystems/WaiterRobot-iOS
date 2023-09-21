@@ -38,7 +38,7 @@ extension View {
                             if let icon = icon {
                                 HStack {
                                     Image(systemName: icon)
-                                        .fontWeight(.semibold)
+                                    // .fontWeight(.semibold) // TODO enable when dropped iOS15
                                 }
                                 .padding(.trailing, 4)
                             }
