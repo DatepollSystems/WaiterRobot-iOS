@@ -36,7 +36,7 @@ struct ProductSearch: View {
                         .tag(0)
                         .padding()
 
-                        ForEach(Array(vm.state.productGroups.enumerated()), id: \.element.group.id) { index, groupWithProducts in
+                        ForEach(Array(vm.state.productGroups.enumerated()), id: \.element.id) { index, groupWithProducts in
                             ScrollView {
                                 LazyVGrid(columns: layout, spacing: 0) {
                                     ProductSearchGroupList(
@@ -68,9 +68,9 @@ struct ProductSearch: View {
         }
     }
 
-    private func getGroupNames(_ productGroups: [ProductGroupWithProducts]) -> [String] {
-        var groupNames = productGroups.map { groupWithProducts in
-            groupWithProducts.group.name
+    private func getGroupNames(_ productGroups: [ProductGroup]) -> [String] {
+        var groupNames = productGroups.map { productGroup in
+            productGroup.name
         }
         groupNames.insert(localize.productSearch.allGroups(), at: 0)
         return groupNames

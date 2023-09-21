@@ -26,7 +26,8 @@ struct ProductSearchGroupList_Previews: PreviewProvider {
                         name: "Beer",
                         price: Money(cents: 450),
                         soldOut: false,
-                        allergens: []
+                        allergens: [],
+                        position: 1
                     ),
                 ],
                 onProductClick: { _ in }
