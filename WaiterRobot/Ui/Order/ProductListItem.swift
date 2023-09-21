@@ -19,7 +19,7 @@ struct ProductListItem: View {
         if allergens.count > 2 {
             self.allergens = String(allergens.prefix(allergens.count - 2))
         } else {
-            self.allergens = "-"
+            self.allergens = ""
         }
     }
 
@@ -35,8 +35,10 @@ struct ProductListItem: View {
                 VStack {
                     Text(product.name)
                         .strikethrough(product.soldOut)
-                    Text(allergens)
-                        .foregroundColor(.gray)
+                    if !product.allergens.isEmpty {
+                        Text(allergens)
+                            .foregroundColor(.gray)
+                    }
                     Text(product.price.description())
                 }
                 .foregroundColor(Color("textColor"))
@@ -62,7 +64,8 @@ struct ProductListItem_Previews: PreviewProvider {
                     Allergen(id: 3, name: "Egg3", shortName: "B"),
                     Allergen(id: 4, name: "Egg4", shortName: "C"),
                     Allergen(id: 5, name: "Egg5", shortName: "D"),
-                ]
+                ],
+                position: 1
             ),
             onClick: {}
         )
