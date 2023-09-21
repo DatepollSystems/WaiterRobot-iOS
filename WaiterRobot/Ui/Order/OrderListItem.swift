@@ -28,6 +28,7 @@ struct OrderListItem: View {
                         editedNote = note ?? ""
                     } label: {
                         Image(systemName: "pencil")
+                            .imageScale(.large)
                     }.foregroundColor(.accentColor)
                 }
 

@@ -28,6 +28,7 @@ struct TableListFilterRow: View {
                             Text(group.name)
                         }
                         .buttonStyle(.bordered)
+                        .tint(.primary)
                     }
                 }.padding(.horizontal)
             }

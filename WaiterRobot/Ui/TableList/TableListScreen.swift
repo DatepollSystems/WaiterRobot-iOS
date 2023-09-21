@@ -51,7 +51,7 @@ struct TableListScreen: View {
             }
         }
         .navigationTitle(CommonApp.shared.settings.eventName)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarTitleDisplayMode(.large)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {

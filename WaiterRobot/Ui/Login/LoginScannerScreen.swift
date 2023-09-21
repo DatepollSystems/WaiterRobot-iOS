@@ -15,7 +15,7 @@ struct LoginScannerScreen: View {
             VStack {
                 CodeScannerView(
                     codeTypes: [.qr],
-                    simulatedData: "https://my.kellner.team/ml/signIn?token=gj8TeJ4eQ0oRhD5yw8THx5OFhjQ&purpose=SIGN_IN"
+                    simulatedData: "https://lava.kellner.team/ml/signIn?token=w7wF6pgYA6Ssm3VBH-rSFL6if70&purpose=SIGN_IN"
                 ) { result in
                     switch result {
                     case let .success(result):
