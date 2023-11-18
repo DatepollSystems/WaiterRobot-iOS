@@ -1,11 +1,13 @@
 <p align="center">
-    <img src="documentation/wr-square-rounded.png" style="width:200px; border-radius: 15px;"/><br/>
+    <img src="documentation/wr-square-rounded.png" style="width:200px; border-radius: 15px;"/>
+</p>
+<h1 align="center">WaiterRobot</h1>
+<div align="center">
+    <p>Lightning fast and simple gastronomy</p>
     <a href="https://apps.apple.com/at/app/waiterrobot/id1610157234?itsct=apps_box_badge&amp;itscg=30200">
       <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1660003200" alt="Download on the App Store" style="border-radius: 13px; width: 155px;">
     </a>
-</p>
-<h1 align="center">WaiterRobot</h1>
-<p align="center">Lightning fast and simple gastronomy</p>
+</div>
 
 # iOS
 
