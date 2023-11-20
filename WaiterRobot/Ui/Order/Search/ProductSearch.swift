@@ -56,7 +56,7 @@ struct ProductSearch: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always))
-                .onChange(of: search, perform: vm.actual.filterProducts)
+                .onChange(of: search, perform: { vm.actual.filterProducts(filter: $0) })
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(localize.dialog.cancel()) {
