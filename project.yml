@@ -73,7 +73,6 @@ targetTemplates:
         NSCameraUsageDescription: "Camera is needed to scan QR-Codes"
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
-        UILaunchStoryboardName: "LaunchScreen"
         UIRequiredDeviceCapabilities:
           - armv7
         UISupportedInterfaceOrientations:
