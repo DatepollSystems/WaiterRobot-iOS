@@ -3,7 +3,7 @@ import shared
 import SwiftUI
 
 struct LaunchScreen: View {
-    private let minimumOnScreenTime = 3.0 // in seconds
+    private let minimumOnScreenTimeSeconds = 3.0
     private let device = UIDevice.current.userInterfaceIdiom
 
     @State private var startupFinished = false
@@ -19,6 +19,7 @@ struct LaunchScreen: View {
                         .scaledToFit()
                 }
                 .padding(.horizontal, -2)
+                .ignoresSafeArea()
             } else {
                 ZStack {
                     Image(.logoRounded)
@@ -80,7 +81,7 @@ struct LaunchScreen: View {
 
     private func delay() async {
         print("started delay")
-        try? await Task.sleep(nanoseconds: UInt64(minimumOnScreenTime * 1_000_000_000))
+        try? await Task.sleep(seconds: minimumOnScreenTimeSeconds)
         print("finished delay")
     }
 
