@@ -26,6 +26,9 @@ jobs:
           username: cirunner
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Install xcodes
+        run: brew install xcodes
+        
       - name: Install XcodeGen
         run: brew install xcodegen
 
