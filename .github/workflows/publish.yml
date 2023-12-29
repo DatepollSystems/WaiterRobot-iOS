@@ -36,12 +36,12 @@ jobs:
           username: cirunner
           password: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Setup xcodegen and init xcode project
-        uses: xavierLowmiller/xcodegen-action@1.1.2
-        with:
-          spec: project.yml
-          use-cache: true
-      
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Run XcodeGen
+        run: xcodegen
+
       - name: Run tests with fastlane
         run: bundle exec fastlane test
         
