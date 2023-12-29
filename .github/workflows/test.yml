@@ -28,7 +28,7 @@ jobs:
 
       - name: Install xcodes
         run: brew install xcodes
-        
+
       - name: Install XcodeGen
         run: brew install xcodegen
 

@@ -15,7 +15,7 @@ struct LoginScreen: View {
             VStack {
                 Spacer()
 
-                Image("LogoRounded")
+                Image(.logoRounded)
                     .resizable()
                     .scaledToFit()
                     .frame(maxWidth: 250)

@@ -15,7 +15,7 @@ struct OrderedItemView: View {
                 Text(item.name)
             }
         }
-        .foregroundColor(Color("textColor"))
+        .foregroundColor(.blackWhite)
     }
 }
 

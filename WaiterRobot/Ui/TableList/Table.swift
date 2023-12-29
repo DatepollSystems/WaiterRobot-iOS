@@ -8,14 +8,14 @@ struct Table: View {
         Button(action: onClick) {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color("textColor"), lineWidth: 5)
+                    .stroke(.blackWhite, lineWidth: 5)
 
                 Text(text)
                     .font(.title)
             }
         }
         .aspectRatio(1.0, contentMode: .fit)
-        .foregroundColor(Color("textColor"))
+        .foregroundColor(.blackWhite)
     }
 }
 

@@ -41,7 +41,7 @@ struct ProductListItem: View {
                     }
                     Text(product.price.description())
                 }
-                .foregroundColor(Color("textColor"))
+                .foregroundColor(.blackWhite)
                 .frame(maxWidth: .infinity)
                 .padding(5)
             }

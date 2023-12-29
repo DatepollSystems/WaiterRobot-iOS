@@ -10,7 +10,7 @@ struct ProductSearchGroupList: View {
             ProductListItem(product: product) {
                 onProductClick(product)
             }
-            .foregroundColor(Color("textColor"))
+            .foregroundColor(.blackWhite)
             .padding(10)
         }
     }

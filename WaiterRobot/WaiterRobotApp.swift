@@ -114,7 +114,7 @@ struct WaiterRobotApp: App {
                     showUpdateAvailableAlert = true
                 }
             }
-            .tint(Color("primaryColor"))
+            .tint(.main)
         }
     }
 }

@@ -38,7 +38,7 @@ struct OrderListItem: View {
                         .font(.caption)
                 }
             }
-            .foregroundColor(Color("textColor"))
+            .foregroundColor(.blackWhite)
         }
         .sheet(isPresented: $editNote) {
             NavigationView {
