@@ -14,11 +14,11 @@ struct WaiterRobotApp: App {
     private var selectedScheme: ColorScheme? {
         switch strongVM.state.selectedTheme {
         case .dark:
-            return .dark
+            .dark
         case .light:
-            return .light
+            .light
         default:
-            return nil
+            nil
         }
     }
 
@@ -39,13 +39,13 @@ struct WaiterRobotApp: App {
                     case let screen as Screen.OrderScreen: OrderScreen(table: screen.table, initialItemId: screen.initialItemId)
                     case let screen as Screen.BillingScreen: BillingScreen(table: screen.table)
                     default:
-                        Text("No view defined for \(route.self.description)") // TODO:
+                        Text("No view defined for \(route.description)") // TODO:
                         Button {
                             navigator.pop()
                         } label: {
                             Text("Back")
                         }.onAppear {
-                            koin.logger(tag: "WaiterRobotApp").e { "No view defined for \(route.self.description)" }
+                            koin.logger(tag: "WaiterRobotApp").e { "No view defined for \(route.description)" }
                         }
                     }
                 }

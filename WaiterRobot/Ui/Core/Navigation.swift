@@ -35,7 +35,7 @@ extension View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: action) {
                         HStack(spacing: 0) {
-                            if let icon = icon {
+                            if let icon {
                                 HStack {
                                     Image(systemName: icon)
                                     // .fontWeight(.semibold) // TODO enable when dropped iOS15
@@ -53,10 +53,10 @@ extension View {
     }
 
     @MainActor
-    func handleSideEffects<S, E, VM, OVM>(
-        of vm: OVM, _ navigator: UIPilot<Screen>,
+    func handleSideEffects<S, E>(
+        of vm: some ObservableViewModel<S, E, some AbstractViewModel<S, E>>, _ navigator: UIPilot<Screen>,
         handler: ((E) -> Bool)? = nil
-    ) -> some View where S: ViewModelState, E: ViewModelEffect, VM: AbstractViewModel<S, E>, OVM: ObservableViewModel<S, E, VM> {
+    ) -> some View where S: ViewModelState, E: ViewModelEffect {
         onReceive(vm.sideEffect) { effect in
             debugPrint("Got Sideeffect \(effect)")
 

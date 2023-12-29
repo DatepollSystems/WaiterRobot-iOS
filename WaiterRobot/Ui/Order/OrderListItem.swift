@@ -32,7 +32,7 @@ struct OrderListItem: View {
                     }.foregroundColor(.accentColor)
                 }
 
-                if let note = note {
+                if let note {
                     Text(note)
                         .foregroundColor(.secondary)
                         .font(.caption)

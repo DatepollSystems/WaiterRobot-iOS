@@ -2,6 +2,7 @@ name: WaiterRobot
 
 fileGroups:
   - .gitignore
+  - .github
   - README.md
   - project.yml
   - fastlane
