@@ -28,7 +28,7 @@ packages:
 settings:
   base:
     IPHONEOS_DEPLOYMENT_TARGET: '15.0'
-    ENABLE_USER_SCRIPT_SANDBOXING: true
+    ENABLE_USER_SCRIPT_SANDBOXING: false
     ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: true
 
 targetTemplates:
@@ -132,7 +132,7 @@ targets:
           randomExecutionOrder: true
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot.beta"
-      displayName: "lava kellner.team"
+      displayName: "lava.kellner.team"
       deeplinkDomain: "lava.kellner.team"
       apiBase: "https://lava.kellner.team/api"
       versionSuffix: "lava"
