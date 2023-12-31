@@ -6,12 +6,10 @@ import UIPilot
 struct LoginScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM = ObservableViewModel(vm: koin.loginVM())
+    @StateObject private var viewModel = ObservableViewModel(viewModel: koin.loginVM())
 
     var body: some View {
-        unowned let vm = strongVM
-
-        ScreenContainer(vm.state) {
+        ScreenContainer(viewModel.state) {
             VStack {
                 Spacer()
 
@@ -30,7 +28,7 @@ struct LoginScreen: View {
                     .multilineTextAlignment(.center)
 
                 Button {
-                    vm.actual.openScanner()
+                    viewModel.actual.openScanner()
                 } label: {
                     Label(localize.login.withQrCode(), systemImage: "qrcode.viewfinder")
                         .font(.title3)
@@ -40,6 +38,6 @@ struct LoginScreen: View {
                 Spacer()
             }
         }
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
     }
 }

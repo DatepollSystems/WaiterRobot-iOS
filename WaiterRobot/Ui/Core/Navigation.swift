@@ -53,18 +53,18 @@ extension View {
     }
 
     @MainActor
-    func handleSideEffects<S, E>(
-        of vm: some ObservableViewModel<S, E, some AbstractViewModel<S, E>>, _ navigator: UIPilot<Screen>,
-        handler: ((E) -> Bool)? = nil
-    ) -> some View where S: ViewModelState, E: ViewModelEffect {
-        onReceive(vm.sideEffect) { effect in
+    func handleSideEffects<State, Effect>(
+        of viewModel: some ObservableViewModel<State, Effect, some AbstractViewModel<State, Effect>>, _ navigator: UIPilot<Screen>,
+        handler: ((Effect) -> Bool)? = nil
+    ) -> some View where State: ViewModelState, Effect: ViewModelEffect {
+        onReceive(viewModel.sideEffect) { effect in
             debugPrint("Got Sideeffect \(effect)")
 
             switch effect {
-            case let navEffect as NavOrViewModelEffectNavEffect<E>:
+            case let navEffect as NavOrViewModelEffectNavEffect<Effect>:
                 navigator.navigate(navEffect.action)
 
-            case let sideEffect as NavOrViewModelEffectVMEffect<E>:
+            case let sideEffect as NavOrViewModelEffectVMEffect<Effect>:
                 if handler?(sideEffect.effect) != true {
                     koin.logger(tag: "handleSideEffects").w { "Side effect \(sideEffect.effect) was not handled." }
                 }

@@ -5,52 +5,50 @@ import UIPilot
 struct TableDetailScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel>
+    @StateObject private var viewModel: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel>
     private let table: shared.Table
 
     init(table: shared.Table) {
         self.table = table
-        _strongVM = StateObject(wrappedValue: ObservableViewModel(vm: koin.tableDetailVM(table: table)))
+        _viewModel = StateObject(wrappedValue: ObservableViewModel(viewModel: koin.tableDetailVM(table: table)))
     }
 
     var body: some View {
-        unowned let vm = strongVM
-
-        ScreenContainer(vm.state) {
+        ScreenContainer(viewModel.state) {
             ZStack {
                 List {
-                    if vm.state.orderedItems.isEmpty {
+                    if viewModel.state.orderedItems.isEmpty {
                         Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity)
                             .padding()
                     } else {
-                        ForEach(vm.state.orderedItems, id: \.id) { item in
+                        ForEach(viewModel.state.orderedItems, id: \.id) { item in
                             OrderedItemView(item: item) {
-                                vm.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
+                                viewModel.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
                             }
                         }
                     }
                 }
 
                 EmbeddedFloatingActionButton(icon: "plus") {
-                    vm.actual.openOrderScreen(initialItemId: nil)
+                    viewModel.actual.openOrderScreen(initialItemId: nil)
                 }
             }
         }
         .refreshable {
-            vm.actual.loadOrder()
+            viewModel.actual.loadOrder()
         }
         .navigationTitle(localize.tableDetail.title(value0: table.number.description, value1: table.groupName))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    vm.actual.openBillingScreen()
+                    viewModel.actual.openBillingScreen()
                 } label: {
                     Image(systemName: "creditcard")
-                }.disabled(vm.state.orderedItems.isEmpty)
+                }.disabled(viewModel.state.orderedItems.isEmpty)
             }
         }
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
     }
 }

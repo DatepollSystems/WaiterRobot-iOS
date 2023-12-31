@@ -8,19 +8,21 @@ import Foundation
 import shared
 
 @MainActor
-class ObservableViewModel<S: ViewModelState, E: ViewModelEffect, VM: AbstractViewModel<S, E>>: ObservableObject {
-    @Published public private(set) var state: S
-    public private(set) var sideEffect: AnyPublisher<NavOrViewModelEffect<E>, Never>
+class ObservableViewModel<State: ViewModelState, Effect: ViewModelEffect, ViewModel: AbstractViewModel<State, Effect>>: ObservableObject {
+    @Published
+    public private(set) var state: State
 
-    public let actual: VM
+    public private(set) var sideEffect: AnyPublisher<NavOrViewModelEffect<Effect>, Never>
 
-    init(vm: VM) {
-        actual = vm
-        // This is save, as the constraint is required by the generics (S must be the state of the provided VM)
-        state = actual.container.stateFlow.value as! S
-        sideEffect = actual.container.sideEffectFlow.asPublisher() as AnyPublisher<NavOrViewModelEffect<E>, Never>
+    public let actual: ViewModel
 
-        (actual.container.stateFlow.asPublisher() as AnyPublisher<S, Never>)
+    init(viewModel: ViewModel) {
+        actual = viewModel
+        // This is save, as the constraint is required by the generics (S must be the state of the provided ViewModel)
+        state = actual.container.stateFlow.value as! State
+        sideEffect = actual.container.sideEffectFlow.asPublisher() as AnyPublisher<NavOrViewModelEffect<Effect>, Never>
+
+        (actual.container.stateFlow.asPublisher() as AnyPublisher<State, Never>)
             .receive(on: RunLoop.main)
             .assign(to: &$state)
     }
