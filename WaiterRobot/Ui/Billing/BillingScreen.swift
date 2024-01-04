@@ -83,10 +83,10 @@ struct BillingScreen: View {
         }
         .navigationTitle(localize.billing.title(value0: table.number.description, value1: table.groupName))
         .navigationBarTitleDisplayMode(.inline)
-        .customBackNavigation(title: localize.dialog.cancel(), icon: nil, action: vm.actual.goBack) // TODO:
+        .customBackNavigation(title: localize.dialog.cancel(), icon: nil, action: { vm.actual.goBack() }) // TODO:
         .confirmationDialog(localize.billing.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
-            Button(localize.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortBill)
-            Button(localize.dialog.cancel(), role: .cancel, action: vm.actual.keepBill)
+            Button(localize.dialog.closeAnyway(), role: .destructive, action: { vm.actual.abortBill() })
+            Button(localize.dialog.cancel(), role: .cancel, action: { vm.actual.keepBill() })
         } message: {
             Text(localize.billing.notSent.desc())
         }

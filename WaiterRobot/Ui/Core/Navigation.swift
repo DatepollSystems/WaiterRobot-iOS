@@ -54,22 +54,45 @@ extension View {
 
     @MainActor
     func handleSideEffects<S, E>(
-        of vm: some ObservableViewModel<S, E, some AbstractViewModel<S, E>>, _ navigator: UIPilot<Screen>,
+        of vm: some ObservableViewModel<S, E, some AbstractViewModel<S, E>>,
+        _ navigator: UIPilot<Screen>,
         handler: ((E) -> Bool)? = nil
     ) -> some View where S: ViewModelState, E: ViewModelEffect {
-        onReceive(vm.sideEffect) { effect in
-            debugPrint("Got Sideeffect \(effect)")
+        handleSideEffects2(of: vm.actual, navigator, handler: handler)
+    }
 
-            switch effect {
-            case let navEffect as NavOrViewModelEffectNavEffect<E>:
-                navigator.navigate(navEffect.action)
-
-            case let sideEffect as NavOrViewModelEffectVMEffect<E>:
-                if handler?(sideEffect.effect) != true {
-                    koin.logger(tag: "handleSideEffects").w { "Side effect \(sideEffect.effect) was not handled." }
+    @MainActor
+    func handleSideEffects2<E>(
+        of vm: some AbstractViewModel<some ViewModelState, E>,
+        _ navigator: UIPilot<Screen>,
+        handler: ((E) -> Bool)? = nil
+    ) -> some View where E: ViewModelEffect {
+        task {
+            let logger = koin.logger(tag: "handleSideEffects")
+            for await sideEffect in vm.container.sideEffectFlow {
+                logger.d { "Got sideEffect: \(sideEffect)" }
+                switch onEnum(of: sideEffect as! NavOrViewModelEffect<E>) {
+                case let .navEffect(navEffect):
+                    navigator.navigate(navEffect.action)
+                case let .vMEffect(effect):
+                    if handler?(effect.effect) != true {
+                        logger.w { "Side effect \(effect.effect) was not handled." }
+                    }
                 }
-            default:
-                koin.logger(tag: "handleSideEffects").w { "Unhandled effect type \(effect)." }
+            }
+        }
+    }
+
+    @MainActor
+    func observeState<S>(
+        of vm: some AbstractViewModel<S, some ViewModelEffect>,
+        stateBinding: Binding<S>
+    ) -> some View where S: ViewModelState {
+        task {
+            let logger = koin.logger(tag: "ObservableViewModel")
+            for await state in vm.container.stateFlow {
+                logger.d { "New state: \(state)" }
+                stateBinding.wrappedValue = state as! S
             }
         }
     }

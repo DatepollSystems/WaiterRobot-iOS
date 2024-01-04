@@ -73,14 +73,12 @@ struct WaiterRobotApp: App {
                 }
             }
             .handleSideEffects(of: vm, navigator) { effect in
-                switch effect {
-                case let snackBar as RootEffect.ShowSnackBar:
+                switch onEnum(of: effect) {
+                case let .showSnackBar(snackBar):
                     snackBarMessage = snackBar.message
                     DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                         snackBarMessage = nil
                     }
-                default:
-                    return false
                 }
                 return true
             }

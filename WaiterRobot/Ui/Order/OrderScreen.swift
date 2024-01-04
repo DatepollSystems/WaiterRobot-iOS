@@ -65,10 +65,10 @@ struct OrderScreen: View {
                 .disabled(vm.state.currentOrder.isEmpty || vm.state.viewState != ViewState.Idle.shared)
             }
         }
-        .customBackNavigation(title: localize.dialog.cancel(), icon: "chevron.backward", action: vm.actual.goBack)
+        .customBackNavigation(title: localize.dialog.cancel(), icon: "chevron.backward", action: { vm.actual.goBack() })
         .confirmationDialog(localize.order.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
-            Button(localize.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortOrder)
-            Button(localize.order.keepOrder(), role: .cancel, action: vm.actual.keepOrder)
+            Button(localize.dialog.closeAnyway(), role: .destructive, action: { vm.actual.abortOrder() })
+            Button(localize.order.keepOrder(), role: .cancel, action: { vm.actual.keepOrder() })
         } message: {
             Text(localize.order.notSent.desc())
         }
