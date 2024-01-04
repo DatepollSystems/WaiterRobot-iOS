@@ -10,7 +10,6 @@ fileGroups:
   - .github/workflows
   - command-line-tools
   - .swiftformat
-  - .swiftlint.yml
   - setup.sh
   - renovate.json5
 
