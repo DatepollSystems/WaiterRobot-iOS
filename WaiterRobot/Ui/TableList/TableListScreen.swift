@@ -11,42 +11,44 @@ struct TableListScreen: View {
         GridItem(.adaptive(minimum: 100)),
     ]
 
+    // TODO: table has open/unpaid order indicator
     var body: some View {
         unowned let vm = strongVM
 
-        ScreenContainer(vm.state) {
-            VStack {
-                if (vm.state.unselectedTableGroupList.count + vm.state.selectedTableGroupList.count) > 1 {
-                    TableListFilterRow(
-                        selectedTableGroups: vm.state.selectedTableGroupList,
-                        unselectedTableGroups: vm.state.unselectedTableGroupList,
-                        onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0) },
-                        onClearFilter: vm.actual.clearFilter
-                    )
+        let tableGroups = vm.state.tableGroups.data as? [TableGroup]
+        let tableGroupResource = onEnum(of: vm.state.tableGroups)
+        VStack {
+            if let tableGroups = tableGroups, tableGroups.count > 1 {
+                TableListFilterRow(
+                    tableGroups: tableGroups,
+                    onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0) },
+                    onSelectAll: { vm.actual.showAll() },
+                    onUnselectAll: { vm.actual.hideAll() }
+                )
+            }
+
+            RefreshableScrollView(for: tableGroupResource, onRefresh: { vm.actual.loadTables(forceUpdate: true) }) {
+                if case let .error(resource) = tableGroupResource {
+                    Text(resource.exception.getLocalizedUserMessage())
                 }
 
-                ScrollView {
-                    if vm.state.filteredTableGroups.isEmpty {
-                        Text(localize.tableList.noTableFound())
-                            .multilineTextAlignment(.center)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                    } else {
-                        LazyVGrid(columns: layout) {
-                            ForEach(vm.state.filteredTableGroups, id: \.group.id) { groupWithTables in
-                                if !groupWithTables.tables.isEmpty {
-                                    TableGroupSection(
-                                        groupWithTables: groupWithTables,
-                                        onTableClick: vm.actual.onTableClick
-                                    )
-                                }
+                if tableGroups?.isEmpty == true {
+                    Text(localize.tableList.noTableFound())
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                } else if let tableGroups = tableGroups {
+                    LazyVGrid(columns: layout) {
+                        ForEach(tableGroups.filter { !$0.hidden }, id: \.id) { group in
+                            if !group.tables.isEmpty {
+                                TableGroupSection(
+                                    tableGroup: group,
+                                    onTableClick: { vm.actual.onTableClick(table: $0) }
+                                )
                             }
                         }
-                        .padding()
                     }
-                }
-                .refreshable {
-                    vm.actual.loadTables(forceUpdate: true)
+                    .padding()
                 }
             }
         }

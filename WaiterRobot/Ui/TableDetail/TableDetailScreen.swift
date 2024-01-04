@@ -15,31 +15,34 @@ struct TableDetailScreen: View {
 
     var body: some View {
         unowned let vm = strongVM
+        let resource = onEnum(of: vm.state.orderedItemsResource)
+        let orderedItems = vm.state.orderedItemsResource.data as? [OrderedItem]
 
-        ScreenContainer(vm.state) {
-            ZStack {
-                List {
-                    if vm.state.orderedItems.isEmpty {
-                        Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
-                            .multilineTextAlignment(.center)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                    } else {
-                        ForEach(vm.state.orderedItems, id: \.id) { item in
+        // TODO: add refreshing and loading indicator (also check android)
+        ZStack {
+            VStack {
+                if case let .error(value) = resource {
+                    Text(value.exception.getLocalizedUserMessage())
+                }
+                if orderedItems?.isEmpty == true {
+                    Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                } else if let orderedItems = orderedItems {
+                    List {
+                        ForEach(orderedItems, id: \.id) { item in
                             OrderedItemView(item: item) {
                                 vm.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
                             }
                         }
                     }
                 }
-
-                EmbeddedFloatingActionButton(icon: "plus") {
-                    vm.actual.openOrderScreen(initialItemId: nil)
-                }
             }
-        }
-        .refreshable {
-            vm.actual.loadOrder()
+
+            EmbeddedFloatingActionButton(icon: "plus") {
+                vm.actual.openOrderScreen(initialItemId: nil)
+            }
         }
         .navigationTitle(localize.tableDetail.title(value0: table.number.description, value1: table.groupName))
         .toolbar {
@@ -48,7 +51,7 @@ struct TableDetailScreen: View {
                     vm.actual.openBillingScreen()
                 } label: {
                     Image(systemName: "creditcard")
-                }.disabled(vm.state.orderedItems.isEmpty)
+                }.disabled(orderedItems?.isEmpty != false)
             }
         }
         .handleSideEffects(of: vm, navigator)

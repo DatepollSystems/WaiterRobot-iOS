@@ -27,14 +27,18 @@ struct SettingsScreen: View {
                         icon: "arrow.triangle.2.circlepath",
                         title: localize.settings.refresh.title(),
                         subtitle: localize.settings.refresh.desc(),
-                        action: vm.actual.refreshAll
+                        action: {
+                            vm.actual.refreshAll()
+                        }
                     )
 
                     SettingsItem(
                         icon: "person.3",
                         title: localize.switchEvent.title(),
                         subtitle: CommonApp.shared.settings.eventName,
-                        action: vm.actual.switchEvent
+                        action: {
+                            vm.actual.switchEvent()
+                        }
                     )
                 }
 
@@ -66,7 +70,7 @@ struct SettingsScreen: View {
             }
         }
         .confirmationDialog(localize.settings.logout.title(value0: CommonApp.shared.settings.organisationName), isPresented: $showConfirmLogout, titleVisibility: .visible) {
-            Button(localize.settings.logout.action(), role: .destructive, action: vm.actual.logout)
+            Button(localize.settings.logout.action(), role: .destructive, action: { vm.actual.logout() })
             Button(localize.settings.keepLoggedIn(), role: .cancel, action: { showConfirmLogout = false })
         } message: {
             Text(localize.settings.logout.desc(value0: CommonApp.shared.settings.organisationName))

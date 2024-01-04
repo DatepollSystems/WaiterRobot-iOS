@@ -15,10 +15,10 @@ struct RegisterScreen: View {
 
         ScreenContainer(vm.state) {
             VStack {
-                Text(localize.register_.name.desc())
+                Text(localize.register.name.desc())
                     .font(.body)
 
-                TextField(localize.register_.name.title(), text: $name)
+                TextField(localize.register.name.title(), text: $name)
                     .font(.body)
                     .fixedSize()
                     .padding()
@@ -35,12 +35,12 @@ struct RegisterScreen: View {
                     Button {
                         vm.actual.onRegister(name: name, createToken: createToken)
                     } label: {
-                        Text(localize.register_.login())
+                        Text(localize.register.login())
                     }
                 }
                 .padding()
 
-                Label(localize.register_.alreadyRegisteredInfo(), systemImage: "info.circle.fill")
+                Label(localize.register.alreadyRegisteredInfo(), systemImage: "info.circle.fill")
             }
             .padding()
         }
