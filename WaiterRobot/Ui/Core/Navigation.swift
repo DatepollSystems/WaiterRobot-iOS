@@ -47,7 +47,7 @@ extension View {
                         }
                     }
                     .buttonStyle(.plain)
-                    .foregroundStyle(.main)
+                    .foregroundStyle(Color("primaryColor"))
                 }
             }
     }
