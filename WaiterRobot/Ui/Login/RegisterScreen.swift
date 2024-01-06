@@ -5,15 +5,13 @@ import UIPilot
 struct RegisterScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM = ObservableViewModel(vm: koin.registerVM())
+    @StateObject private var viewModel = RegisterObservableViewModel()
 
     @State private var name: String = ""
     let createToken: String
 
     var body: some View {
-        unowned let vm = strongVM
-
-        ScreenContainer(vm.state) {
+        ScreenContainer(viewModel.state) {
             VStack {
                 Text(localize.register.name.desc())
                     .font(.body)
@@ -25,7 +23,7 @@ struct RegisterScreen: View {
 
                 HStack {
                     Button {
-                        vm.actual.cancel()
+                        viewModel.actual.cancel()
                     } label: {
                         Text(localize.dialog.cancel())
                     }
@@ -33,7 +31,7 @@ struct RegisterScreen: View {
                     Spacer()
 
                     Button {
-                        vm.actual.onRegister(name: name, createToken: createToken)
+                        viewModel.actual.onRegister(name: name, createToken: createToken)
                     } label: {
                         Text(localize.register.login())
                     }
@@ -45,7 +43,7 @@ struct RegisterScreen: View {
             .padding()
         }
         .navigationBarHidden(true)
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
     }
 }
 

@@ -5,14 +5,12 @@ import UIPilot
 struct SwitchEventScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM = ObservableViewModel(vm: koin.switchEventVM())
+    @StateObject private var viewModel = SwitchEventObservableViewModel()
 
     @SwiftUI.State private var selectedEvent: Event?
 
     var body: some View {
-        unowned let vm = strongVM
-
-        ScreenContainer(vm.state) {
+        ScreenContainer(viewModel.state) {
             VStack {
                 Image(systemName: "person.3")
                     .resizable()
@@ -28,16 +26,16 @@ struct SwitchEventScreen: View {
                 Divider()
 
                 ScrollView {
-                    if vm.state.events.isEmpty {
+                    if viewModel.state.events.isEmpty {
                         Text(localize.switchEvent.noEventFound())
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity)
                             .padding()
                     } else {
                         LazyVStack {
-                            ForEach(vm.state.events, id: \.id) { event in
+                            ForEach(viewModel.state.events, id: \.id) { event in
                                 Button {
-                                    vm.actual.onEventSelected(event: event)
+                                    viewModel.actual.onEventSelected(event: event)
                                 } label: {
                                     Event(event: event)
                                         .padding(.horizontal)
@@ -48,10 +46,10 @@ struct SwitchEventScreen: View {
                     }
                 }
                 .refreshable {
-                    vm.actual.loadEvents()
+                    viewModel.actual.loadEvents()
                 }
             }
-            .handleSideEffects(of: vm, navigator)
+            .handleSideEffects(of: viewModel, navigator)
         }
     }
 }

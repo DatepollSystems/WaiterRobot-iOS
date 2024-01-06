@@ -6,11 +6,9 @@ import UIPilot
 struct LoginScannerScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM = ObservableViewModel(vm: koin.loginScannerVM())
+    @StateObject private var vm = LoginScannerObservableViewModel()
 
     var body: some View {
-        unowned let vm = strongVM
-
         ScreenContainer(vm.state) {
             VStack {
                 CodeScannerView(

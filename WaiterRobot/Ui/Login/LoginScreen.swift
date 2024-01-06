@@ -6,11 +6,9 @@ import UIPilot
 struct LoginScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM = ObservableViewModel(vm: koin.loginVM())
+    @StateObject private var vm = ObservableViewModel(viewModel: koin.loginVM())
 
     var body: some View {
-        unowned let vm = strongVM
-
         ScreenContainer(vm.state) {
             VStack {
                 Spacer()

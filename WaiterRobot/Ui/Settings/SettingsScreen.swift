@@ -7,12 +7,10 @@ struct SettingsScreen: View {
 
     @State private var showConfirmLogout = false
 
-    @StateObject private var strongVM = ObservableViewModel(vm: koin.settingsVM())
+    @StateObject private var viewModel = SettingsObservableViewModel()
 
     var body: some View {
-        unowned let vm = strongVM
-
-        ScreenContainer(vm.state) {
+        ScreenContainer(viewModel.state) {
             List {
                 Section {
                     SettingsItem(
@@ -29,7 +27,7 @@ struct SettingsScreen: View {
                         title: localize.settings.refresh.title(),
                         subtitle: localize.settings.refresh.desc(),
                         action: {
-                            vm.actual.refreshAll()
+                            viewModel.actual.refreshAll()
                         }
                     )
 
@@ -38,13 +36,16 @@ struct SettingsScreen: View {
                         title: localize.switchEvent.title(),
                         subtitle: CommonApp.shared.settings.eventName,
                         action: {
-                            vm.actual.switchEvent()
+                            viewModel.actual.switchEvent()
                         }
                     )
                 }
 
                 Section {
-                    SwitchThemeView(initial: vm.state.currentAppTheme, onChange: vm.actual.switchTheme)
+                    SwitchThemeView(
+                        initial: viewModel.state.currentAppTheme,
+                        onChange: viewModel.actual.switchTheme
+                    )
                 }
 
                 Section {
@@ -53,7 +54,7 @@ struct SettingsScreen: View {
 
                 HStack {
                     Spacer()
-                    Text(vm.state.versionString)
+                    Text(viewModel.state.versionString)
                         .font(.footnote)
                     Spacer()
                 }
@@ -71,11 +72,11 @@ struct SettingsScreen: View {
             }
         }
         .confirmationDialog(localize.settings.logout.title(value0: CommonApp.shared.settings.organisationName), isPresented: $showConfirmLogout, titleVisibility: .visible) {
-            Button(localize.settings.logout.action(), role: .destructive, action: { vm.actual.logout() })
+            Button(localize.settings.logout.action(), role: .destructive, action: { viewModel.actual.logout() })
             Button(localize.settings.keepLoggedIn(), role: .cancel, action: { showConfirmLogout = false })
         } message: {
             Text(localize.settings.logout.desc(value0: CommonApp.shared.settings.organisationName))
         }
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
     }
 }

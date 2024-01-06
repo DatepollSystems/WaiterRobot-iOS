@@ -5,7 +5,7 @@ import UIPilot
 struct TableListScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var vm = TableListObservableViewModel()
+    @StateObject private var viewModel = TableListObservableViewModel()
 
     private let layout = [
         GridItem(.adaptive(minimum: 100)),
@@ -13,7 +13,7 @@ struct TableListScreen: View {
 
     var body: some View {
         VStack {
-            switch onEnum(of: vm.state.tableGroupsArray) {
+            switch onEnum(of: viewModel.state.tableGroupsArray) {
             case let .error(resource):
                 Text(resource.exception.getLocalizedUserMessage())
                     .foregroundStyle(.red)
@@ -27,7 +27,7 @@ struct TableListScreen: View {
                 EmptyView()
             }
 
-            if let data = vm.state.tableGroupsArray.data {
+            if let data = viewModel.state.tableGroupsArray.data {
                 let tableGroups = Array(data)
                 content(tableGroups: tableGroups)
             }
@@ -37,13 +37,13 @@ struct TableListScreen: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    vm.actual.openSettings()
+                    viewModel.actual.openSettings()
                 } label: {
                     Image(systemName: "gear")
                 }
             }
         }
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
     }
 
     // TODO: table has open/unpaid order indicator
@@ -52,9 +52,9 @@ struct TableListScreen: View {
         if tableGroups.count > 1 {
             TableListFilterRow(
                 tableGroups: tableGroups,
-                onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0) },
-                onSelectAll: { vm.actual.showAll() },
-                onUnselectAll: { vm.actual.hideAll() }
+                onToggleFilter: { viewModel.actual.toggleFilter(tableGroup: $0) },
+                onSelectAll: { viewModel.actual.showAll() },
+                onUnselectAll: { viewModel.actual.hideAll() }
             )
         }
 
@@ -70,7 +70,7 @@ struct TableListScreen: View {
                         if !group.tables.isEmpty {
                             TableGroupSection(
                                 tableGroup: group,
-                                onTableClick: { vm.actual.onTableClick(table: $0) }
+                                onTableClick: { viewModel.actual.onTableClick(table: $0) }
                             )
                         }
                     }
