@@ -6,6 +6,7 @@ struct SettingsScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
     @State private var showConfirmLogout = false
+
     @StateObject private var strongVM = ObservableViewModel(vm: koin.settingsVM())
 
     var body: some View {

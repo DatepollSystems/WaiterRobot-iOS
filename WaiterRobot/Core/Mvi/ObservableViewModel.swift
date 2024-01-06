@@ -29,14 +29,17 @@ class ObservableViewModel<S: ViewModelState, E: ViewModelEffect, VM: AbstractVie
 
     @MainActor
     private func activate() {
-        guard task == nil else {
-            return
-        }
+        guard task == nil else { return }
         task = Task {
-            let logger = koin.logger(tag: VM.description())
             for await state in actual.container.stateFlow {
                 self.state = state as! S
             }
         }
+    }
+}
+
+class TableListObservableViewModel: ObservableViewModel<TableListState, TableListEffect, TableListViewModel> {
+    init() {
+        super.init(vm: koin.tableListVM())
     }
 }
