@@ -6,7 +6,7 @@ import UIPilot
 struct LoginScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var vm = ObservableViewModel(viewModel: koin.loginVM())
+    @StateObject private var vm = LoginObservableViewMode()
 
     var body: some View {
         ScreenContainer(vm.state) {

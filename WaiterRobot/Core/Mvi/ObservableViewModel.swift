@@ -93,3 +93,9 @@ class RegisterObservableViewModel: ObservableViewModel<RegisterState, RegisterEf
         super.init(viewModel: koin.registerVM())
     }
 }
+
+class LoginObservableViewMode: ObservableViewModel<LoginState, LoginEffect, LoginViewModel> {
+    init() {
+        super.init(viewModel: koin.loginVM())
+    }
+}
