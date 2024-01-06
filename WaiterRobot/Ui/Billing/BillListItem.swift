@@ -23,7 +23,7 @@ struct BillListItem: View {
                     .padding(.leading)
             }
         }
-        .foregroundColor(Color("textColor"))
+        .foregroundColor(.blackWhite)
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             HStack {
                 Button(action: {

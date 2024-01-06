@@ -41,7 +41,7 @@ struct SwitchEventScreen: View {
                                 } label: {
                                     Event(event: event)
                                         .padding(.horizontal)
-                                }.foregroundColor(Color("textColor"))
+                                }.foregroundColor(.blackWhite)
                                 Divider()
                             }
                         }

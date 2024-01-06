@@ -29,7 +29,7 @@ struct TableDetailScreen: View {
                         .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity)
                         .padding()
-                } else if let orderedItems = orderedItems {
+                } else if let orderedItems {
                     List {
                         ForEach(orderedItems, id: \.id) { item in
                             OrderedItemView(item: item) {

@@ -18,15 +18,15 @@ on:
 
 jobs:    
   publish:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
           
-      - name: Setup Ruby 3.2.1
+      - name: Setup Ruby 3.3.0
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2.1'
+          ruby-version: '3.3.0'
           bundler-cache: true
       
       - name: Netrc maven.pkg.github.com
@@ -36,12 +36,15 @@ jobs:
           username: cirunner
           password: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Setup xcodegen and init xcode project
-        uses: xavierLowmiller/xcodegen-action@1.1.2
-        with:
-          spec: project.yml
-          use-cache: true
-      
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Run XcodeGen
+        run: xcodegen
+
+      - name: Install xcodes
+        run: brew install xcodes
+
       - name: Run tests with fastlane
         run: bundle exec fastlane test
         

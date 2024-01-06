@@ -35,7 +35,7 @@ extension View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: action) {
                         HStack(spacing: 0) {
-                            if let icon = icon {
+                            if let icon {
                                 HStack {
                                     Image(systemName: icon)
                                     // .fontWeight(.semibold) // TODO enable when dropped iOS15
@@ -53,20 +53,20 @@ extension View {
     }
 
     @MainActor
-    func handleSideEffects<S, E, VM, OVM>(
-        of vm: OVM,
+    func handleSideEffects<S, E>(
+        of vm: some ObservableViewModel<S, E, some AbstractViewModel<S, E>>,
         _ navigator: UIPilot<Screen>,
         handler: ((E) -> Bool)? = nil
-    ) -> some View where S: ViewModelState, E: ViewModelEffect, VM: AbstractViewModel<S, E>, OVM: ObservableViewModel<S, E, VM> {
+    ) -> some View where S: ViewModelState, E: ViewModelEffect {
         handleSideEffects2(of: vm.actual, navigator, handler: handler)
     }
 
     @MainActor
-    func handleSideEffects2<S, E, VM>(
-        of vm: VM,
+    func handleSideEffects2<E>(
+        of vm: some AbstractViewModel<some ViewModelState, E>,
         _ navigator: UIPilot<Screen>,
         handler: ((E) -> Bool)? = nil
-    ) -> some View where S: ViewModelState, E: ViewModelEffect, VM: AbstractViewModel<S, E> {
+    ) -> some View where E: ViewModelEffect {
         task {
             let logger = koin.logger(tag: "handleSideEffects")
             for await sideEffect in vm.container.sideEffectFlow {
@@ -84,10 +84,10 @@ extension View {
     }
 
     @MainActor
-    func observeState<S, E, VM>(
-        of vm: VM,
+    func observeState<S>(
+        of vm: some AbstractViewModel<S, some ViewModelEffect>,
         stateBinding: Binding<S>
-    ) -> some View where S: ViewModelState, E: ViewModelEffect, VM: AbstractViewModel<S, E> {
+    ) -> some View where S: ViewModelState {
         task {
             let logger = koin.logger(tag: "ObservableViewModel")
             for await state in vm.container.stateFlow {

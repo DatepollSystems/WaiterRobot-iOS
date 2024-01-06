@@ -18,7 +18,7 @@ struct TableListScreen: View {
         let tableGroups = vm.state.tableGroups.data as? [TableGroup]
         let tableGroupResource = onEnum(of: vm.state.tableGroups)
         VStack {
-            if let tableGroups = tableGroups, tableGroups.count > 1 {
+            if let tableGroups, tableGroups.count > 1 {
                 TableListFilterRow(
                     tableGroups: tableGroups,
                     onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0) },
@@ -37,7 +37,7 @@ struct TableListScreen: View {
                         .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity)
                         .padding()
-                } else if let tableGroups = tableGroups {
+                } else if let tableGroups {
                     LazyVGrid(columns: layout) {
                         ForEach(tableGroups.filter { !$0.hidden }, id: \.id) { group in
                             if !group.tables.isEmpty {

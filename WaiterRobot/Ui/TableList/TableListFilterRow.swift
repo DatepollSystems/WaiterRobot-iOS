@@ -28,7 +28,7 @@ struct TableListFilterRow: View {
                 Image(systemName: "xmark")
             }
             .padding(.trailing)
-            .disabled(tableGroups.allSatisfy { $0.hidden })
+            .disabled(tableGroups.allSatisfy(\.hidden))
             Button {
                 onSelectAll()
             } label: {

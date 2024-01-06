@@ -2,14 +2,13 @@ name: WaiterRobot
 
 fileGroups:
   - .gitignore
+  - .github
   - README.md
   - project.yml
   - fastlane
   - Gemfile
-  - .github/workflows
   - command-line-tools
   - .swiftformat
-  - .swiftlint.yml
   - setup.sh
   - renovate.json5
 
@@ -27,7 +26,9 @@ packages:
 settings:
   base:
     IPHONEOS_DEPLOYMENT_TARGET: '15.0'
-        
+    ENABLE_USER_SCRIPT_SANDBOXING: false
+    ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS: true
+
 targetTemplates:
   WaiterRobot:
     type: application
@@ -64,13 +65,12 @@ targetTemplates:
         CFBundleName: "${target_name}"
         CFBundlePackageType: "$(PRODUCT_BUNDLE_PACKAGE_TYPE)"
         ITSAppUsesNonExemptEncryption: false
-        LSRequiresIPhoneOS: true
+        UILaunchStoryboardName: ""
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
         NSCameraUsageDescription: "Camera is needed to scan QR-Codes"
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
-        UILaunchStoryboardName: "LaunchScreen"
         UIRequiredDeviceCapabilities:
           - armv7
         UISupportedInterfaceOrientations:
@@ -129,7 +129,7 @@ targets:
           randomExecutionOrder: true
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot.beta"
-      displayName: "lava kellner.team"
+      displayName: "lava.kellner.team"
       deeplinkDomain: "lava.kellner.team"
       apiBase: "https://lava.kellner.team/api"
       versionSuffix: "lava"
@@ -151,7 +151,7 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: true
         TEST_TARGET_NAME: WaiterRobotLava
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/lava kellner.team.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lava kellner.team"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/lava.kellner.team.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lava.kellner.team"
 
   WaiterRobotUITests:
     type: bundle.ui-testing
