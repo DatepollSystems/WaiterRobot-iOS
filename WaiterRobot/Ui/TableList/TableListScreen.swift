@@ -5,60 +5,32 @@ import UIPilot
 struct TableListScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM = TableListObservableViewModel()
+    @StateObject private var vm = TableListObservableViewModel()
 
     private let layout = [
         GridItem(.adaptive(minimum: 100)),
     ]
 
-    // TODO: table has open/unpaid order indicator
     var body: some View {
-        unowned let vm = strongVM
-
-        let tableGroupResource = onEnum(of: vm.state.tableGroupsArray)
-
         VStack {
-            if case let .error(resource) = tableGroupResource {
+            switch onEnum(of: vm.state.tableGroupsArray) {
+            case let .error(resource):
                 Text(resource.exception.getLocalizedUserMessage())
-            } else if case let .loading(resource) = tableGroupResource {
-                ProgressView()
-            } else if case let .success(resource) = tableGroupResource {
-                if let tableGroupsArray = resource.data {
-                    let tableGroups = Array(tableGroupsArray)
-                    if tableGroups.count > 1 {
-                        TableListFilterRow(
-                            tableGroups: tableGroups,
-                            onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0) },
-                            onSelectAll: { vm.actual.showAll() },
-                            onUnselectAll: { vm.actual.hideAll() }
-                        )
-                    }
+                    .foregroundStyle(.red)
 
-                    ScrollView {
-                        LazyVGrid(columns: layout) {
-                            ForEach(tableGroups.filter { !$0.hidden }, id: \.id) { group in
-                                if !group.tables.isEmpty {
-                                    TableGroupSection(
-                                        tableGroup: group,
-                                        onTableClick: { vm.actual.onTableClick(table: $0) }
-                                    )
-                                }
-                            }
-                        }
-                        .padding()
-                    }
+            case let .loading(resource):
+                if resource.data == nil {
+                    ProgressView()
                 }
+
+            case .success:
+                EmptyView()
             }
 
-//                if tableGroups?.isEmpty == true {
-//                    Text(localize.tableList.noTableFound())
-//                        .multilineTextAlignment(.center)
-//                        .frame(maxWidth: .infinity)
-//                        .padding()
-//                } else if let tableGroups {
-//
-//                }
-//            }
+            if let data = vm.state.tableGroupsArray.data {
+                let tableGroups = Array(data)
+                content(tableGroups: tableGroups)
+            }
         }
         .navigationTitle(CommonApp.shared.settings.eventName)
         .navigationBarTitleDisplayMode(.large)
@@ -72,5 +44,39 @@ struct TableListScreen: View {
             }
         }
         .handleSideEffects(of: vm, navigator)
+    }
+
+    // TODO: table has open/unpaid order indicator
+    @ViewBuilder
+    private func content(tableGroups: [TableGroup]) -> some View {
+        if tableGroups.count > 1 {
+            TableListFilterRow(
+                tableGroups: tableGroups,
+                onToggleFilter: { vm.actual.toggleFilter(tableGroup: $0) },
+                onSelectAll: { vm.actual.showAll() },
+                onUnselectAll: { vm.actual.hideAll() }
+            )
+        }
+
+        if tableGroups.isEmpty {
+            Text(localize.tableList.noTableFound())
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .padding()
+        } else {
+            ScrollView {
+                LazyVGrid(columns: layout) {
+                    ForEach(tableGroups.filter { !$0.hidden }, id: \.id) { group in
+                        if !group.tables.isEmpty {
+                            TableGroupSection(
+                                tableGroup: group,
+                                onTableClick: { vm.actual.onTableClick(table: $0) }
+                            )
+                        }
+                    }
+                }
+                .padding()
+            }
+        }
     }
 }
