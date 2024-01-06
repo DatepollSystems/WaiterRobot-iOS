@@ -30,9 +30,11 @@ class ObservableViewModel<S: ViewModelState, E: ViewModelEffect, VM: AbstractVie
     @MainActor
     private func activate() {
         guard task == nil else { return }
-        task = Task {
-            for await state in actual.container.stateFlow {
-                self.state = state as! S
+        task = Task { [weak self] in
+            guard let stateFlow = self?.actual.container.stateFlow else { return }
+
+            for await state in stateFlow {
+                self?.state = state as! S
             }
         }
     }
@@ -41,5 +43,29 @@ class ObservableViewModel<S: ViewModelState, E: ViewModelEffect, VM: AbstractVie
 class TableListObservableViewModel: ObservableViewModel<TableListState, TableListEffect, TableListViewModel> {
     init() {
         super.init(vm: koin.tableListVM())
+    }
+}
+
+class TableDetailObservableViewModel: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel> {
+    init(table: Table) {
+        super.init(vm: koin.tableDetailVM(table: table))
+    }
+}
+
+class RootObservableViewModel: ObservableViewModel<RootState, RootEffect, RootViewModel> {
+    init() {
+        super.init(vm: koin.rootVM())
+    }
+}
+
+class BillingObservableViewModel: ObservableViewModel<BillingState, BillingEffect, BillingViewModel> {
+    init(table: Table) {
+        super.init(vm: koin.billingVM(table: table))
+    }
+}
+
+class OrderObservableViewModel: ObservableViewModel<OrderState, OrderEffect, OrderViewModel> {
+    init(table: Table, initialItemId: KotlinLong?) {
+        super.init(vm: koin.orderVM(table: table, initialItemId: initialItemId))
     }
 }

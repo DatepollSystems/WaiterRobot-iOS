@@ -4,7 +4,7 @@ import SwiftUI
 struct ProductSearch: View {
     @Environment(\.dismiss) private var dismiss
 
-    @ObservedObject var vm: ObservableViewModel<OrderState, OrderEffect, OrderViewModel>
+    @ObservedObject var vm: OrderObservableViewModel
 
     @State private var search: String = ""
     @State private var selectedTab: Int = 0

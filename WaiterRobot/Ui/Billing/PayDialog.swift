@@ -5,7 +5,7 @@ import SwiftUI
 struct PayDialog: View {
     @Environment(\.dismiss) private var dismiss
 
-    @ObservedObject var vm: ObservableViewModel<BillingState, BillingEffect, BillingViewModel>
+    @ObservedObject var vm: BillingObservableViewModel
 
     @State private var moneyGiven: String = "" {
         didSet {

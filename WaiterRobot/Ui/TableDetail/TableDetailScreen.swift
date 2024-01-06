@@ -5,16 +5,15 @@ import UIPilot
 struct TableDetailScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel>
+    @StateObject private var vm: TableDetailObservableViewModel
     private let table: shared.Table
 
     init(table: shared.Table) {
         self.table = table
-        _strongVM = StateObject(wrappedValue: ObservableViewModel(vm: koin.tableDetailVM(table: table)))
+        _vm = StateObject(wrappedValue: TableDetailObservableViewModel(table: table))
     }
 
     var body: some View {
-        unowned let vm = strongVM
         let resource = onEnum(of: vm.state.orderedItemsResource)
         let orderedItems = vm.state.orderedItemsResource.data as? [OrderedItem]
 

@@ -7,12 +7,12 @@ struct BillingScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
     @State private var showPayDialog: Bool = false
-    @StateObject private var strongVM: ObservableViewModel<BillingState, BillingEffect, BillingViewModel>
+    @StateObject private var strongVM: BillingObservableViewModel
     private let table: shared.Table
 
     init(table: shared.Table) {
         self.table = table
-        _strongVM = StateObject(wrappedValue: ObservableViewModel(vm: koin.billingVM(table: table)))
+        _strongVM = StateObject(wrappedValue: BillingObservableViewModel(table: table))
     }
 
     var body: some View {

@@ -3,7 +3,7 @@ import shared
 import SwiftUI
 
 struct RootScreen: View {
-    @ObservedObject var strongVM: ObservableViewModel<RootState, RootEffect, RootViewModel>
+    @ObservedObject var strongVM: RootObservableViewModel
 
     var body: some View {
         unowned let vm = strongVM
