@@ -12,9 +12,26 @@ struct TableListScreen: View {
     ]
 
     var body: some View {
+        content()
+            .navigationTitle(CommonApp.shared.settings.eventName)
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        viewModel.actual.openSettings()
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                }
+            }
+            .handleSideEffects(of: viewModel, navigator)
+            .animation(.spring, value: viewModel.state.tableGroupsArray)
+    }
+
+    private func content() -> some View {
         ZStack {
             if let data = viewModel.state.tableGroupsArray.data {
-                content(data: data)
+                tableList(data: data)
             }
 
             switch onEnum(of: viewModel.state.tableGroupsArray) {
@@ -42,24 +59,10 @@ struct TableListScreen: View {
                 EmptyView()
             }
         }
-        .animation(.spring, value: viewModel.state.tableGroupsArray)
-        .navigationTitle(CommonApp.shared.settings.eventName)
-        .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    viewModel.actual.openSettings()
-                } label: {
-                    Image(systemName: "gear")
-                }
-            }
-        }
-        .handleSideEffects(of: viewModel, navigator)
     }
 
-    // TODO: table has open/unpaid order indicator
     @ViewBuilder
-    private func content(data: KotlinArray<TableGroup>) -> some View {
+    private func tableList(data: KotlinArray<TableGroup>) -> some View {
         let tableGroups = Array(data)
 
         VStack {
