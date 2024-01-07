@@ -40,61 +40,61 @@ class ObservableViewModel<State: ViewModelState, Effect: ViewModelEffect, ViewMo
     }
 }
 
-class TableListObservableViewModel: ObservableViewModel<TableListState, TableListEffect, TableListViewModel> {
+class ObservableTableListViewModel: ObservableViewModel<TableListState, TableListEffect, TableListViewModel> {
     init() {
         super.init(viewModel: koin.tableListVM())
     }
 }
 
-class TableDetailObservableViewModel: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel> {
+class ObservableTableDetailViewModel: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel> {
     init(table: Table) {
         super.init(viewModel: koin.tableDetailVM(table: table))
     }
 }
 
-class RootObservableViewModel: ObservableViewModel<RootState, RootEffect, RootViewModel> {
+class ObservableRootViewModel: ObservableViewModel<RootState, RootEffect, RootViewModel> {
     init() {
         super.init(viewModel: koin.rootVM())
     }
 }
 
-class BillingObservableViewModel: ObservableViewModel<BillingState, BillingEffect, BillingViewModel> {
+class ObservableBillingViewModel: ObservableViewModel<BillingState, BillingEffect, BillingViewModel> {
     init(table: Table) {
         super.init(viewModel: koin.billingVM(table: table))
     }
 }
 
-class OrderObservableViewModel: ObservableViewModel<OrderState, OrderEffect, OrderViewModel> {
+class ObservableOrderViewModel: ObservableViewModel<OrderState, OrderEffect, OrderViewModel> {
     init(table: Table, initialItemId: KotlinLong?) {
         super.init(viewModel: koin.orderVM(table: table, initialItemId: initialItemId))
     }
 }
 
-class LoginScannerObservableViewModel: ObservableViewModel<LoginScannerState, LoginScannerEffect, LoginScannerViewModel> {
+class ObservableLoginScannerViewModel: ObservableViewModel<LoginScannerState, LoginScannerEffect, LoginScannerViewModel> {
     init() {
         super.init(viewModel: koin.loginScannerVM())
     }
 }
 
-class SettingsObservableViewModel: ObservableViewModel<SettingsState, SettingsEffect, SettingsViewModel> {
+class ObservableSettingsViewModel: ObservableViewModel<SettingsState, SettingsEffect, SettingsViewModel> {
     init() {
         super.init(viewModel: koin.settingsVM())
     }
 }
 
-class SwitchEventObservableViewModel: ObservableViewModel<SwitchEventState, SwitchEventEffect, SwitchEventViewModel> {
+class ObservableSwitchEventViewModel: ObservableViewModel<SwitchEventState, SwitchEventEffect, SwitchEventViewModel> {
     init() {
         super.init(viewModel: koin.switchEventVM())
     }
 }
 
-class RegisterObservableViewModel: ObservableViewModel<RegisterState, RegisterEffect, RegisterViewModel> {
+class ObservableRegisterViewModel: ObservableViewModel<RegisterState, RegisterEffect, RegisterViewModel> {
     init() {
         super.init(viewModel: koin.registerVM())
     }
 }
 
-class LoginObservableViewMode: ObservableViewModel<LoginState, LoginEffect, LoginViewModel> {
+class ObservableLoginViewModel: ObservableViewModel<LoginState, LoginEffect, LoginViewModel> {
     init() {
         super.init(viewModel: koin.loginVM())
     }

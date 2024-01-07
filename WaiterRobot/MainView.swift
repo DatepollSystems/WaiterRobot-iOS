@@ -13,7 +13,7 @@ struct MainView: View {
     @State private var snackBarMessage: String?
     @State private var showUpdateAvailableAlert: Bool = false
     @StateObject private var navigator: UIPilot<Screen> = UIPilot(initial: Screen.RootScreen.shared, debug: true)
-    @StateObject private var viewModel = RootObservableViewModel()
+    @StateObject private var viewModel = ObservableRootViewModel()
 
     private var selectedScheme: ColorScheme? {
         switch viewModel.state.selectedTheme {

@@ -7,7 +7,7 @@ struct SettingsScreen: View {
 
     @State private var showConfirmLogout = false
 
-    @StateObject private var viewModel = SettingsObservableViewModel()
+    @StateObject private var viewModel = ObservableSettingsViewModel()
 
     var body: some View {
         ScreenContainer(viewModel.state) {
