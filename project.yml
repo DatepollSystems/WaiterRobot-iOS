@@ -96,6 +96,7 @@ targetTemplates:
         DEVELOPMENT_TEAM: "28TM58T3GZ"
         PRODUCT_NAME: "${displayName}"
         ENABLE_PREVIEWS: "YES"
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: "main"
       configs:
         RELEASE:
           ONLY_ACTIVE_ARCH: "NO"

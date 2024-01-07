@@ -113,10 +113,11 @@ struct MainView: View {
                 showUpdateAvailableAlert = true
             }
         }
-        .tint(.main)
     }
 }
 
 #Preview {
-    MainView()
+    PreviewView {
+        MainView()
+    }
 }

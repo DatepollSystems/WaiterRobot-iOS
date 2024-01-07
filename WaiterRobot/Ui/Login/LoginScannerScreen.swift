@@ -8,12 +8,14 @@ struct LoginScannerScreen: View {
 
     @StateObject private var vm = LoginScannerObservableViewModel()
 
+    private let simulatedData = "https://lava.kellner.team/ml/signIn?token=w7wF6pgYA6Ssm3VBH-rSFL6if70&purpose=SIGN_IN"
+
     var body: some View {
         ScreenContainer(vm.state) {
             VStack {
                 CodeScannerView(
                     codeTypes: [.qr],
-                    simulatedData: "https://lava.kellner.team/ml/signIn?token=w7wF6pgYA6Ssm3VBH-rSFL6if70&purpose=SIGN_IN"
+                    simulatedData: simulatedData
                 ) { result in
                     switch result {
                     case let .success(result):
@@ -38,8 +40,8 @@ struct LoginScannerScreen: View {
     }
 }
 
-struct LoginScannerScreen_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview {
+    PreviewView {
         LoginScannerScreen()
     }
 }
