@@ -39,13 +39,17 @@ struct LaunchScreen: View {
             }
         }
         .onAppear {
-            Task {
-                async let setup: () = setupApp()
-                async let delay: () = delay()
+            // This is needed otherwise previews will crash randomly
+            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" {
+                Task {
+                    async let setup: () = setupApp()
+                    async let delay: () = delay()
 
-                _ = await [setup, delay]
+                    await setup
+                    await delay
 
-                startupFinished = true
+                    startupFinished = true
+                }
             }
         }
         .fullScreenCover(isPresented: $startupFinished) {
@@ -54,7 +58,7 @@ struct LaunchScreen: View {
     }
 
     /// Setup of frameworks and all the other related stuff which is needed everywhere in the app
-    private func setupApp() {
+    private func setupApp() async {
         print("started app setup")
         var appVersion = readFromInfoPlist(withKey: "CFBundleShortVersionString")
         let versionSuffix = readFromInfoPlist(withKey: "VERSION_SUFFIX")
@@ -62,7 +66,7 @@ struct LaunchScreen: View {
             appVersion += "-\(versionSuffix)"
         }
 
-        CommonApp.shared.doInit(
+        await CommonApp.shared.doInit(
             appVersion: appVersion,
             appBuild: Int32(readFromInfoPlist(withKey: "CFBundleVersion"))!,
             phoneModel: UIDevice.current.deviceType,
