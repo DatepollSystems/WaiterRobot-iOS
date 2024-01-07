@@ -8,12 +8,12 @@ struct OrderScreen: View {
     @State private var productName: String = ""
     @State private var showProductSearch: Bool
 
-    @StateObject private var viewModel: OrderObservableViewModel
+    @StateObject private var viewModel: ObservableOrderViewModel
     private let table: shared.Table
 
     init(table: shared.Table, initialItemId: KotlinLong?) {
         self.table = table
-        _viewModel = StateObject(wrappedValue: OrderObservableViewModel(table: table, initialItemId: initialItemId))
+        _viewModel = StateObject(wrappedValue: ObservableOrderViewModel(table: table, initialItemId: initialItemId))
         showProductSearch = initialItemId == nil ? true : false
     }
 

@@ -3,7 +3,7 @@ import shared
 import SwiftUI
 
 struct RootScreen: View {
-    @ObservedObject var viewModel: RootObservableViewModel
+    @ObservedObject var viewModel: ObservableRootViewModel
 
     var body: some View {
         if !viewModel.state.isLoggedIn {

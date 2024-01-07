@@ -5,7 +5,7 @@ import UIPilot
 struct TableListScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var viewModel = TableListObservableViewModel()
+    @StateObject private var viewModel = ObservableTableListViewModel()
 
     private let layout = [
         GridItem(.adaptive(minimum: 100)),

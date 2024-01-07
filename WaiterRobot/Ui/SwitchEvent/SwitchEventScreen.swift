@@ -5,7 +5,7 @@ import UIPilot
 struct SwitchEventScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var viewModel = SwitchEventObservableViewModel()
+    @StateObject private var viewModel = ObservableSwitchEventViewModel()
 
     @SwiftUI.State private var selectedEvent: Event?
 

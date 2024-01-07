@@ -6,10 +6,10 @@ import UIPilot
 struct LoginScannerScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var vm = LoginScannerObservableViewModel()
+    @StateObject private var viewModel = ObservableLoginScannerViewModel()
 
     var body: some View {
-        ScreenContainer(vm.state) {
+        ScreenContainer(viewModel.state) {
             VStack {
                 CodeScannerView(
                     codeTypes: [.qr],
@@ -17,7 +17,7 @@ struct LoginScannerScreen: View {
                 ) { result in
                     switch result {
                     case let .success(result):
-                        vm.actual.onCode(code: result.string)
+                        viewModel.actual.onCode(code: result.string)
                     case let .failure(error):
                         koin.logger(tag: "LoginScanner").e { error.localizedDescription }
                     }
@@ -28,13 +28,13 @@ struct LoginScannerScreen: View {
                     .multilineTextAlignment(.center)
 
                 Button {
-                    vm.actual.goBack()
+                    viewModel.actual.goBack()
                 } label: {
                     Text(localize.dialog.cancel())
                 }
             }
         }
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
     }
 }
 

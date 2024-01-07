@@ -5,7 +5,7 @@ import SwiftUI
 struct PayDialog: View {
     @Environment(\.dismiss) private var dismiss
 
-    @ObservedObject var vm: BillingObservableViewModel
+    @ObservedObject var viewModel: ObservableBillingViewModel
 
     @State private var moneyGiven: String = "" {
         didSet {
@@ -14,7 +14,7 @@ struct PayDialog: View {
                 return
             }
 
-            isInputInvalid = vm.state.changeText == "NaN" || vm.state.changeText.hasPrefix("-") || regex.firstMatch(in: moneyGiven, options: [], range: range) == nil
+            isInputInvalid = viewModel.state.changeText == "NaN" || viewModel.state.changeText.hasPrefix("-") || regex.firstMatch(in: moneyGiven, options: [], range: range) == nil
         }
     }
 
@@ -27,14 +27,14 @@ struct PayDialog: View {
                     Text(localize.billing.total() + ":")
                         .font(.title2)
                     Spacer()
-                    Text(vm.state.priceSum.description)
+                    Text(viewModel.state.priceSum.description)
                         .font(.title2)
                 }
 
                 TextField(localize.billing.given(), text: $moneyGiven)
                     .font(.title)
                     .keyboardType(.numbersAndPunctuation)
-                    .onChange(of: moneyGiven, perform: vm.actual.moneyGiven)
+                    .onChange(of: moneyGiven, perform: viewModel.actual.moneyGiven)
                     .frame(height: 48)
                     .padding(EdgeInsets(top: 0, leading: 6, bottom: 0, trailing: 6))
                     .cornerRadius(5)
@@ -47,7 +47,7 @@ struct PayDialog: View {
                     Text(localize.billing.change() + ":")
                         .font(.title2)
                     Spacer()
-                    Text(vm.state.changeText)
+                    Text(viewModel.state.changeText)
                         .font(.title2)
                 }
 
@@ -62,7 +62,7 @@ struct PayDialog: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(localize.billing.pay()) {
-                        vm.actual.paySelection()
+                        viewModel.actual.paySelection()
                         dismiss()
                     }
                 }

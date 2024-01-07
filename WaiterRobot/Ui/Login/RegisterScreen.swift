@@ -5,7 +5,7 @@ import UIPilot
 struct RegisterScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var viewModel = RegisterObservableViewModel()
+    @StateObject private var viewModel = ObservableRegisterViewModel()
 
     @State private var name: String = ""
     let createToken: String
