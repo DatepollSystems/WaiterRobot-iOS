@@ -28,8 +28,7 @@ struct TableListScreen: View {
             }
 
             if let data = viewModel.state.tableGroupsArray.data {
-                let tableGroups = Array(data)
-                content(tableGroups: tableGroups)
+                content(data: data)
             }
         }
         .navigationTitle(CommonApp.shared.settings.eventName)
@@ -48,7 +47,9 @@ struct TableListScreen: View {
 
     // TODO: table has open/unpaid order indicator
     @ViewBuilder
-    private func content(tableGroups: [TableGroup]) -> some View {
+    private func content(data: KotlinArray<TableGroup>) -> some View {
+        let tableGroups = Array(data)
+
         if tableGroups.count > 1 {
             TableListFilterRow(
                 tableGroups: tableGroups,
