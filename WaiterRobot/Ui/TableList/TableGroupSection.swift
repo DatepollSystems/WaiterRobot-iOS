@@ -10,6 +10,7 @@ struct TableGroupSection: View {
             ForEach(tableGroup.tables, id: \.id) { table in
                 TableView(
                     text: table.number.description,
+                    hasOrders: table.hasOrders,
                     onClick: {
                         onTableClick(table)
                     }
@@ -46,6 +47,7 @@ struct TableGroupSection_Previews: PreviewProvider {
                 ),
                 onTableClick: { _ in }
             )
+
         }.padding()
     }
 }

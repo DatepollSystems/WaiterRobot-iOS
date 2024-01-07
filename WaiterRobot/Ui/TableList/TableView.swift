@@ -2,6 +2,7 @@ import SwiftUI
 
 struct TableView: View {
     let text: String
+    let hasOrders: Bool
     let onClick: () -> Void
 
     var body: some View {
@@ -12,6 +13,21 @@ struct TableView: View {
 
                 Text(text)
                     .font(.title)
+
+                if hasOrders {
+                    VStack(alignment: .trailing) {
+                        HStack {
+                            Spacer()
+
+                            Circle()
+                                .foregroundColor(.red)
+                                .frame(width: 12)
+                        }
+                        Spacer()
+                    }
+                    .padding(.top, 10)
+                    .padding(.trailing, 10)
+                }
             }
         }
         .aspectRatio(1.0, contentMode: .fit)
@@ -19,8 +35,12 @@ struct TableView: View {
     }
 }
 
-struct Table_Previews: PreviewProvider {
-    static var previews: some View {
-        TableView(text: "1", onClick: {})
+#Preview {
+    VStack {
+        TableView(text: "1", hasOrders: false, onClick: {})
+            .frame(maxWidth: 100)
+
+        TableView(text: "2", hasOrders: true, onClick: {})
+            .frame(maxWidth: 100)
     }
 }
