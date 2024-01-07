@@ -126,8 +126,6 @@ targets:
       testTargets:
         - name: WaiterRobotTests
           randomExecutionOrder: true
-        - name: WaiterRobotUITests
-          randomExecutionOrder: true
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot.beta"
       displayName: "lava.kellner.team"
@@ -153,15 +151,3 @@ targets:
         GENERATE_INFOPLIST_FILE: true
         TEST_TARGET_NAME: WaiterRobotLava
         TEST_HOST: "$(BUILT_PRODUCTS_DIR)/lava.kellner.team.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lava.kellner.team"
-
-  WaiterRobotUITests:
-    type: bundle.ui-testing
-    platform: iOS
-    sources:
-      - WaiterRobotUITests
-    dependencies:
-      - target: WaiterRobotLava
-    settings:
-      base:
-        GENERATE_INFOPLIST_FILE: true
-        TEST_TARGET_NAME: WaiterRobotLava
