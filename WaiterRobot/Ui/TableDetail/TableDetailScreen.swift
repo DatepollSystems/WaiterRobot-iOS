@@ -5,18 +5,17 @@ import UIPilot
 struct TableDetailScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel>
+    @StateObject private var viewModel: ObservableTableDetailViewModel
     private let table: shared.Table
 
     init(table: shared.Table) {
         self.table = table
-        _strongVM = StateObject(wrappedValue: ObservableViewModel(vm: koin.tableDetailVM(table: table)))
+        _viewModel = StateObject(wrappedValue: ObservableTableDetailViewModel(table: table))
     }
 
     var body: some View {
-        unowned let vm = strongVM
-        let resource = onEnum(of: vm.state.orderedItemsResource)
-        let orderedItems = vm.state.orderedItemsResource.data as? [OrderedItem]
+        let resource = onEnum(of: viewModel.state.orderedItemsResource)
+        let orderedItems = viewModel.state.orderedItemsResource.data as? [OrderedItem]
 
         // TODO: add refreshing and loading indicator (also check android)
         ZStack {
@@ -33,7 +32,7 @@ struct TableDetailScreen: View {
                     List {
                         ForEach(orderedItems, id: \.id) { item in
                             OrderedItemView(item: item) {
-                                vm.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
+                                viewModel.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
                             }
                         }
                     }
@@ -41,19 +40,19 @@ struct TableDetailScreen: View {
             }
 
             EmbeddedFloatingActionButton(icon: "plus") {
-                vm.actual.openOrderScreen(initialItemId: nil)
+                viewModel.actual.openOrderScreen(initialItemId: nil)
             }
         }
         .navigationTitle(localize.tableDetail.title(value0: table.number.description, value1: table.groupName))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    vm.actual.openBillingScreen()
+                    viewModel.actual.openBillingScreen()
                 } label: {
                     Image(systemName: "creditcard")
                 }.disabled(orderedItems?.isEmpty != false)
             }
         }
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
     }
 }

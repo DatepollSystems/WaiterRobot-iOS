@@ -13,10 +13,10 @@ struct MainView: View {
     @State private var snackBarMessage: String?
     @State private var showUpdateAvailableAlert: Bool = false
     @StateObject private var navigator: UIPilot<Screen> = UIPilot(initial: Screen.RootScreen.shared, debug: true)
-    @StateObject private var strongVM = ObservableViewModel(vm: koin.rootVM())
+    @StateObject private var viewModel = ObservableRootViewModel()
 
     private var selectedScheme: ColorScheme? {
-        switch strongVM.state.selectedTheme {
+        switch viewModel.state.selectedTheme {
         case .dark:
             .dark
         case .light:
@@ -27,11 +27,10 @@ struct MainView: View {
     }
 
     var body: some View {
-        unowned let vm = strongVM
         ZStack {
             UIPilotHost(navigator) { route in
                 switch route {
-                case is Screen.RootScreen: RootScreen(strongVM: vm)
+                case is Screen.RootScreen: RootScreen(viewModel: viewModel)
                 case is Screen.LoginScannerScreen: LoginScannerScreen()
                 case is Screen.SwitchEventScreen: SwitchEventScreen()
                 case is Screen.SettingsScreen: SettingsScreen()
@@ -74,7 +73,7 @@ struct MainView: View {
                 .padding()
             }
         }
-        .handleSideEffects(of: vm, navigator) { effect in
+        .handleSideEffects(of: viewModel, navigator) { effect in
             switch onEnum(of: effect) {
             case let .showSnackBar(snackBar):
                 snackBarMessage = snackBar.message
@@ -85,7 +84,7 @@ struct MainView: View {
             return true
         }
         .onOpenURL { url in
-            vm.actual.onDeepLink(url: url.absoluteString)
+            viewModel.actual.onDeepLink(url: url.absoluteString)
         }
         .alert(
             localize.app.updateAvailable.title(),

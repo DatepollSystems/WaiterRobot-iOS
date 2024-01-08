@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Table: View {
+struct TableView: View {
     let text: String
     let onClick: () -> Void
 
@@ -21,6 +21,6 @@ struct Table: View {
 
 struct Table_Previews: PreviewProvider {
     static var previews: some View {
-        Table(text: "1", onClick: {})
+        TableView(text: "1", onClick: {})
     }
 }

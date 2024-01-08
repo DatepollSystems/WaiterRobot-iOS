@@ -47,29 +47,29 @@ extension View {
                         }
                     }
                     .buttonStyle(.plain)
-                    .foregroundStyle(Color("primaryColor"))
+                    .foregroundStyle(.main)
                 }
             }
     }
 
     @MainActor
     func handleSideEffects<S, E>(
-        of vm: some ObservableViewModel<S, E, some AbstractViewModel<S, E>>,
+        of viewModel: some ObservableViewModel<S, E, some AbstractViewModel<S, E>>,
         _ navigator: UIPilot<Screen>,
         handler: ((E) -> Bool)? = nil
     ) -> some View where S: ViewModelState, E: ViewModelEffect {
-        handleSideEffects2(of: vm.actual, navigator, handler: handler)
+        handleSideEffects2(of: viewModel.actual, navigator, handler: handler)
     }
 
     @MainActor
     func handleSideEffects2<E>(
-        of vm: some AbstractViewModel<some ViewModelState, E>,
+        of viewModel: some AbstractViewModel<some ViewModelState, E>,
         _ navigator: UIPilot<Screen>,
         handler: ((E) -> Bool)? = nil
     ) -> some View where E: ViewModelEffect {
         task {
             let logger = koin.logger(tag: "handleSideEffects")
-            for await sideEffect in vm.container.sideEffectFlow {
+            for await sideEffect in viewModel.container.sideEffectFlow {
                 logger.d { "Got sideEffect: \(sideEffect)" }
                 switch onEnum(of: sideEffect as! NavOrViewModelEffect<E>) {
                 case let .navEffect(navEffect):
@@ -85,12 +85,12 @@ extension View {
 
     @MainActor
     func observeState<S>(
-        of vm: some AbstractViewModel<S, some ViewModelEffect>,
+        of viewModel: some AbstractViewModel<S, some ViewModelEffect>,
         stateBinding: Binding<S>
     ) -> some View where S: ViewModelState {
         task {
             let logger = koin.logger(tag: "ObservableViewModel")
-            for await state in vm.container.stateFlow {
+            for await state in viewModel.container.stateFlow {
                 logger.d { "New state: \(state)" }
                 stateBinding.wrappedValue = state as! S
             }

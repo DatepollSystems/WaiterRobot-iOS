@@ -4,7 +4,7 @@ import SwiftUI
 struct ProductSearch: View {
     @Environment(\.dismiss) private var dismiss
 
-    @ObservedObject var vm: ObservableViewModel<OrderState, OrderEffect, OrderViewModel>
+    @ObservedObject var viewModel: ObservableOrderViewModel
 
     @State private var search: String = ""
     @State private var selectedTab: Int = 0
@@ -15,34 +15,34 @@ struct ProductSearch: View {
 
     var body: some View {
         NavigationView {
-            if vm.state.productGroups.isEmpty {
+            if viewModel.state.productGroups.isEmpty {
                 Text(localize.productSearch.noProductFound())
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()
             } else {
                 VStack {
-                    ProducSearchTabBarHeader(currentTab: $selectedTab, tabBarOptions: getGroupNames(vm.state.productGroups))
+                    ProducSearchTabBarHeader(currentTab: $selectedTab, tabBarOptions: getGroupNames(viewModel.state.productGroups))
 
                     TabView(selection: $selectedTab) {
                         ProductSearchAllTab(
-                            productGroups: vm.state.productGroups,
+                            productGroups: viewModel.state.productGroups,
                             columns: layout,
                             onProductClick: {
-                                vm.actual.addItem(product: $0, amount: 1)
+                                viewModel.actual.addItem(product: $0, amount: 1)
                                 dismiss()
                             }
                         )
                         .tag(0)
                         .padding()
 
-                        ForEach(Array(vm.state.productGroups.enumerated()), id: \.element.id) { index, groupWithProducts in
+                        ForEach(Array(viewModel.state.productGroups.enumerated()), id: \.element.id) { index, groupWithProducts in
                             ScrollView {
                                 LazyVGrid(columns: layout, spacing: 0) {
                                     ProductSearchGroupList(
                                         products: groupWithProducts.products,
                                         onProductClick: {
-                                            vm.actual.addItem(product: $0, amount: 1)
+                                            viewModel.actual.addItem(product: $0, amount: 1)
                                             dismiss()
                                         }
                                     )
@@ -56,7 +56,7 @@ struct ProductSearch: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always))
-                .onChange(of: search, perform: { vm.actual.filterProducts(filter: $0) })
+                .onChange(of: search, perform: { viewModel.actual.filterProducts(filter: $0) })
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(localize.dialog.cancel()) {

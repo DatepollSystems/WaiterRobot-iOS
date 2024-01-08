@@ -8,7 +8,7 @@ struct TableGroupSection: View {
     var body: some View {
         Section {
             ForEach(tableGroup.tables, id: \.id) { table in
-                Table(
+                TableView(
                     text: table.number.description,
                     onClick: {
                         onTableClick(table)

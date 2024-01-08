@@ -7,41 +7,39 @@ struct BillingScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
     @State private var showPayDialog: Bool = false
-    @StateObject private var strongVM: ObservableViewModel<BillingState, BillingEffect, BillingViewModel>
+    @StateObject private var viewModel: ObservableBillingViewModel
     private let table: shared.Table
 
     init(table: shared.Table) {
         self.table = table
-        _strongVM = StateObject(wrappedValue: ObservableViewModel(vm: koin.billingVM(table: table)))
+        _viewModel = StateObject(wrappedValue: ObservableBillingViewModel(table: table))
     }
 
     var body: some View {
-        unowned let vm = strongVM
-
-        ScreenContainer(vm.state) {
+        ScreenContainer(viewModel.state) {
             VStack {
                 List {
-                    if vm.state.billItems.isEmpty {
+                    if viewModel.state.billItems.isEmpty {
                         Text(localize.billing.noOpenBill(value0: table.number.description, value1: table.groupName))
                             .multilineTextAlignment(.center)
                             .frame(maxWidth: .infinity)
                             .padding()
                     } else {
                         Section {
-                            ForEach(vm.state.billItems, id: \.self) { item in
+                            ForEach(viewModel.state.billItems, id: \.self) { item in
                                 BillListItem(
                                     item: item,
                                     addOne: {
-                                        vm.actual.addItem(id: item.productId, amount: 1)
+                                        viewModel.actual.addItem(id: item.productId, amount: 1)
                                     },
                                     addAll: {
-                                        vm.actual.addItem(id: item.productId, amount: item.ordered - item.selectedForBill)
+                                        viewModel.actual.addItem(id: item.productId, amount: item.ordered - item.selectedForBill)
                                     },
                                     removeOne: {
-                                        vm.actual.addItem(id: item.productId, amount: -1)
+                                        viewModel.actual.addItem(id: item.productId, amount: -1)
                                     },
                                     removeAll: {
-                                        vm.actual.addItem(id: item.productId, amount: -item.selectedForBill)
+                                        viewModel.actual.addItem(id: item.productId, amount: -item.selectedForBill)
                                     }
                                 )
                             }
@@ -55,13 +53,13 @@ struct BillingScreen: View {
                     }
                 }
                 .refreshable {
-                    vm.actual.loadBill()
+                    viewModel.actual.loadBill()
                 }
 
                 HStack {
                     Text("\(localize.billing.total()):")
                     Spacer()
-                    Text("\(vm.state.priceSum)")
+                    Text("\(viewModel.state.priceSum)")
                 }
                 .font(.title2)
                 .padding()
@@ -77,37 +75,37 @@ struct BillingScreen: View {
                     .background(.blue)
                     .mask(Circle())
                     .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
-                    .disabled(vm.state.viewState != ViewState.Idle.shared || !vm.state.hasSelectedItems)
+                    .disabled(viewModel.state.viewState != ViewState.Idle.shared || !viewModel.state.hasSelectedItems)
                 }
             }
         }
         .navigationTitle(localize.billing.title(value0: table.number.description, value1: table.groupName))
         .navigationBarTitleDisplayMode(.inline)
-        .customBackNavigation(title: localize.dialog.cancel(), icon: nil, action: { vm.actual.goBack() }) // TODO:
-        .confirmationDialog(localize.billing.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
-            Button(localize.dialog.closeAnyway(), role: .destructive, action: { vm.actual.abortBill() })
-            Button(localize.dialog.cancel(), role: .cancel, action: { vm.actual.keepBill() })
+        .customBackNavigation(title: localize.dialog.cancel(), icon: nil, action: { viewModel.actual.goBack() }) // TODO:
+        .confirmationDialog(localize.billing.notSent.title(), isPresented: Binding.constant(viewModel.state.showConfirmationDialog), titleVisibility: .visible) {
+            Button(localize.dialog.closeAnyway(), role: .destructive, action: { viewModel.actual.abortBill() })
+            Button(localize.dialog.cancel(), role: .cancel, action: { viewModel.actual.keepBill() })
         } message: {
             Text(localize.billing.notSent.desc())
         }
         .toolbar {
             ToolbarItemGroup(placement: .navigationBarTrailing) {
                 Button {
-                    vm.actual.selectAll()
+                    viewModel.actual.selectAll()
                 } label: {
                     Image(systemName: "checkmark")
                 }
 
                 Button {
-                    vm.actual.unselectAll()
+                    viewModel.actual.unselectAll()
                 } label: {
                     Image(systemName: "xmark")
                 }
             }
         }
         .sheet(isPresented: $showPayDialog) {
-            PayDialog(vm: vm)
+            PayDialog(viewModel: viewModel)
         }
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
     }
 }

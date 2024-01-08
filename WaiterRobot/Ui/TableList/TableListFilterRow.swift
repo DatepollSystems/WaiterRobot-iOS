@@ -13,7 +13,7 @@ struct TableListFilterRow: View {
                 HStack {
                     ForEach(tableGroups, id: \.id) { group in
                         Button {
-                            onToggleFilter(group) // vm.actual.toggleFilter(tableGroup: group)
+                            onToggleFilter(group) // viewModel.actual.toggleFilter(tableGroup: group)
                         } label: {
                             Text(group.name)
                         }
