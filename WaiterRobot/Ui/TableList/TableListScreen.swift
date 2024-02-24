@@ -12,11 +12,43 @@ struct TableListScreen: View {
     ]
 
     var body: some View {
-        VStack {
+        content()
+            .navigationTitle(CommonApp.shared.settings.eventName)
+            .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        viewModel.actual.openSettings()
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                }
+            }
+            .handleSideEffects(of: viewModel, navigator)
+            .animation(.spring, value: viewModel.state.tableGroupsArray)
+    }
+
+    private func content() -> some View {
+        ZStack {
+            if let data = viewModel.state.tableGroupsArray.data {
+                tableList(data: data)
+            }
+
             switch onEnum(of: viewModel.state.tableGroupsArray) {
             case let .error(resource):
-                Text(resource.exception.getLocalizedUserMessage())
-                    .foregroundStyle(.red)
+                VStack {
+                    Spacer()
+
+                    HStack {
+                        Text("Test me")
+                            .padding()
+
+                        Spacer()
+                    }
+                    .background(.red)
+                    .foregroundStyle(.white)
+                }
+                .transition(.move(edge: .bottom))
 
             case let .loading(resource):
                 if resource.data == nil {
@@ -26,58 +58,49 @@ struct TableListScreen: View {
             case .success:
                 EmptyView()
             }
-
-            if let data = viewModel.state.tableGroupsArray.data {
-                content(data: data)
-            }
         }
-        .navigationTitle(CommonApp.shared.settings.eventName)
-        .navigationBarTitleDisplayMode(.large)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    viewModel.actual.openSettings()
-                } label: {
-                    Image(systemName: "gear")
-                }
-            }
-        }
-        .handleSideEffects(of: viewModel, navigator)
     }
 
-    // TODO: table has open/unpaid order indicator
     @ViewBuilder
-    private func content(data: KotlinArray<TableGroup>) -> some View {
+    private func tableList(data: KotlinArray<TableGroup>) -> some View {
         let tableGroups = Array(data)
 
-        if tableGroups.count > 1 {
-            TableListFilterRow(
-                tableGroups: tableGroups,
-                onToggleFilter: { viewModel.actual.toggleFilter(tableGroup: $0) },
-                onSelectAll: { viewModel.actual.showAll() },
-                onUnselectAll: { viewModel.actual.hideAll() }
-            )
-        }
+        VStack {
+            if tableGroups.count > 1 {
+                TableListFilterRow(
+                    tableGroups: tableGroups,
+                    onToggleFilter: { viewModel.actual.toggleFilter(tableGroup: $0) },
+                    onSelectAll: { viewModel.actual.showAll() },
+                    onUnselectAll: { viewModel.actual.hideAll() }
+                )
+            }
 
-        if tableGroups.isEmpty {
-            Text(localize.tableList.noTableFound())
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
-                .padding()
-        } else {
-            ScrollView {
-                LazyVGrid(columns: layout) {
-                    ForEach(tableGroups.filter { !$0.hidden }, id: \.id) { group in
-                        if !group.tables.isEmpty {
-                            TableGroupSection(
-                                tableGroup: group,
-                                onTableClick: { viewModel.actual.onTableClick(table: $0) }
-                            )
+            if tableGroups.isEmpty {
+                Text(localize.tableList.noTableFound())
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+            } else {
+                ScrollView {
+                    LazyVGrid(columns: layout) {
+                        ForEach(tableGroups.filter { !$0.hidden }, id: \.id) { group in
+                            if !group.tables.isEmpty {
+                                TableGroupSection(
+                                    tableGroup: group,
+                                    onTableClick: { viewModel.actual.onTableClick(table: $0) }
+                                )
+                            }
                         }
                     }
+                    .padding()
                 }
-                .padding()
             }
         }
+    }
+}
+
+#Preview {
+    PreviewView {
+        TableListScreen()
     }
 }
