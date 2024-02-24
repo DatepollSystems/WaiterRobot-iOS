@@ -12,7 +12,7 @@ struct ProductListItem: View {
         self.onClick = onClick
 
         var allergens = ""
-        self.product.allergens.forEach { allergen in
+        for allergen in self.product.allergens {
             allergens += "\(allergen.shortName), "
         }
 

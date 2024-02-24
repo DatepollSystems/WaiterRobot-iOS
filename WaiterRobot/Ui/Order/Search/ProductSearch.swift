@@ -15,57 +15,81 @@ struct ProductSearch: View {
 
     var body: some View {
         NavigationView {
-            if viewModel.state.productGroups.isEmpty {
-                Text(localize.productSearch.noProductFound())
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-            } else {
-                VStack {
-                    ProducSearchTabBarHeader(currentTab: $selectedTab, tabBarOptions: getGroupNames(viewModel.state.productGroups))
-
-                    TabView(selection: $selectedTab) {
-                        ProductSearchAllTab(
-                            productGroups: viewModel.state.productGroups,
-                            columns: layout,
-                            onProductClick: {
-                                viewModel.actual.addItem(product: $0, amount: 1)
-                                dismiss()
-                            }
-                        )
-                        .tag(0)
-                        .padding()
-
-                        ForEach(Array(viewModel.state.productGroups.enumerated()), id: \.element.id) { index, groupWithProducts in
-                            ScrollView {
-                                LazyVGrid(columns: layout, spacing: 0) {
-                                    ProductSearchGroupList(
-                                        products: groupWithProducts.products,
-                                        onProductClick: {
-                                            viewModel.actual.addItem(product: $0, amount: 1)
-                                            dismiss()
-                                        }
-                                    )
-                                    Spacer()
-                                }
-                                .padding()
-                            }
-                            .tag(index + 1)
-                        }
-                    }
+            switch onEnum(of: viewModel.state.productGroups) {
+            case let .loading(resource):
+                ProgressView()
+            case let .error(resource):
+                productGroupsError()
+            case let .success(resource):
+                if let productGroups = resource.data {
+                    productsGroupsList(productGroups: productGroups)
+                } else {
+                    productGroupsError()
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always))
-                .onChange(of: search, perform: { viewModel.actual.filterProducts(filter: $0) })
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(localize.dialog.cancel()) {
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func productsGroupsList(productGroups: KotlinArray<ProductGroup>) -> some View {
+        let productGroups = Array(productGroups)
+
+        if productGroups.isEmpty {
+            Text(localize.productSearch.noProductFound())
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .padding()
+
+        } else {
+            VStack {
+                ProducSearchTabBarHeader(currentTab: $selectedTab, tabBarOptions: getGroupNames(productGroups))
+
+                TabView(selection: $selectedTab) {
+                    ProductSearchAllTab(
+                        productGroups: productGroups,
+                        columns: layout,
+                        onProductClick: {
+                            viewModel.actual.addItem(product: $0, amount: 1)
                             dismiss()
                         }
+                    )
+                    .tag(0)
+                    .padding()
+
+                    let enumeratedProductGroups = Array(productGroups.enumerated())
+                    ForEach(enumeratedProductGroups, id: \.element.id) { index, groupWithProducts in
+                        ScrollView {
+                            LazyVGrid(columns: layout, spacing: 0) {
+                                ProductSearchGroupList(
+                                    products: groupWithProducts.products,
+                                    onProductClick: {
+                                        viewModel.actual.addItem(product: $0, amount: 1)
+                                        dismiss()
+                                    }
+                                )
+                                Spacer()
+                            }
+                            .padding()
+                        }
+                        .tag(index + 1)
+                    }
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always))
+            .onChange(of: search, perform: { viewModel.actual.filterProducts(filter: $0) })
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(localize.dialog.cancel()) {
+                        dismiss()
                     }
                 }
             }
         }
+    }
+
+    private func productGroupsError() -> some View {
+        Text("Something went wrong") // TODO: fix
     }
 
     private func getGroupNames(_ productGroups: [ProductGroup]) -> [String] {

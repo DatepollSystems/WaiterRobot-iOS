@@ -1,37 +1,47 @@
 import Foundation
 import shared
 
-@objc public class KotlinIteratorImpl: NSObject, KotlinIterator, IteratorProtocol {
-    public typealias Element = KotlinInt
+// public class KotlinIteratorImpl<T>: NSObject, KotlinIterator, IteratorProtocol {
+//    public typealias Element = T
+//
+//    var iterator: KotlinIterator
+//
+//    init(iterator: KotlinIterator) {
+//        self.iterator = iterator
+//    }
+//
+//    public func next() -> Any? {
+//        if hasNext() {
+//            iterator.next()
+//        } else {
+//            nil
+//        }
+//    }
+//
+//    public func next() -> T? {
+//        if hasNext() {
+//            (iterator.next() as! T?)
+//        } else {
+//            nil
+//        }
+//    }
+//
+//    public func hasNext() -> Bool {
+//        iterator.hasNext()
+//    }
+// }
 
-    var iterator: KotlinIterator
+// extension KotlinArray where T: AnyObject {
+//    var array: Array<T> {
+//        Array(self)
+//    }
+// }
 
-    init(iterator: KotlinIterator) {
-        self.iterator = iterator
-    }
-
-    public func next() -> Any? {
-        if hasNext() {
-            iterator.next()
-        } else { nil }
-    }
-
-    public func next() -> KotlinInt? {
-        if hasNext() {
-            (iterator.next() as! KotlinInt?)
-        } else { nil }
-    }
-
-    public func hasNext() -> Bool {
-        iterator.hasNext()
-    }
-}
-
-extension KotlinArray: Sequence {
-    @objc public func makeIterator() -> KotlinIteratorImpl {
-        KotlinIteratorImpl(iterator: iterator())
-    }
-}
+// extension KotlinArray: Sequence {
+//    @objc public func makeIterator() -> KotlinIteratorImpl<Any> {
+//        KotlinIteratorImpl(iterator: iterator())
+//    }
+// }
 
 extension Array where Element: AnyObject {
     init(_ kotlinArray: KotlinArray<Element>) {

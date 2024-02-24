@@ -11,6 +11,7 @@ struct ScreenContainer<Content: View>: View {
     }
 
     var body: some View {
+        // onEnum(of: )
         switch state.viewState {
         case is ViewState.Loading:
             ProgressView()

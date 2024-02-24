@@ -35,7 +35,6 @@ struct TableListFilterRow: View {
                 Image(systemName: "checkmark")
             }
             .padding(.trailing)
-
             .disabled(tableGroups.allSatisfy { !$0.hidden })
         }
     }

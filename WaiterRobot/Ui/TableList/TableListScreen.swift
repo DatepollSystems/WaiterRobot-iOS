@@ -40,7 +40,7 @@ struct TableListScreen: View {
                     Spacer()
 
                     HStack {
-                        Text("Test me")
+                        Text(resource.userMessage)
                             .padding()
 
                         Spacer()

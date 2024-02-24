@@ -8,7 +8,7 @@ struct LoginScannerScreen: View {
 
     @StateObject private var viewModel = ObservableLoginScannerViewModel()
 
-    private let simulatedData = "https://lava.kellner.team/ml/signIn?token=w7wF6pgYA6Ssm3VBH-rSFL6if70&purpose=SIGN_IN"
+    private let simulatedData = "https://lava.kellner.team/ml/signIn?purpose=SIGN_IN&token=xWEP33DuYhJzUvQ6clywKPCM_Oa5NymihpJk4-_EGHV3D_f10YSKL_2hOYV3"
 
     var body: some View {
         ScreenContainer(viewModel.state) {

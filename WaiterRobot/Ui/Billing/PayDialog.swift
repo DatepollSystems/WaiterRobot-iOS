@@ -14,7 +14,8 @@ struct PayDialog: View {
                 return
             }
 
-            isInputInvalid = viewModel.state.changeText == "NaN" || viewModel.state.changeText.hasPrefix("-") || regex.firstMatch(in: moneyGiven, options: [], range: range) == nil
+            // TODO: fix
+//            isInputInvalid = viewModel.state.change == "NaN" || viewModel.state.changeText.hasPrefix("-") || regex.firstMatch(in: moneyGiven, options: [], range: range) == nil
         }
     }
 
@@ -47,8 +48,11 @@ struct PayDialog: View {
                     Text(localize.billing.change() + ":")
                         .font(.title2)
                     Spacer()
-                    Text(viewModel.state.changeText)
-                        .font(.title2)
+
+                    if let change = viewModel.state.change?.amount {
+                        Text(change.description()) // TODO: check if correct
+                            .font(.title2)
+                    }
                 }
 
                 Spacer()

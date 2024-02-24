@@ -40,7 +40,7 @@ struct MainView: View {
                 case let screen as Screen.OrderScreen: OrderScreen(table: screen.table, initialItemId: screen.initialItemId)
                 case let screen as Screen.BillingScreen: BillingScreen(table: screen.table)
                 default:
-                    Text("No view defined for \(route.description)") // TODO:
+                    Text("No view defined for \(route.description)") // TODO: fix
                     Button {
                         navigator.pop()
                     } label: {
