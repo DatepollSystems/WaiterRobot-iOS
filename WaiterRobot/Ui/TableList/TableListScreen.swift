@@ -14,7 +14,7 @@ struct TableListScreen: View {
     var body: some View {
         content()
             .navigationTitle(CommonApp.shared.settings.eventName)
-            .navigationBarTitleDisplayMode(.large)
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -65,14 +65,19 @@ struct TableListScreen: View {
     private func tableList(data: KotlinArray<TableGroup>) -> some View {
         let tableGroups = Array(data)
 
-        VStack {
+        VStack(spacing: 0) {
             if tableGroups.count > 1 {
-                TableListFilterRow(
-                    tableGroups: tableGroups,
-                    onToggleFilter: { viewModel.actual.toggleFilter(tableGroup: $0) },
-                    onSelectAll: { viewModel.actual.showAll() },
-                    onUnselectAll: { viewModel.actual.hideAll() }
-                )
+                VStack {
+                    TableListFilterRow(
+                        tableGroups: tableGroups,
+                        onToggleFilter: { viewModel.actual.toggleFilter(tableGroup: $0) },
+                        onSelectAll: { viewModel.actual.showAll() },
+                        onUnselectAll: { viewModel.actual.hideAll() }
+                    )
+
+                    Divider()
+                }
+                .background(Color(UIColor.systemBackground))
             }
 
             if tableGroups.isEmpty {

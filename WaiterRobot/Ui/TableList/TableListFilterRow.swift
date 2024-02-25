@@ -20,8 +20,11 @@ struct TableListFilterRow: View {
                         .buttonStyle(.bordered)
                         .tint(group.hidden ? .primary : .blue)
                     }
-                }.padding(.horizontal)
+                }
+                .padding(.horizontal)
             }
+            .padding(.bottom, 4)
+
             Button {
                 onUnselectAll()
             } label: {
