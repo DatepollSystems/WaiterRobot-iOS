@@ -7,6 +7,8 @@ struct BillingScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
     @State private var showPayDialog: Bool = false
+    @State private var showAbortConfirmation = false
+
     @StateObject private var viewModel: ObservableBillingViewModel
     private let table: shared.Table
 
@@ -19,16 +21,27 @@ struct BillingScreen: View {
         content()
             .navigationTitle(localize.billing.title(value0: table.number.description, value1: table.groupName))
             .navigationBarTitleDisplayMode(.inline)
-            .customBackNavigation(title: localize.dialog.cancel(), icon: nil) {
-                viewModel.actual.abortBill()
+            .customBackNavigation(
+                title: localize.dialog.cancel(),
+                icon: nil
+            ) {
+                if viewModel.state.hasSelectedItems {
+                    showAbortConfirmation = true
+                } else {
+                    viewModel.actual.abortBill()
+                }
             }
-            // TODO: whatever?
-//            .confirmationDialog(localize.billing.notSent.title(), isPresented: Binding.constant(viewModel.state.showConfirmationDialog), titleVisibility: .visible) {
-//                Button(localize.dialog.closeAnyway(), role: .destructive, action: { viewModel.actual.abortBill() })
-//                Button(localize.dialog.cancel(), role: .cancel, action: { viewModel.actual.keepBill() })
-//            } message: {
-//                Text(localize.billing.notSent.desc())
-//            }
+            .confirmationDialog(
+                localize.billing.notSent.title(),
+                isPresented: $showAbortConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button(localize.dialog.closeAnyway(), role: .destructive) {
+                    viewModel.actual.abortBill()
+                }
+            } message: {
+                Text(localize.billing.notSent.desc())
+            }
 //            TODO: Check if this was removed
 //            .refreshable {
 //                viewModel.actual.loadBill()

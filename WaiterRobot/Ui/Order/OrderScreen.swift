@@ -7,6 +7,7 @@ struct OrderScreen: View {
 
     @State private var productName: String = ""
     @State private var showProductSearch: Bool
+    @State private var showAbortOrderConfirmationDialog = false
 
     @StateObject private var viewModel: ObservableOrderViewModel
     private let table: shared.Table
@@ -38,14 +39,17 @@ struct OrderScreen: View {
         .navigationTitle(localize.order.title(value0: table.number.description, value1: table.groupName))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden()
-//        TODO: check if confirmation was dropped
-        .customBackNavigation(title: localize.dialog.cancel(), icon: "chevron.backward", action: { viewModel.actual.abortOrder() })
-//        .confirmationDialog(localize.order.notSent.title(), isPresented: Binding.constant(viewModel.state.showConfirmationDialog), titleVisibility: .visible) {
-//            Button(localize.dialog.closeAnyway(), role: .destructive, action: { viewModel.actual.abortOrder() })
-//            Button(localize.order.keepOrder(), role: .cancel, action: { viewModel.actual.keepOrder() })
-//        } message: {
-//            Text(localize.order.notSent.desc())
-//        }
+        .confirmationDialog(
+            localize.order.notSent.title(),
+            isPresented: $showAbortOrderConfirmationDialog,
+            titleVisibility: .visible
+        ) {
+            Button(localize.dialog.closeAnyway(), role: .destructive) {
+                viewModel.actual.abortOrder()
+            }
+        } message: {
+            Text(localize.order.notSent.desc())
+        }
         .sheet(isPresented: $showProductSearch) {
             ProductSearch(viewModel: viewModel)
         }
@@ -108,33 +112,12 @@ struct OrderScreen: View {
             }
             .buttonStyle(.wrBorderedProminent)
         }
-
-//                VStack {
-//                    Divider()
-//
-//                    HStack {
-//                        Button {
-//                            viewModel.actual.sendOrder()
-//                        } label: {
-//                            Image(systemName: "paperplane.fill")
-//                                .imageScale(.small)
-//                                .padding(10)
-//                        }
-//                        .buttonStyle(.wrBorderedProminent)
-//                        .disabled(currentOrder.isEmpty)
-//
-//                        Spacer()
-//
-//                        Button {
-//                            showProductSearch = true
-//                        } label: {
-//                            Image(systemName: "plus")
-//                                .imageScale(.large)
-//                                .padding()
-//                        }
-//                        .buttonStyle(.wrBorderedProminent)
-//                    }
-//
-//                }
+        .customBackNavigation(title: localize.dialog.cancel(), icon: "chevron.backward") {
+            if currentOrder.isEmpty {
+                viewModel.actual.abortOrder()
+            } else {
+                showAbortOrderConfirmationDialog = true
+            }
+        }
     }
 }

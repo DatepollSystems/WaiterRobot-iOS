@@ -53,10 +53,14 @@ struct TableDetailScreen: View {
         // TODO: we need KotlinArray here in shared
         VStack {
             if orderedItems.isEmpty {
+                Spacer()
+
                 Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()
+
+                Spacer()
             } else {
                 List {
                     ForEach(orderedItems, id: \.id) { item in
