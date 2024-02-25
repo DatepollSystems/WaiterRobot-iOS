@@ -1,7 +1,4 @@
-name: Publish to TestFlight
-concurrency: # Cancel currently running releases when a new one is started
-  group: publish-android-${{ github.ref_name }}
-  cancel-in-progress: true
+name: Refresh certificates
 on:
   workflow_dispatch:
   push:
