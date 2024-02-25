@@ -40,6 +40,7 @@ struct OrderListItem: View {
             }
             .foregroundColor(.blackWhite)
         }
+        // TODO: make only half screen when ios 15 is dropped
         .sheet(isPresented: $editNote) {
             NavigationView {
                 VStack {

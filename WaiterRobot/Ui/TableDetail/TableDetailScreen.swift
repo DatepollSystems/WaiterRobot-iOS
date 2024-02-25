@@ -21,6 +21,7 @@ struct TableDetailScreen: View {
             .handleSideEffects(of: viewModel, navigator)
     }
 
+    // TODO: add refreshing and loading indicator (also check android)
     private func content() -> some View {
         VStack {
             switch onEnum(of: viewModel.state.orderedItemsResource) {
@@ -38,15 +39,6 @@ struct TableDetailScreen: View {
                 }
             }
         }
-
-        // TODO: add refreshing and loading indicator (also check android)
-        //        ZStack {
-        //            tableDetails()
-        //
-        //            EmbeddedFloatingActionButton(icon: "plus") {
-        //                viewModel.actual.openOrderScreen(initialItemId: nil)
-        //            }
-        //        }
     }
 
     func tableDetails(orderedItems: [OrderedItem]) -> some View {

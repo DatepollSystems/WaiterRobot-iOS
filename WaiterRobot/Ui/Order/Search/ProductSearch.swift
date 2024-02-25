@@ -16,15 +16,13 @@ struct ProductSearch: View {
     var body: some View {
         NavigationView {
             switch onEnum(of: viewModel.state.productGroups) {
-            case let .loading(resource):
+            case .loading:
                 ProgressView()
             case let .error(resource):
-                productGroupsError()
+                productGroupsError(error: resource)
             case let .success(resource):
                 if let productGroups = resource.data {
                     productsGroupsList(productGroups: productGroups)
-                } else {
-                    productGroupsError()
                 }
             }
         }
@@ -88,8 +86,8 @@ struct ProductSearch: View {
         }
     }
 
-    private func productGroupsError() -> some View {
-        Text("Something went wrong") // TODO: fix
+    private func productGroupsError(error: ResourceError<KotlinArray<ProductGroup>>) -> some View {
+        Text(error.userMessage)
     }
 
     private func getGroupNames(_ productGroups: [ProductGroup]) -> [String] {
