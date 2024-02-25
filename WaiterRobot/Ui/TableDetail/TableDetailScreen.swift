@@ -22,58 +22,71 @@ struct TableDetailScreen: View {
     }
 
     private func content() -> some View {
-        // TODO: add refreshing and loading indicator (also check android)
-        ZStack {
-            tableDetails()
-
-            EmbeddedFloatingActionButton(icon: "plus") {
-                viewModel.actual.openOrderScreen(initialItemId: nil)
-            }
-        }
-    }
-
-    func tableDetails() -> some View {
         VStack {
             switch onEnum(of: viewModel.state.orderedItemsResource) {
-            case let .loading(resource):
+            case .loading:
                 ProgressView()
 
             case let .error(error):
                 tableDetailsError(error)
 
             case let .success(resource):
-                // TODO: we need KotlinArray here in shared
                 if let orderedItems = resource.data as? [OrderedItem] {
-                    VStack {
-                        if orderedItems.isEmpty {
-                            Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
-                                .multilineTextAlignment(.center)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                        } else {
-                            List {
-                                ForEach(orderedItems, id: \.id) { item in
-                                    OrderedItemView(item: item) {
-                                        viewModel.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button {
-                                viewModel.actual.openBillingScreen()
-                            } label: {
-                                Image(systemName: "creditcard")
-                            }
-                            .disabled(orderedItems.isEmpty)
-                        }
-                    }
+                    tableDetails(orderedItems: orderedItems)
                 } else {
                     Text("Something went wrong")
                 }
             }
+        }
+
+        // TODO: add refreshing and loading indicator (also check android)
+        //        ZStack {
+        //            tableDetails()
+        //
+        //            EmbeddedFloatingActionButton(icon: "plus") {
+        //                viewModel.actual.openOrderScreen(initialItemId: nil)
+        //            }
+        //        }
+    }
+
+    func tableDetails(orderedItems: [OrderedItem]) -> some View {
+        // TODO: we need KotlinArray here in shared
+        VStack {
+            if orderedItems.isEmpty {
+                Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+            } else {
+                List {
+                    ForEach(orderedItems, id: \.id) { item in
+                        OrderedItemView(item: item) {
+                            viewModel.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
+                        }
+                    }
+                }
+            }
+        }
+        .wrBottomBar {
+            Button {
+                viewModel.actual.openBillingScreen()
+            } label: {
+                Image(systemName: "creditcard")
+                    .padding(10)
+            }
+            .buttonStyle(.wrBorderedProminent)
+            .disabled(orderedItems.isEmpty)
+
+            Spacer()
+
+            Button {
+                viewModel.actual.openOrderScreen(initialItemId: nil)
+            } label: {
+                Image(systemName: "plus")
+                    .imageScale(.large)
+                    .padding()
+            }
+            .buttonStyle(.wrBorderedProminent)
         }
     }
 

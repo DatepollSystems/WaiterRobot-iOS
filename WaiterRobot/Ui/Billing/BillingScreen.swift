@@ -19,7 +19,10 @@ struct BillingScreen: View {
         content()
             .navigationTitle(localize.billing.title(value0: table.number.description, value1: table.groupName))
             .navigationBarTitleDisplayMode(.inline)
-//            .customBackNavigation(title: localize.dialog.cancel(), icon: nil, action: { viewModel.actual.goBack() }) // TODO: whatever?
+            .customBackNavigation(title: localize.dialog.cancel(), icon: nil) {
+                viewModel.actual.abortBill()
+            }
+            // TODO: whatever?
 //            .confirmationDialog(localize.billing.notSent.title(), isPresented: Binding.constant(viewModel.state.showConfirmationDialog), titleVisibility: .visible) {
 //                Button(localize.dialog.closeAnyway(), role: .destructive, action: { viewModel.actual.abortBill() })
 //                Button(localize.dialog.cancel(), role: .cancel, action: { viewModel.actual.keepBill() })
