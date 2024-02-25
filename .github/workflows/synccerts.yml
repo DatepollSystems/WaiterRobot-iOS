@@ -4,6 +4,7 @@ concurrency: # Cancel currently running releases when a new one is started
   cancel-in-progress: true
 on:
   workflow_dispatch:
+  push:
 
 jobs:    
   publish:
