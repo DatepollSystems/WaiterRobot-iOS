@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:    
-  publish:
+  sync-certs:
     runs-on: macos-13
     steps:
       - name: Checkout repo
@@ -31,9 +31,6 @@ jobs:
 
       - name: Install xcodes
         run: brew install xcodes
-
-      - name: Run tests with fastlane
-        run: bundle exec fastlane test
         
       - name: Extract secrets
         run: |
