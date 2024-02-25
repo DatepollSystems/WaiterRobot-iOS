@@ -10,56 +10,74 @@ struct SettingsScreen: View {
     @StateObject private var viewModel = ObservableSettingsViewModel()
 
     var body: some View {
-        ScreenContainer(viewModel.state) {
-            List {
-                Section {
-                    SettingsItem(
-                        icon: "rectangle.portrait.and.arrow.right",
-                        title: localize.settings.logout.action(),
-                        subtitle: "\"\(CommonApp.shared.settings.organisationName)\" / \"\(CommonApp.shared.settings.waiterName)\"",
-                        action: {
-                            showConfirmLogout = true
-                        }
-                    )
-
-                    SettingsItem(
-                        icon: "arrow.triangle.2.circlepath",
-                        title: localize.settings.refresh.title(),
-                        subtitle: localize.settings.refresh.desc(),
-                        action: {
-                            viewModel.actual.refreshAll()
-                        }
-                    )
-
-                    SettingsItem(
-                        icon: "person.3",
-                        title: localize.switchEvent.title(),
-                        subtitle: CommonApp.shared.settings.eventName,
-                        action: {
-                            viewModel.actual.switchEvent()
-                        }
+        switch viewModel.state.viewState {
+        case is ViewState.Loading:
+            ProgressView()
+        case is ViewState.Idle:
+            content()
+        case let error as ViewState.Error:
+            content()
+                .alert(isPresented: Binding.constant(true)) {
+                    Alert(
+                        title: Text(error.title),
+                        message: Text(error.message),
+                        dismissButton: .cancel(Text("OK"), action: error.onDismiss)
                     )
                 }
+        default:
+            fatalError("Unexpected ViewState: \(viewModel.state.viewState.description)")
+        }
+    }
 
-                Section {
-                    SwitchThemeView(
-                        initial: viewModel.state.currentAppTheme,
-                        onChange: viewModel.actual.switchTheme
-                    )
-                }
+    private func content() -> some View {
+        List {
+            Section {
+                SettingsItem(
+                    icon: "rectangle.portrait.and.arrow.right",
+                    title: localize.settings.logout.action(),
+                    subtitle: "\"\(CommonApp.shared.settings.organisationName)\" / \"\(CommonApp.shared.settings.waiterName)\"",
+                    action: {
+                        showConfirmLogout = true
+                    }
+                )
 
-                Section {
-                    Link(localize.settings.privacyPolicy(), destination: URL(string: CommonApp.shared.privacyPolicyUrl)!)
-                }
+                SettingsItem(
+                    icon: "arrow.triangle.2.circlepath",
+                    title: localize.settings.refresh.title(),
+                    subtitle: localize.settings.refresh.desc(),
+                    action: {
+                        viewModel.actual.refreshAll()
+                    }
+                )
 
-                HStack {
-                    Spacer()
-                    Text(viewModel.state.versionString)
-                        .font(.footnote)
-                    Spacer()
-                }
-                .listRowBackground(Color.clear)
+                SettingsItem(
+                    icon: "person.3",
+                    title: localize.switchEvent.title(),
+                    subtitle: CommonApp.shared.settings.eventName,
+                    action: {
+                        viewModel.actual.switchEvent()
+                    }
+                )
             }
+
+            Section {
+                SwitchThemeView(
+                    initial: viewModel.state.currentAppTheme,
+                    onChange: viewModel.actual.switchTheme
+                )
+            }
+
+            Section {
+                Link(localize.settings.privacyPolicy(), destination: URL(string: CommonApp.shared.privacyPolicyUrl)!)
+            }
+
+            HStack {
+                Spacer()
+                Text(viewModel.state.versionString)
+                    .font(.footnote)
+                Spacer()
+            }
+            .listRowBackground(Color.clear)
         }
         .navigationTitle(localize.settings.title())
         .toolbar {
