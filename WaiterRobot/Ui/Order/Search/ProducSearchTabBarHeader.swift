@@ -49,10 +49,8 @@ struct ProducSearchTabBarHeader: View {
     }
 }
 
-struct ProducSearchTabBarHeader_Previews: PreviewProvider {
-    static var previews: some View {
-        ProducSearchTabBarHeader(
-            currentTab: .constant(4), tabBarOptions: ["All", "Food", "Drinks", "more", "One more"]
-        )
-    }
+#Preview {
+    ProducSearchTabBarHeader(
+        currentTab: .constant(4), tabBarOptions: ["All", "Food", "Drinks", "more", "One more"]
+    )
 }

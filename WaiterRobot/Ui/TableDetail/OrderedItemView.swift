@@ -19,10 +19,8 @@ struct OrderedItemView: View {
     }
 }
 
-struct OrderedItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            OrderedItemView(item: OrderedItem(id: 1, name: "Test", amount: 2), tabbed: {})
-        }
+#Preview {
+    List {
+        OrderedItemView(item: OrderedItem(id: 1, name: "Test", amount: 2), tabbed: {})
     }
 }

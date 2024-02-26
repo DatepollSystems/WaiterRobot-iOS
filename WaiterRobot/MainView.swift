@@ -40,13 +40,17 @@ struct MainView: View {
                 case let screen as Screen.OrderScreen: OrderScreen(table: screen.table, initialItemId: screen.initialItemId)
                 case let screen as Screen.BillingScreen: BillingScreen(table: screen.table)
                 default:
-                    Text("No view defined for \(route.description)") // TODO:
-                    Button {
-                        navigator.pop()
-                    } label: {
-                        Text("Back")
-                    }.onAppear {
-                        koin.logger(tag: "WaiterRobotApp").e { "No view defined for \(route.description)" }
+                    VStack {
+                        Text("No view defined for \(route.description)")
+
+                        Button {
+                            navigator.pop()
+                        } label: {
+                            Text("Back")
+                        }
+                        .onAppear {
+                            koin.logger(tag: "WaiterRobotApp").e { "No view defined for \(route.description)" }
+                        }
                     }
                 }
             }

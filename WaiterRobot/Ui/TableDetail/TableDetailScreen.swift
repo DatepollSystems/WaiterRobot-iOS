@@ -10,49 +10,81 @@ struct TableDetailScreen: View {
 
     init(table: shared.Table) {
         self.table = table
-        _viewModel = StateObject(wrappedValue: ObservableTableDetailViewModel(table: table))
+        _viewModel = StateObject(
+            wrappedValue: ObservableTableDetailViewModel(table: table)
+        )
     }
 
     var body: some View {
-        let resource = onEnum(of: viewModel.state.orderedItemsResource)
-        let orderedItems = viewModel.state.orderedItemsResource.data as? [OrderedItem]
+        content()
+            .navigationTitle(localize.tableDetail.title(value0: table.number.description, value1: table.groupName))
+            .handleSideEffects(of: viewModel, navigator)
+    }
 
-        // TODO: add refreshing and loading indicator (also check android)
-        ZStack {
-            VStack {
-                if case let .error(value) = resource {
-                    Text(value.exception.getLocalizedUserMessage())
+    // TODO: add refreshing and loading indicator (also check android)
+    private func content() -> some View {
+        VStack {
+            switch onEnum(of: viewModel.state.orderedItemsResource) {
+            case .loading:
+                ProgressView()
+
+            case let .error(error):
+                tableDetailsError(error)
+
+            case let .success(resource):
+                if let orderedItems = resource.data as? [OrderedItem] {
+                    tableDetails(orderedItems: orderedItems)
                 }
-                if orderedItems?.isEmpty == true {
-                    Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                } else if let orderedItems {
-                    List {
-                        ForEach(orderedItems, id: \.id) { item in
-                            OrderedItemView(item: item) {
-                                viewModel.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
-                            }
+            }
+        }
+    }
+
+    private func tableDetails(orderedItems: [OrderedItem]) -> some View {
+        // TODO: we need KotlinArray here in shared
+        VStack {
+            if orderedItems.isEmpty {
+                Spacer()
+
+                Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+
+                Spacer()
+            } else {
+                List {
+                    ForEach(orderedItems, id: \.id) { item in
+                        OrderedItemView(item: item) {
+                            viewModel.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
                         }
                     }
                 }
             }
+        }
+        .wrBottomBar {
+            Button {
+                viewModel.actual.openBillingScreen()
+            } label: {
+                Image(systemName: "creditcard")
+                    .padding(10)
+            }
+            .buttonStyle(.wrBorderedProminent)
+            .disabled(orderedItems.isEmpty)
 
-            EmbeddedFloatingActionButton(icon: "plus") {
+            Spacer()
+
+            Button {
                 viewModel.actual.openOrderScreen(initialItemId: nil)
+            } label: {
+                Image(systemName: "plus")
+                    .imageScale(.large)
+                    .padding()
             }
+            .buttonStyle(.wrBorderedProminent)
         }
-        .navigationTitle(localize.tableDetail.title(value0: table.number.description, value1: table.groupName))
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    viewModel.actual.openBillingScreen()
-                } label: {
-                    Image(systemName: "creditcard")
-                }.disabled(orderedItems?.isEmpty != false)
-            }
-        }
-        .handleSideEffects(of: viewModel, navigator)
+    }
+
+    private func tableDetailsError(_ error: ResourceError<NSArray>) -> some View {
+        Text(error.userMessage)
     }
 }

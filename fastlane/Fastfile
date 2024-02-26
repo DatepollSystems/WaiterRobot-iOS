@@ -17,7 +17,7 @@ default_platform(:ios)
 
 platform :ios do
   before_all do
-    xcodes(version: "15.1", select_for_current_build_only: true)
+    xcodes(version: "15.2", select_for_current_build_only: true)
   end
 
   desc "Run all iOS unit and ui tests."
@@ -50,6 +50,20 @@ platform :ios do
         git_private_key: "./fastlane/.keys/github-deploy-key",
       )
     end
+  end
+
+  desc "Renew certificates and profiles"
+  lane :renew_certificates do
+      setupFastlaneSecrets
+      
+      match(
+        type: "appstore",
+        force: true
+      )
+      match(
+        type: "development",
+        force: true
+      )
   end
 
   desc "Push a new lava build to TestFlight"

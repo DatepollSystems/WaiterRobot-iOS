@@ -31,21 +31,19 @@ struct SettingsItem: View {
     }
 }
 
-struct SettingsItem_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            SettingsItem(
-                icon: "rectangle.portrait.and.arrow.right",
-                title: "Logout",
-                subtitle: "Logout from this organisation",
-                action: {}
-            )
-            SettingsItem(
-                icon: "person.3",
-                title: "Switch event",
-                subtitle: "My Organisation / The Event",
-                action: {}
-            )
-        }
+#Preview {
+    List {
+        SettingsItem(
+            icon: "rectangle.portrait.and.arrow.right",
+            title: "Logout",
+            subtitle: "Logout from this organisation",
+            action: {}
+        )
+        SettingsItem(
+            icon: "person.3",
+            title: "Switch event",
+            subtitle: "My Organisation / The Event",
+            action: {}
+        )
     }
 }

@@ -22,7 +22,7 @@ struct WaiterRobotApp: App {
         CommonApp.shared.doInit(
             appVersion: appVersion,
             appBuild: Int32(readFromInfoPlist(withKey: "CFBundleVersion"))!,
-            phoneModel: UIDevice.current.deviceType,
+            phoneModel: UIDevice.current.model,
             os: OS.Ios(version: UIDevice.current.systemVersion),
             apiBaseUrl: readFromInfoPlist(withKey: "API_BASE")
         )

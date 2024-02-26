@@ -40,6 +40,7 @@ struct OrderListItem: View {
             }
             .foregroundColor(.blackWhite)
         }
+        // TODO: make only half screen when ios 15 is dropped
         .sheet(isPresented: $editNote) {
             NavigationView {
                 VStack {
@@ -105,27 +106,25 @@ struct OrderListItem: View {
     }
 }
 
-struct OrderListItem_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            OrderListItem(
-                name: "Beer",
-                amount: 5,
-                note: nil,
-                addOne: {},
-                removeOne: {},
-                removeAll: {},
-                onSaveNote: { _ in }
-            )
-            OrderListItem(
-                name: "Wine",
-                amount: 20,
-                note: "1x without Tomatoe",
-                addOne: {},
-                removeOne: {},
-                removeAll: {},
-                onSaveNote: { _ in }
-            )
-        }
+#Preview {
+    List {
+        OrderListItem(
+            name: "Beer",
+            amount: 5,
+            note: nil,
+            addOne: {},
+            removeOne: {},
+            removeAll: {},
+            onSaveNote: { _ in }
+        )
+        OrderListItem(
+            name: "Wine",
+            amount: 20,
+            note: "1x without Tomatoe",
+            addOne: {},
+            removeOne: {},
+            removeAll: {},
+            onSaveNote: { _ in }
+        )
     }
 }

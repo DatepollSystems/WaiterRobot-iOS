@@ -16,22 +16,20 @@ struct ProductSearchGroupList: View {
     }
 }
 
-struct ProductSearchGroupList_Previews: PreviewProvider {
-    static var previews: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 110))]) {
-            ProductSearchGroupList(
-                products: [
-                    Product(
-                        id: 1,
-                        name: "Beer",
-                        price: Money(cents: 450),
-                        soldOut: false,
-                        allergens: [],
-                        position: 1
-                    ),
-                ],
-                onProductClick: { _ in }
-            )
-        }
+#Preview {
+    LazyVGrid(columns: [GridItem(.adaptive(minimum: 110))]) {
+        ProductSearchGroupList(
+            products: [
+                Product(
+                    id: 1,
+                    name: "Beer",
+                    price: Money(cents: 450),
+                    soldOut: false,
+                    allergens: [],
+                    position: 1
+                ),
+            ],
+            onProductClick: { _ in }
+        )
     }
 }
