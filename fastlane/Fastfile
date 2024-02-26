@@ -52,6 +52,20 @@ platform :ios do
     end
   end
 
+  desc "Renew certificates and profiles"
+  lane :renew_certificates do
+      setupFastlaneSecrets
+      
+      match(
+        type: "appstore",
+        force: true
+      )
+      match(
+        type: "development",
+        force: true
+      )
+  end
+
   desc "Push a new lava build to TestFlight"
   lane :releaseWaiterRobot_develop do |options|
     setupFastlaneSecrets

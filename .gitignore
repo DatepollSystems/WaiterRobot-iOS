@@ -261,3 +261,4 @@ xcuserdata/
 !.env.example
 
 .idea
+fastlane/.env
