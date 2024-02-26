@@ -63,35 +63,33 @@ struct BillListItem: View {
     }
 }
 
-struct BillListItem_Previews: PreviewProvider {
-    static var previews: some View {
-        List {
-            BillListItem(
-                item: BillItem(
-                    productId: 1,
-                    name: "Beer",
-                    ordered: 10,
-                    selectedForBill: 5,
-                    pricePerPiece: Money(cents: 3390)
-                ),
-                addOne: {},
-                addAll: {},
-                removeOne: {},
-                removeAll: {}
-            )
-            BillListItem(
-                item: BillItem(
-                    productId: 2,
-                    name: "Wine",
-                    ordered: 15,
-                    selectedForBill: 8,
-                    pricePerPiece: Money(cents: 390)
-                ),
-                addOne: {},
-                addAll: {},
-                removeOne: {},
-                removeAll: {}
-            )
-        }
+#Preview {
+    List {
+        BillListItem(
+            item: BillItem(
+                productId: 1,
+                name: "Beer",
+                ordered: 10,
+                selectedForBill: 5,
+                pricePerPiece: Money(cents: 3390)
+            ),
+            addOne: {},
+            addAll: {},
+            removeOne: {},
+            removeAll: {}
+        )
+        BillListItem(
+            item: BillItem(
+                productId: 2,
+                name: "Wine",
+                ordered: 15,
+                selectedForBill: 8,
+                pricePerPiece: Money(cents: 390)
+            ),
+            addOne: {},
+            addAll: {},
+            removeOne: {},
+            removeAll: {}
+        )
     }
 }

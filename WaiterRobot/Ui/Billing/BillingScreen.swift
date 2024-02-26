@@ -69,7 +69,7 @@ struct BillingScreen: View {
     }
 
     @ViewBuilder
-    func content() -> some View {
+    private func content() -> some View {
         let billItems = Array(viewModel.state.billItemsArray)
 
         VStack {

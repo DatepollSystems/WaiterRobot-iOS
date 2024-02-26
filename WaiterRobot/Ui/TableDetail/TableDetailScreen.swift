@@ -39,7 +39,7 @@ struct TableDetailScreen: View {
         }
     }
 
-    func tableDetails(orderedItems: [OrderedItem]) -> some View {
+    private func tableDetails(orderedItems: [OrderedItem]) -> some View {
         // TODO: we need KotlinArray here in shared
         VStack {
             if orderedItems.isEmpty {
@@ -84,7 +84,7 @@ struct TableDetailScreen: View {
         }
     }
 
-    func tableDetailsError(_ error: ResourceError<NSArray>) -> some View {
+    private func tableDetailsError(_ error: ResourceError<NSArray>) -> some View {
         Text(error.userMessage)
     }
 }

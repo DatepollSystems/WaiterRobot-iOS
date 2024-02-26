@@ -72,8 +72,6 @@ struct SwitchEventScreen: View {
     }
 }
 
-struct SwitchEventScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        SwitchEventScreen()
-    }
+#Preview {
+    SwitchEventScreen()
 }

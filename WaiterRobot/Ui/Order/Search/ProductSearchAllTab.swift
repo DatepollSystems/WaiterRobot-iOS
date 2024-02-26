@@ -31,29 +31,27 @@ struct ProductSearchAllTab: View {
     }
 }
 
-struct ProductSearchAllTab_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductSearchAllTab(
-            productGroups: [
-                ProductGroup(
-                    id: 1,
-                    name: "Test Group 1",
-                    position: 1,
-                    products: [
-                        Product(
-                            id: 1,
-                            name: "Beer",
-                            price: Money(cents: 450),
-                            soldOut: false,
-                            allergens: [],
-                            position: 1
-                        ),
-                    ]
-                ),
-            ],
-            columns: [GridItem(.adaptive(minimum: 110))],
-            onProductClick: { _ in }
-        )
-        .padding()
-    }
+#Preview {
+    ProductSearchAllTab(
+        productGroups: [
+            ProductGroup(
+                id: 1,
+                name: "Test Group 1",
+                position: 1,
+                products: [
+                    Product(
+                        id: 1,
+                        name: "Beer",
+                        price: Money(cents: 450),
+                        soldOut: false,
+                        allergens: [],
+                        position: 1
+                    ),
+                ]
+            ),
+        ],
+        columns: [GridItem(.adaptive(minimum: 110))],
+        onProductClick: { _ in }
+    )
+    .padding()
 }

@@ -43,16 +43,14 @@ struct TableListFilterRow: View {
     }
 }
 
-struct TableListFilterRow_Previews: PreviewProvider {
-    static var previews: some View {
-        TableListFilterRow(
-            tableGroups: [
-                TableGroup(id: 1, name: "Test Group1", eventId: 1, position: 1, color: nil, hidden: false, tables: []),
-                TableGroup(id: 2, name: "Test Group2", eventId: 1, position: 1, color: nil, hidden: false, tables: []),
-            ],
-            onToggleFilter: { _ in },
-            onSelectAll: {},
-            onUnselectAll: {}
-        )
-    }
+#Preview {
+    TableListFilterRow(
+        tableGroups: [
+            TableGroup(id: 1, name: "Test Group1", eventId: 1, position: 1, color: nil, hidden: false, tables: []),
+            TableGroup(id: 2, name: "Test Group2", eventId: 1, position: 1, color: nil, hidden: false, tables: []),
+        ],
+        onToggleFilter: { _ in },
+        onSelectAll: {},
+        onUnselectAll: {}
+    )
 }

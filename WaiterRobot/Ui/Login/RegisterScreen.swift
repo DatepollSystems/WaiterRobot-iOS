@@ -65,8 +65,6 @@ struct RegisterScreen: View {
     }
 }
 
-struct RegisterScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterScreen(createToken: "")
-    }
+#Preview {
+    RegisterScreen(createToken: "")
 }

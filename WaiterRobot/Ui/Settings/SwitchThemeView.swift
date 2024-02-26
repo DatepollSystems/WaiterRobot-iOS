@@ -20,8 +20,6 @@ struct SwitchThemeView: View {
     }
 }
 
-struct SwitchThemeView_Previews: PreviewProvider {
-    static var previews: some View {
-        SwitchThemeView(initial: AppTheme.system, onChange: { _ in })
-    }
+#Preview {
+    SwitchThemeView(initial: AppTheme.system, onChange: { _ in })
 }
