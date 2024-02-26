@@ -42,7 +42,7 @@ struct BillingScreen: View {
             } message: {
                 Text(localize.billing.notSent.desc())
             }
-//            TODO: Check if this was removed
+//            TODO: Needs shared modification to be accessible from here
 //            .refreshable {
 //                viewModel.actual.loadBill()
 //            }

@@ -34,8 +34,6 @@ struct TableDetailScreen: View {
             case let .success(resource):
                 if let orderedItems = resource.data as? [OrderedItem] {
                     tableDetails(orderedItems: orderedItems)
-                } else {
-                    Text("Something went wrong")
                 }
             }
         }
