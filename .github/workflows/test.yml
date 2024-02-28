@@ -20,7 +20,7 @@ jobs:
           bundler-cache: true
 
       - name: Netrc api.github.com
-        uses: extractions/netrc@v1
+        uses: extractions/netrc@v2
         with:
           machine: maven.pkg.github.com
           username: cirunner
