@@ -9,7 +9,7 @@ struct LaunchScreen: View {
     @State private var startupFinished = false
 
     var body: some View {
-        VStack {
+        ZStack {
             if case .phone = device {
                 VStack {
                     Spacer()
@@ -37,6 +37,10 @@ struct LaunchScreen: View {
                     }
                 }
             }
+
+            if startupFinished {
+                MainView()
+            }
         }
         .onAppear {
             // This is needed otherwise previews will crash randomly
@@ -52,9 +56,6 @@ struct LaunchScreen: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $startupFinished) {
-            MainView()
-        }
     }
 
     private func delay() async {
@@ -67,5 +68,33 @@ struct LaunchScreen: View {
 #Preview {
     PreviewView {
         LaunchScreen()
+    }
+}
+
+struct MyView: View {
+    @State private var name = "Swift"
+
+    @FocusState var isInputActive: Bool
+
+    var body: some View {
+        if #available(iOS 16, *) {
+            NavigationView {
+                TextField("Enter your name", text: $name)
+                    .textFieldStyle(.roundedBorder)
+                    .focused($isInputActive)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            Button("Done") {
+                                isInputActive = false
+                            }
+                        }
+                    }
+                    .navigationTitle("Test")
+                    .navigationBarTitleDisplayMode(.inline)
+                    .padding()
+            }
+        } else {
+            Text("Test")
+        }
     }
 }

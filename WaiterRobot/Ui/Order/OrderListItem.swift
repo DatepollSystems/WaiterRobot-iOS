@@ -17,63 +17,55 @@ struct OrderListItem: View {
         Button {
             addOne()
         } label: {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("\(amount) x")
-                    Spacer()
-                    Text(name)
+            HStack {
+                VStack {
+                    HStack {
+                        Text("\(amount)x")
+                            .font(.title3)
+                            .frame(width: 40, alignment: .leading)
+                            .multilineTextAlignment(.leading)
 
+                        Text(name)
+                            .font(.title3)
+                            .multilineTextAlignment(.leading)
+
+                        Spacer()
+                    }
+
+                    if let note {
+                        Text(note)
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+
+                HStack {
                     Button {
                         editNote = true
                         editedNote = note ?? ""
                     } label: {
                         Image(systemName: "pencil")
-                            .imageScale(.large)
-                    }.foregroundColor(.accentColor)
+                            .padding(10)
+                    }
+                    .foregroundStyle(.white)
+                    .background(
+                        RoundedRectangle(cornerRadius: 3)
+                            .foregroundStyle(Color.accentColor)
+                    )
                 }
-
-                if let note {
-                    Text(note)
-                        .foregroundColor(.secondary)
-                        .font(.caption)
-                }
+                .padding(.vertical, 2)
+                .frame(maxHeight: .infinity, alignment: .center)
             }
+
             .foregroundColor(.blackWhite)
         }
-        // TODO: make only half screen when ios 15 is dropped
         .sheet(isPresented: $editNote) {
-            NavigationView {
-                VStack {
-                    TextEditorWithPlaceholder(
-                        text: $editedNote,
-                        lable: localize.order.addNoteDialog.inputLabel(),
-                        placeHolder: localize.order.addNoteDialog.inputPlaceholder(),
-                        editorHeight: 110,
-                        maxLength: 120
-                    )
-
-                    HStack {
-                        Button(localize.dialog.cancel(), role: .cancel) {
-                            editNote = false
-                        }
-                        Spacer()
-                        Button(localize.dialog.clear()) {
-                            onSaveNote(nil)
-                            editNote = false
-                        }
-                        Spacer()
-                        Button(localize.dialog.save()) {
-                            onSaveNote(editedNote)
-                            editNote = false
-                        }
-                    }
-                    .padding(.top)
-
-                    Spacer()
-                }
-                .padding()
-                .navigationTitle(localize.order.addNoteDialog.title(value0: name))
-                .navigationBarTitleDisplayMode(.inline)
+            if #available(iOS 16.0, *) {
+                orderProductNote()
+//                    .presentationDetents([.medium, .large])
+            } else {
+                orderProductNote()
             }
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
@@ -104,27 +96,33 @@ struct OrderListItem: View {
             .tint(.green)
         })
     }
+
+    private func orderProductNote() -> some View {
+        OrderProductNoteView(name: "test", noteText: $editedNote, onSaveNote: onSaveNote)
+    }
 }
 
 #Preview {
-    List {
-        OrderListItem(
-            name: "Beer",
-            amount: 5,
-            note: nil,
-            addOne: {},
-            removeOne: {},
-            removeAll: {},
-            onSaveNote: { _ in }
-        )
-        OrderListItem(
-            name: "Wine",
-            amount: 20,
-            note: "1x without Tomatoe",
-            addOne: {},
-            removeOne: {},
-            removeAll: {},
-            onSaveNote: { _ in }
-        )
+    PreviewView {
+        List {
+            OrderListItem(
+                name: "Beer",
+                amount: 5,
+                note: nil,
+                addOne: {},
+                removeOne: {},
+                removeAll: {},
+                onSaveNote: { _ in }
+            )
+            OrderListItem(
+                name: "Wine",
+                amount: 20,
+                note: "1x without Tomatoe",
+                addOne: {},
+                removeOne: {},
+                removeAll: {},
+                onSaveNote: { _ in }
+            )
+        }
     }
 }

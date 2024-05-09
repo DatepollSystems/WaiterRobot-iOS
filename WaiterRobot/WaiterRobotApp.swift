@@ -1,6 +1,5 @@
 import shared
 import SwiftUI
-import UIPilot
 
 @main
 struct WaiterRobotApp: App {
