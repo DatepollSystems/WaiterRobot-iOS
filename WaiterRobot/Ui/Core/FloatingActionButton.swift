@@ -62,15 +62,13 @@ struct FloatingActionButtonStyle: ButtonStyle {
     }
 }
 
-struct FloatingActionButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            EmbeddedFloatingActionButton(
-                icon: "plus",
-                action: {
-                    print("Test")
-                }
-            )
-        }
+#Preview {
+    ZStack {
+        EmbeddedFloatingActionButton(
+            icon: "plus",
+            action: {
+                print("Test")
+            }
+        )
     }
 }

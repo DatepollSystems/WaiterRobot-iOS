@@ -12,20 +12,36 @@ struct TableListScreen: View {
     ]
 
     var body: some View {
-        content()
-            .navigationTitle(CommonApp.shared.settings.eventName)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        viewModel.actual.openSettings()
-                    } label: {
-                        Image(systemName: "gear")
+        VStack {
+            if #available(iOS 16.0, *) {
+                content()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                viewModel.actual.openSettings()
+                            } label: {
+                                Image(systemName: "gear")
+                            }
+                        }
                     }
-                }
+                    .toolbarBackground(.hidden, for: .navigationBar)
+            } else {
+                content()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            Button {
+                                viewModel.actual.openSettings()
+                            } label: {
+                                Image(systemName: "gear")
+                            }
+                        }
+                    }
             }
-            .handleSideEffects(of: viewModel, navigator)
-            .animation(.spring, value: viewModel.state.tableGroupsArray)
+        }
+        .navigationTitle(CommonApp.shared.settings.eventName)
+        .navigationBarTitleDisplayMode(.inline)
+        .handleSideEffects(of: viewModel, navigator)
+        .animation(.spring, value: viewModel.state.tableGroupsArray)
     }
 
     private func content() -> some View {
@@ -74,17 +90,21 @@ struct TableListScreen: View {
                         onSelectAll: { viewModel.actual.showAll() },
                         onUnselectAll: { viewModel.actual.hideAll() }
                     )
-
-                    Divider()
                 }
                 .background(Color(UIColor.systemBackground))
             }
 
+            Divider()
+
             if tableGroups.isEmpty {
+                Spacer()
+
                 Text(localize.tableList.noTableFound())
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()
+
+                Spacer()
             } else {
                 ScrollView {
                     LazyVGrid(columns: layout) {
@@ -106,6 +126,8 @@ struct TableListScreen: View {
 
 #Preview {
     PreviewView {
-        TableListScreen()
+        NavigationView {
+            TableListScreen()
+        }
     }
 }

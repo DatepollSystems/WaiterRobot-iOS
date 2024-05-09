@@ -36,8 +36,6 @@ struct TextEditorWithPlaceholder: View {
     }
 }
 
-struct TextEditorWithPlaceholder_Previews: PreviewProvider {
-    static var previews: some View {
-        TextEditorWithPlaceholder(text: .constant(""), lable: "Lable", placeHolder: "Some placeholder", editorHeight: 150, maxLength: 150)
-    }
+#Preview {
+    TextEditorWithPlaceholder(text: .constant(""), lable: "Lable", placeHolder: "Some placeholder", editorHeight: 150, maxLength: 150)
 }

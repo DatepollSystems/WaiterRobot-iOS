@@ -60,24 +60,20 @@ struct RefreshableScrollView<Content: View>: View {
     }
 }
 
-struct Refreshing_Preview: PreviewProvider {
-    static var previews: some View {
-        RefreshableScrollView(
-            isRefreshing: true,
-            onRefresh: {}
-        ) {
-            Text("Refreshing")
-        }
+#Preview {
+    RefreshableScrollView(
+        isRefreshing: true,
+        onRefresh: {}
+    ) {
+        Text("Refreshing")
     }
 }
 
-struct PullToRefresh_Preview: PreviewProvider {
-    static var previews: some View {
-        RefreshableScrollView(
-            isRefreshing: false,
-            onRefresh: {}
-        ) {
-            Text("Pull to refresh")
-        }
+#Preview {
+    RefreshableScrollView(
+        isRefreshing: false,
+        onRefresh: {}
+    ) {
+        Text("Pull to refresh")
     }
 }
