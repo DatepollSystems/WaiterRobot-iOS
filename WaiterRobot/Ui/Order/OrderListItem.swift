@@ -48,11 +48,7 @@ struct OrderListItem: View {
                         Image(systemName: "pencil")
                             .padding(10)
                     }
-                    .foregroundStyle(.white)
-                    .background(
-                        RoundedRectangle(cornerRadius: 3)
-                            .foregroundStyle(Color.accentColor)
-                    )
+                    .buttonStyle(.wrBorderedProminent)
                 }
                 .padding(.vertical, 2)
                 .frame(maxHeight: .infinity, alignment: .center)
