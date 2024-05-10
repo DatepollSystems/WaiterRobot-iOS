@@ -15,7 +15,7 @@ struct Event: View {
 
                 Spacer()
 
-                if let date = event.date {
+                if let date = event.startDate {
                     Text(date.description())
                         .font(.caption)
                         .foregroundColor(Color.gray)
@@ -26,5 +26,15 @@ struct Event: View {
 }
 
 #Preview {
-    Event(event: shared.Event(id: 1, name: "My Event", date: Kotlinx_datetimeLocalDate(year: 2022, monthNumber: 12, dayOfMonth: 24), city: "Graz", organisationId: 1))
+    Event(
+        event: shared.Event(
+            id: 1,
+            name: "My Event",
+            startDate: nil,
+            endDate: nil,
+            city: "Graz",
+            organisationId: 1,
+            stripeSettings: shared.Event.StripeSettingsDisabled()
+        )
+    )
 }

@@ -12,7 +12,7 @@ import UIPilot
 struct MainView: View {
     @State private var snackBarMessage: String?
     @State private var showUpdateAvailableAlert: Bool = false
-    @StateObject private var navigator: UIPilot<Screen> = UIPilot(initial: Screen.RootScreen.shared, debug: true)
+    @StateObject private var navigator: UIPilot<Screen> = UIPilot(initial: CommonApp.shared.getNextRootScreen(), debug: true)
     @StateObject private var viewModel = ObservableRootViewModel()
 
     private var selectedScheme: ColorScheme? {
@@ -30,12 +30,12 @@ struct MainView: View {
         ZStack {
             UIPilotHost(navigator) { route in
                 switch route {
-                case is Screen.RootScreen: RootScreen(viewModel: viewModel)
+                case is Screen.LoginScreen: LoginScreen()
                 case is Screen.LoginScannerScreen: LoginScannerScreen()
                 case is Screen.SwitchEventScreen: SwitchEventScreen()
                 case is Screen.SettingsScreen: SettingsScreen()
                 case is Screen.UpdateApp: UpdateAppScreen()
-                case let screen as Screen.RegisterScreen: RegisterScreen(createToken: screen.createToken)
+                case let screen as Screen.RegisterScreen: RegisterScreen(deepLink: screen.registerLink)
                 case let screen as Screen.TableDetailScreen: TableDetailScreen(table: screen.table)
                 case let screen as Screen.OrderScreen: OrderScreen(table: screen.table, initialItemId: screen.initialItemId)
                 case let screen as Screen.BillingScreen: BillingScreen(table: screen.table)

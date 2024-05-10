@@ -113,7 +113,7 @@ struct OrderListItem: View {
             OrderListItem(
                 name: "Wine",
                 amount: 20,
-                note: "1x without Tomatoe",
+                note: "1x without Tomato",
                 addOne: {},
                 removeOne: {},
                 removeAll: {},

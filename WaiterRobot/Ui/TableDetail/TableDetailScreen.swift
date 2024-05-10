@@ -53,9 +53,9 @@ struct TableDetailScreen: View {
                 Spacer()
             } else {
                 List {
-                    ForEach(orderedItems, id: \.id) { item in
+                    ForEach(orderedItems, id: \.virtualId) { item in
                         OrderedItemView(item: item) {
-                            viewModel.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
+                            viewModel.actual.openOrderScreen(initialItemId: item.baseProductId.toKotlinLong())
                         }
                     }
                 }
