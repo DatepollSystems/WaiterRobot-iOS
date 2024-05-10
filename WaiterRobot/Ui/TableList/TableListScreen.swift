@@ -11,12 +11,15 @@ struct TableListScreen: View {
         GridItem(.adaptive(minimum: 100)),
     ]
 
+    @State
+    private var showFilters = false
+
     var body: some View {
         VStack {
             if #available(iOS 16.0, *) {
                 content()
                     .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
+                        ToolbarItem(placement: .topBarTrailing) {
                             Button {
                                 viewModel.actual.openSettings()
                             } label: {
@@ -82,7 +85,7 @@ struct TableListScreen: View {
         let tableGroups = Array(data)
 
         VStack(spacing: 0) {
-            if tableGroups.count > 1 {
+            if tableGroups.count > 1, showFilters {
                 VStack {
                     TableListFilterRow(
                         tableGroups: tableGroups,
@@ -119,8 +122,18 @@ struct TableListScreen: View {
                     }
                     .padding()
                 }
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            showFilters.toggle()
+                        } label: {
+                            Image(systemName: "slider.horizontal.3")
+                        }
+                    }
+                }
             }
         }
+        .animation(.easeIn, value: showFilters)
     }
 }
 
