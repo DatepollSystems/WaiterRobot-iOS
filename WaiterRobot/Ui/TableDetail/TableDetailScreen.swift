@@ -68,7 +68,7 @@ struct TableDetailScreen: View {
                 Image(systemName: "creditcard")
                     .padding(10)
             }
-            .buttonStyle(.wrBorderedProminent)
+            .buttonStyle(.primary)
             .disabled(orderedItems.isEmpty)
 
             Spacer()
@@ -80,7 +80,7 @@ struct TableDetailScreen: View {
                     .imageScale(.large)
                     .padding()
             }
-            .buttonStyle(.wrBorderedProminent)
+            .buttonStyle(.primary)
         }
     }
 

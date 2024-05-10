@@ -94,6 +94,7 @@ struct TableListScreen: View {
                         onUnselectAll: { viewModel.actual.hideAll() }
                     )
                 }
+                .padding()
                 .background(Color(UIColor.systemBackground))
             }
 
