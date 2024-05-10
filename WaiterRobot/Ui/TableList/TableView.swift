@@ -20,7 +20,7 @@ struct TableView: View {
                             Spacer()
 
                             Circle()
-                                .foregroundColor(.red)
+                                .foregroundColor(.accentColor)
                                 .frame(width: 12)
                         }
                         Spacer()
