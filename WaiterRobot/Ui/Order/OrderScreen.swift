@@ -18,7 +18,7 @@ struct OrderScreen: View {
         showProductSearch = initialItemId == nil ? true : false
 
         UIToolbar.appearance().barTintColor = UIColor.systemBackground // Background color
-        UIToolbar.appearance().tintColor = UIColor.blue // Tint color of buttonss
+        UIToolbar.appearance().tintColor = UIColor.blue // Tint color of buttons
     }
 
     var body: some View {
@@ -98,7 +98,7 @@ struct OrderScreen: View {
                     .imageScale(.small)
                     .padding(10)
             }
-            .buttonStyle(.wrBorderedProminent)
+            .buttonStyle(.primary)
             .disabled(currentOrder.isEmpty)
 
             Spacer()
@@ -110,7 +110,7 @@ struct OrderScreen: View {
                     .imageScale(.large)
                     .padding()
             }
-            .buttonStyle(.wrBorderedProminent)
+            .buttonStyle(.primary)
         }
         .customBackNavigation(title: localize.dialog.cancel(), icon: "chevron.backward") {
             if currentOrder.isEmpty {

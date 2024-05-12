@@ -42,21 +42,21 @@ struct WrToolbarModifier<ToolbarView: View>: ViewModifier {
                 Image(systemName: "creditcard")
                     .padding(12)
             }
-            .buttonStyle(.wrBorderedProminent)
+            .buttonStyle(.primary)
 
             Button {} label: {
                 Image(systemName: "plus")
                     .imageScale(.large)
                     .padding()
             }
-            .buttonStyle(.wrBorderedProminent)
+            .buttonStyle(.primary)
 
             Button {} label: {
                 Image(systemName: "plus")
                     .imageScale(.large)
                     .padding()
             }
-            .buttonStyle(.wrBorderedProminent)
+            .buttonStyle(.primary)
             .disabled(true)
         }
 }
