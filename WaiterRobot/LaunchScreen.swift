@@ -70,31 +70,3 @@ struct LaunchScreen: View {
         LaunchScreen()
     }
 }
-
-struct MyView: View {
-    @State private var name = "Swift"
-
-    @FocusState var isInputActive: Bool
-
-    var body: some View {
-        if #available(iOS 16, *) {
-            NavigationView {
-                TextField("Enter your name", text: $name)
-                    .textFieldStyle(.roundedBorder)
-                    .focused($isInputActive)
-                    .toolbar {
-                        ToolbarItemGroup(placement: .keyboard) {
-                            Button("Done") {
-                                isInputActive = false
-                            }
-                        }
-                    }
-                    .navigationTitle("Test")
-                    .navigationBarTitleDisplayMode(.inline)
-                    .padding()
-            }
-        } else {
-            Text("Test")
-        }
-    }
-}

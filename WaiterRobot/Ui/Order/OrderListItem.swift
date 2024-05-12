@@ -57,12 +57,7 @@ struct OrderListItem: View {
             .foregroundColor(.blackWhite)
         }
         .sheet(isPresented: $editNote) {
-            if #available(iOS 16.0, *) {
-                orderProductNote()
-//                    .presentationDetents([.medium, .large])
-            } else {
-                orderProductNote()
-            }
+            orderProductNote()
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
             HStack {
@@ -94,7 +89,7 @@ struct OrderListItem: View {
     }
 
     private func orderProductNote() -> some View {
-        OrderProductNoteView(name: "test", noteText: $editedNote, onSaveNote: onSaveNote)
+        OrderProductNoteView(name: name, noteText: $editedNote, onSaveNote: onSaveNote)
     }
 }
 
