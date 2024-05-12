@@ -14,13 +14,15 @@ class ObservableViewModel<State: ViewModelState, Effect: ViewModelEffect, ViewMo
 
     private var task: Task<Void, Error>? = nil
 
-    init(viewModel: ViewModel, subscribe _: Bool = true) {
+    init(viewModel: ViewModel, subscribe: Bool = true) {
         actual = viewModel
         // This is save, as the constraint is required by the generics (S must be the state of the provided VM)
         state = actual.container.stateFlow.value as! State
 
-        Task {
-            await activate()
+        if subscribe {
+            Task {
+                await activate()
+            }
         }
     }
 
