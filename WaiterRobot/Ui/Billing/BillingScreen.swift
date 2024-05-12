@@ -119,7 +119,7 @@ struct BillingScreen: View {
                 Button {
                     showPayDialog = true
                 } label: {
-                    Image(systemName: "dollarsign")
+                    Image(systemName: "eurosign")
                         .font(.system(.title))
                         .padding()
                         .tint(.white)
