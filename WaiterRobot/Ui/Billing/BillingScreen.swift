@@ -81,20 +81,20 @@ struct BillingScreen: View {
                         .padding()
                 } else {
                     Section {
-                        ForEach(billItems, id: \.self) { item in
+                        ForEach(billItems, id: \.virtualId) { item in
                             BillListItem(
                                 item: item,
                                 addOne: {
-                                    viewModel.actual.addItem(id: item.productId, amount: 1)
+                                    viewModel.actual.addItem(virtualId: item.virtualId, amount: 1)
                                 },
                                 addAll: {
-                                    viewModel.actual.addItem(id: item.productId, amount: item.ordered - item.selectedForBill)
+                                    viewModel.actual.addItem(virtualId: item.virtualId, amount: item.ordered - item.selectedForBill)
                                 },
                                 removeOne: {
-                                    viewModel.actual.addItem(id: item.productId, amount: -1)
+                                    viewModel.actual.addItem(virtualId: item.virtualId, amount: -1)
                                 },
                                 removeAll: {
-                                    viewModel.actual.addItem(id: item.productId, amount: -item.selectedForBill)
+                                    viewModel.actual.addItem(virtualId: item.virtualId, amount: -item.selectedForBill)
                                 }
                             )
                         }

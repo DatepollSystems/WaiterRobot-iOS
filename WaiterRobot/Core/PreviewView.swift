@@ -5,7 +5,7 @@ import UIPilot
 /// Helper view which sets up everything needed for previewing content
 struct PreviewView<Content: View>: View {
     @StateObject
-    private var navigator = UIPilot<Screen>(initial: Screen.RootScreen.shared, debug: true)
+    private var navigator = UIPilot<Screen>(initial: CommonApp.shared.getNextRootScreen(), debug: true)
 
     private let withUIPilot: Bool
 

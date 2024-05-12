@@ -21,6 +21,14 @@ struct OrderedItemView: View {
 
 #Preview {
     List {
-        OrderedItemView(item: OrderedItem(id: 1, name: "Test", amount: 2), tabbed: {})
+        OrderedItemView(
+            item: OrderedItem(
+                baseProductId: 1,
+                name: "Test",
+                amount: 1,
+                virtualId: 2
+            ),
+            tabbed: {}
+        )
     }
 }

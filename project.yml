@@ -15,7 +15,7 @@ fileGroups:
 packages:
   shared:
     url: https://github.com/DatepollSystems/WaiterRobot-Shared-Android.git
-    version: 1.4.1
+    minorVersion: 1.5.0
   UIPilot:
     url: https://github.com/canopas/UIPilot.git
     from: 1.3.1
@@ -51,8 +51,8 @@ targetTemplates:
         # Only used for prod releases. Lava uses epochMinute (same as on Android)
         CFBundleVersion: "20007"
 
-        API_BASE: "${apiBase}"
         VERSION_SUFFIX: "${versionSuffix}"
+        ALLOWED_HOSTS: "${allowedHosts}"
 
         CFBundleDevelopmentRegion: "$(DEVELOPMENT_LANGUAGE)"
         CFBundleDisplayName: "${displayName}"
@@ -116,9 +116,9 @@ targets:
       identifier: "org.datepollsystems.waiterrobot"
       displayName: "kellner.team"
       deeplinkDomain: "my.kellner.team"
-      apiBase: "https://my.kellner.team/api"
       versionSuffix: ""
-  
+      allowedHosts: "my.kellner.team"
+
   WaiterRobotLava:
     templates:
       - WaiterRobot
@@ -130,8 +130,8 @@ targets:
       identifier: "org.datepollsystems.waiterrobot.beta"
       displayName: "lava.kellner.team"
       deeplinkDomain: "lava.kellner.team"
-      apiBase: "https://lava.kellner.team/api"
       versionSuffix: "lava"
+      allowedHosts: "*"
     preBuildScripts:
       - name: Set BuildNumber to epochMinute
         basedOnDependencyAnalysis: false # run for each build

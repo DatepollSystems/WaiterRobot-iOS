@@ -9,7 +9,7 @@ struct LaunchScreen: View {
     @State private var startupFinished = false
 
     var body: some View {
-        VStack {
+        ZStack {
             if case .phone = device {
                 VStack {
                     Spacer()
@@ -37,6 +37,10 @@ struct LaunchScreen: View {
                     }
                 }
             }
+
+            if startupFinished {
+                MainView()
+            }
         }
         .onAppear {
             // This is needed otherwise previews will crash randomly
@@ -51,9 +55,6 @@ struct LaunchScreen: View {
                     startupFinished = true
                 }
             }
-        }
-        .fullScreenCover(isPresented: $startupFinished) {
-            MainView()
         }
     }
 
