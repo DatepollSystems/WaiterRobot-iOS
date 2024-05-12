@@ -53,10 +53,7 @@ struct RegisterScreen: View {
                 Button {
                     viewModel.actual.onRegister(
                         name: name,
-                        registerLink: DeepLink.AuthRegisterLink(
-                            token: deepLink.token,
-                            apiBase: deepLink.apiBase // TODO: use correct id
-                        )
+                        registerLink: deepLink
                     )
                 } label: {
                     Text(localize.register.login())
