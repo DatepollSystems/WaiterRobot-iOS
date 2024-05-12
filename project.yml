@@ -69,6 +69,10 @@ targetTemplates:
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
         NSCameraUsageDescription: "Camera is needed to scan QR-Codes"
+        NSContactsUsageDescription: "We don't use your contacts"
+        NSMotionUsageDescription: "We don't use your motion sensors"
+        NSLocationWhenInUseUsageDescription: "We don't use your location"
+        NSBluetoothAlwaysUsageDescription: "We don't use bluetooth"
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
         UIRequiredDeviceCapabilities:
