@@ -94,7 +94,7 @@ struct OrderListItem: View {
     }
 
     private func orderProductNote() -> some View {
-        OrderProductNoteView(name: "test", noteText: $editedNote, onSaveNote: onSaveNote)
+        OrderProductNoteView(name: name, noteText: $editedNote, onSaveNote: onSaveNote)
     }
 }
 
