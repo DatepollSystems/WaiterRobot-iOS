@@ -13,6 +13,7 @@ class ObservableViewModel<State: ViewModelState, Effect: ViewModelEffect, ViewMo
     public let actual: ViewModel
 
     private var task: Task<Void, Error>? = nil
+    // private var subscriberCount = SubscribtionCounter()
 
     init(viewModel: ViewModel) {
         actual = viewModel
@@ -20,11 +21,29 @@ class ObservableViewModel<State: ViewModelState, Effect: ViewModelEffect, ViewMo
         state = actual.container.stateFlow.value as! State
 
         activate()
+
+        /* $state.handleEvents(
+             receiveSubscription: {
+                 if(subscriberCount.subscribe() == 1) {
+                     activate()
+                 }
+             },
+             receiveCancel: {
+                 if(subscriberCount.unsubscribe() == 0) {
+                     cancel()
+                 }
+             }
+         ) */
     }
 
     deinit {
         actual.onCleared()
+        cancel()
+    }
+
+    private func cancel() {
         task?.cancel()
+        task = nil
     }
 
     @MainActor
@@ -39,6 +58,21 @@ class ObservableViewModel<State: ViewModelState, Effect: ViewModelEffect, ViewMo
         }
     }
 }
+
+/* actor SubscribtionCounter {
+     private var count = 0
+
+     func subscribe() -> Int {
+         return ++count
+     }
+
+     func unsubscribe() -> Int {
+         if --count < 0 {
+           count = 0
+         }
+         return count
+     }
+ } */
 
 class ObservableTableListViewModel: ObservableViewModel<TableListState, TableListEffect, TableListViewModel> {
     init() {
