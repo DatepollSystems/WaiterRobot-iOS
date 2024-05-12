@@ -20,19 +20,24 @@ The KMM module is integrated as a Swift-Package (shared).
 
 This project uses XcodeGen for generating the Xcode project.
 
-1. Execute setup script
+1. Xcodegen
+
+Run in your terminal: 
 
 ```bash
-bash setup.sh
-```
-
-2. Generate the Xcode project (run in root folder, where the `project.yml` lives):
-
-```bash
-xcodegen
+swift run xcodegen
 ```
 
 > This command must also be run after switching branches and it's advisable to also run it after a `git pull`
+
+2. Git pre-commit hook
+
+To have unified formatting, we use SwiftFormat. The pre-commit hook can be installed if the code should be formatted automatically before every commit. Execute following command in your terminal:
+
+```bash
+bash install-git-hook.sh
+```
+
 
 3. Add credentials for the GitHub Maven Package Registry
 

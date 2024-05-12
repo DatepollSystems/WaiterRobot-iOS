@@ -13,7 +13,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Install SwiftFormat
-      run: brew install swiftformat
     - name: Run SwiftFormat
-      run: swiftformat . --lint
+      run: swift run swiftformat . --lint
