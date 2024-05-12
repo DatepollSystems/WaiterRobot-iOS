@@ -131,10 +131,12 @@ struct TableListScreen: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            showFilters.toggle()
-                        } label: {
-                            Image(systemName: "slider.horizontal.3")
+                        if tableGroups.count > 1 {
+                            Button {
+                                showFilters.toggle()
+                            } label: {
+                                Image(systemName: "slider.horizontal.3")
+                            }
                         }
                     }
                 }
