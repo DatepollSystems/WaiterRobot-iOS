@@ -1,7 +1,3 @@
-# xcodegen
-WaiterRobot.xcodeproj/
-.generated/
-
 # Created by https://www.toptal.com/developers/gitignore/api/fastlane,xcode,intellij,appcode,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=fastlane,xcode,intellij,appcode,macos
 
@@ -240,14 +236,6 @@ Temporary Items
 .apdisk
 .build
 
-### Xcode ###
-## User settings
-xcuserdata/
-
-## Xcode 8 and earlier
-*.xcscmblueprint
-*.xccheckout
-
 ## Obj-C/Swift specific
 *.hmap
 *.ipa
@@ -255,6 +243,11 @@ xcuserdata/
 *.dSYM
 
 # End of https://www.toptal.com/developers/gitignore/api/fastlane,xcode,intellij,appcode,macos
+
+# Xcodegen
+.generated/
+WaiterRobot.xcodeproj/*
+!WaiterRobot.xcodeproj/project.xcworkspace/xcshareddata/swiftpm
 
 .keys*
 .env.*

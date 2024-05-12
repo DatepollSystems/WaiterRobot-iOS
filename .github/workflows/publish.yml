@@ -18,7 +18,7 @@ on:
 
 jobs:    
   publish:
-    runs-on: macos-13
+    runs-on: macos-14
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -30,7 +30,7 @@ jobs:
           bundler-cache: true
       
       - name: Netrc maven.pkg.github.com
-        uses: extractions/netrc@v1
+        uses: extractions/netrc@v2
         with:
           machine: maven.pkg.github.com
           username: cirunner

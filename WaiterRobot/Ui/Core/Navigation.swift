@@ -6,21 +6,30 @@ import UIPilot
 extension UIPilot<Screen> {
     func navigate(_ navAction: NavAction) {
         koin.logger(tag: "Navigation").d { "Handle navigation: \(navAction.description)" }
-        switch navAction {
-        case is NavAction.Pop:
+
+        switch onEnum(of: navAction) {
+        case .pop:
             pop()
-        case let nav as NavAction.Push:
+
+        case let .push(nav):
             push(nav.screen)
-        case let nav as NavAction.PopUpTo:
+
+        case let .popUpTo(nav):
             popTo(nav.screen, inclusive: nav.inclusive)
-        case let nav as NavAction.PopUpAndPush:
+
+        case let .popUpAndPush(nav):
             popTo(nav.popUpTo, inclusive: nav.inclusive)
             push(nav.screen)
-        default:
-            koin.logger(tag: "Navigation").e {
-                "No nav action for nav effect \(navAction.self.description)"
-            }
+
+        case let .replaceRoot(nav):
+            guard let topmost = topmostScreen else { return }
+            popTo(topmost, inclusive: true)
+            push(nav.screen)
         }
+    }
+
+    var topmostScreen: Screen? {
+        stack.first
     }
 }
 

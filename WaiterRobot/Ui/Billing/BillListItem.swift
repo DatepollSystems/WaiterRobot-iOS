@@ -67,11 +67,12 @@ struct BillListItem: View {
     List {
         BillListItem(
             item: BillItem(
-                productId: 1,
+                baseProductId: 1,
                 name: "Beer",
                 ordered: 10,
                 selectedForBill: 5,
-                pricePerPiece: Money(cents: 3390)
+                pricePerPiece: Money(cents: 3390),
+                orderProductIds: [1, 2]
             ),
             addOne: {},
             addAll: {},
@@ -80,11 +81,12 @@ struct BillListItem: View {
         )
         BillListItem(
             item: BillItem(
-                productId: 2,
+                baseProductId: 2,
                 name: "Wine",
                 ordered: 15,
                 selectedForBill: 8,
-                pricePerPiece: Money(cents: 390)
+                pricePerPiece: Money(cents: 390),
+                orderProductIds: [1, 2]
             ),
             addOne: {},
             addAll: {},

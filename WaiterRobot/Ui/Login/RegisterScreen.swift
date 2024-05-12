@@ -8,7 +8,8 @@ struct RegisterScreen: View {
     @StateObject private var viewModel = ObservableRegisterViewModel()
 
     @State private var name: String = ""
-    let createToken: String
+
+    let deepLink: DeepLink.AuthRegisterLink
 
     var body: some View {
         switch viewModel.state.viewState {
@@ -50,7 +51,10 @@ struct RegisterScreen: View {
                 Spacer()
 
                 Button {
-                    viewModel.actual.onRegister(name: name, createToken: createToken)
+                    viewModel.actual.onRegister(
+                        name: name,
+                        registerLink: deepLink
+                    )
                 } label: {
                     Text(localize.register.login())
                 }
@@ -66,5 +70,5 @@ struct RegisterScreen: View {
 }
 
 #Preview {
-    RegisterScreen(createToken: "")
+    RegisterScreen(deepLink: DeepLink.AuthRegisterLink(token: "", apiBase: ""))
 }
