@@ -6,48 +6,26 @@
 import Foundation
 import shared
 
-@MainActor
 class ObservableViewModel<State: ViewModelState, Effect: ViewModelEffect, ViewModel: AbstractViewModel<State, Effect>>: ObservableObject {
-    @Published public private(set) var state: State
+    @Published
+    public private(set) var state: State
 
     public let actual: ViewModel
 
     private var task: Task<Void, Error>? = nil
-    // private var subscriberCount = SubscribtionCounter()
 
-    init(viewModel: ViewModel) {
+    init(viewModel: ViewModel, subscribe _: Bool = true) {
         actual = viewModel
         // This is save, as the constraint is required by the generics (S must be the state of the provided VM)
         state = actual.container.stateFlow.value as! State
 
-        activate()
-
-        /* $state.handleEvents(
-             receiveSubscription: {
-                 if(subscriberCount.subscribe() == 1) {
-                     activate()
-                 }
-             },
-             receiveCancel: {
-                 if(subscriberCount.unsubscribe() == 0) {
-                     cancel()
-                 }
-             }
-         ) */
-    }
-
-    deinit {
-        actual.onCleared()
-        cancel()
-    }
-
-    private func cancel() {
-        task?.cancel()
-        task = nil
+        Task {
+            await activate()
+        }
     }
 
     @MainActor
-    private func activate() {
+    func activate() {
         guard task == nil else { return }
         task = Task { [weak self] in
             guard let stateFlow = self?.actual.container.stateFlow else { return }
@@ -57,32 +35,29 @@ class ObservableViewModel<State: ViewModelState, Effect: ViewModelEffect, ViewMo
             }
         }
     }
+
+    func deactivate() {
+        task?.cancel()
+        task = nil
+    }
+
+    deinit {
+        actual.onCleared()
+
+        task?.cancel()
+        task = nil
+    }
 }
-
-/* actor SubscribtionCounter {
-     private var count = 0
-
-     func subscribe() -> Int {
-         return ++count
-     }
-
-     func unsubscribe() -> Int {
-         if --count < 0 {
-           count = 0
-         }
-         return count
-     }
- } */
 
 class ObservableTableListViewModel: ObservableViewModel<TableListState, TableListEffect, TableListViewModel> {
     init() {
-        super.init(viewModel: koin.tableListVM())
+        super.init(viewModel: koin.tableListVM(), subscribe: false)
     }
 }
 
 class ObservableTableDetailViewModel: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel> {
     init(table: Table) {
-        super.init(viewModel: koin.tableDetailVM(table: table))
+        super.init(viewModel: koin.tableDetailVM(table: table), subscribe: false)
     }
 }
 

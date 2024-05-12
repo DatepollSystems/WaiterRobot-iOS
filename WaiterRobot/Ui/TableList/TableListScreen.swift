@@ -42,6 +42,12 @@ struct TableListScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .handleSideEffects(of: viewModel, navigator)
         .animation(.spring, value: viewModel.state.tableGroupsArray)
+        .onAppear {
+            viewModel.activate()
+        }
+        .onDisappear {
+            viewModel.deactivate()
+        }
     }
 
     private func content() -> some View {

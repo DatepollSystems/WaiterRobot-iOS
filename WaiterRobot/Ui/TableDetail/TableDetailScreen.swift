@@ -37,6 +37,12 @@ struct TableDetailScreen: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.activate()
+        }
+        .onDisappear {
+            viewModel.deactivate()
+        }
     }
 
     private func tableDetails(orderedItems: [OrderedItem]) -> some View {
