@@ -23,9 +23,8 @@ struct WaiterRobotApp: App {
             appBuild: Int32(readFromInfoPlist(withKey: "CFBundleVersion"))!,
             phoneModel: UIDevice.current.model,
             os: OS.Ios(version: UIDevice.current.systemVersion),
-            allowedHostsCsv: "",
+            allowedHostsCsv: "*", // TODO: separate according to selected target (comma separated list)
             stripeProvider: nil
-//            apiBaseUrl: readFromInfoPlist(withKey: "API_BASE") TODO: Check how to force Prod to fixed URL
         )
 
         KoinKt.doInitKoinIos()

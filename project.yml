@@ -51,7 +51,6 @@ targetTemplates:
         # Only used for prod releases. Lava uses epochMinute (same as on Android)
         CFBundleVersion: "20007"
 
-        API_BASE: "${apiBase}"
         VERSION_SUFFIX: "${versionSuffix}"
 
         CFBundleDevelopmentRegion: "$(DEVELOPMENT_LANGUAGE)"
@@ -116,7 +115,6 @@ targets:
       identifier: "org.datepollsystems.waiterrobot"
       displayName: "kellner.team"
       deeplinkDomain: "my.kellner.team"
-      apiBase: "https://my.kellner.team/api"
       versionSuffix: ""
   
   WaiterRobotLava:
@@ -130,7 +128,6 @@ targets:
       identifier: "org.datepollsystems.waiterrobot.beta"
       displayName: "lava.kellner.team"
       deeplinkDomain: "lava.kellner.team"
-      apiBase: "https://lava.kellner.team/api"
       versionSuffix: "lava"
     preBuildScripts:
       - name: Set BuildNumber to epochMinute

@@ -10,10 +10,17 @@ import SwiftUI
 import UIPilot
 
 struct MainView: View {
-    @State private var snackBarMessage: String?
-    @State private var showUpdateAvailableAlert: Bool = false
-    @StateObject private var navigator: UIPilot<Screen> = UIPilot(initial: CommonApp.shared.getNextRootScreen(), debug: true)
-    @StateObject private var viewModel = ObservableRootViewModel()
+    @State
+    private var snackBarMessage: String?
+
+    @State
+    private var showUpdateAvailableAlert: Bool = false
+
+    @StateObject
+    private var navigator: UIPilot<Screen> = UIPilot(initial: CommonApp.shared.getNextRootScreen(), debug: true)
+
+    @StateObject
+    private var viewModel = ObservableRootViewModel()
 
     private var selectedScheme: ColorScheme? {
         switch viewModel.state.selectedTheme {
@@ -29,29 +36,39 @@ struct MainView: View {
     var body: some View {
         ZStack {
             UIPilotHost(navigator) { route in
-                switch route {
-                case is Screen.LoginScreen: LoginScreen()
-                case is Screen.LoginScannerScreen: LoginScannerScreen()
-                case is Screen.SwitchEventScreen: SwitchEventScreen()
-                case is Screen.SettingsScreen: SettingsScreen()
-                case is Screen.UpdateApp: UpdateAppScreen()
-                case let screen as Screen.RegisterScreen: RegisterScreen(deepLink: screen.registerLink)
-                case let screen as Screen.TableDetailScreen: TableDetailScreen(table: screen.table)
-                case let screen as Screen.OrderScreen: OrderScreen(table: screen.table, initialItemId: screen.initialItemId)
-                case let screen as Screen.BillingScreen: BillingScreen(table: screen.table)
-                default:
-                    VStack {
-                        Text("No view defined for \(route.description)")
+                switch onEnum(of: route) {
+                case .loginScreen:
+                    LoginScreen()
 
-                        Button {
-                            navigator.pop()
-                        } label: {
-                            Text("Back")
-                        }
-                        .onAppear {
-                            koin.logger(tag: "WaiterRobotApp").e { "No view defined for \(route.description)" }
-                        }
-                    }
+                case .tableListScreen:
+                    TableListScreen()
+
+                case .switchEventScreen:
+                    SwitchEventScreen()
+
+                case .settingsScreen:
+                    SettingsScreen()
+
+                case let .registerScreen(screen):
+                    RegisterScreen(deepLink: screen.registerLink)
+
+                case .updateApp:
+                    UpdateAppScreen()
+
+                case let .tableDetailScreen(screen):
+                    TableDetailScreen(table: screen.table)
+
+                case let .orderScreen(screen):
+                    OrderScreen(table: screen.table, initialItemId: screen.initialItemId)
+
+                case let .billingScreen(screen):
+                    BillingScreen(table: screen.table)
+
+                case .loginScannerScreen:
+                    LoginScannerScreen()
+
+                case .stripeInitializationScreen:
+                    EmptyView()
                 }
             }
         }
