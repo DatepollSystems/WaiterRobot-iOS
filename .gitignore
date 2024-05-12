@@ -241,12 +241,9 @@ Temporary Items
 .build
 
 ### Xcode ###
-## User settings
-xcuserdata/
+WaiterRobot.xcodeproj/*
+!WaiterRobot.xcodeproj/project.xcworkspace/xcshareddata/swiftpm
 
-## Xcode 8 and earlier
-*.xcscmblueprint
-*.xccheckout
 
 ## Obj-C/Swift specific
 *.hmap
