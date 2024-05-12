@@ -23,7 +23,7 @@ struct WaiterRobotApp: App {
             appBuild: Int32(readFromInfoPlist(withKey: "CFBundleVersion"))!,
             phoneModel: UIDevice.current.model,
             os: OS.Ios(version: UIDevice.current.systemVersion),
-            allowedHostsCsv: "*", // TODO: separate according to selected target (comma separated list)
+            allowedHostsCsv: readFromInfoPlist(withKey: "ALLOWED_HOSTS"),
             stripeProvider: nil
         )
 

@@ -52,6 +52,7 @@ targetTemplates:
         CFBundleVersion: "20007"
 
         VERSION_SUFFIX: "${versionSuffix}"
+        ALLOWED_HOSTS: "${allowedHosts}"
 
         CFBundleDevelopmentRegion: "$(DEVELOPMENT_LANGUAGE)"
         CFBundleDisplayName: "${displayName}"
@@ -116,7 +117,8 @@ targets:
       displayName: "kellner.team"
       deeplinkDomain: "my.kellner.team"
       versionSuffix: ""
-  
+      allowedHosts: "my.kellner.team"
+
   WaiterRobotLava:
     templates:
       - WaiterRobot
@@ -129,6 +131,7 @@ targets:
       displayName: "lava.kellner.team"
       deeplinkDomain: "lava.kellner.team"
       versionSuffix: "lava"
+      allowedHosts: "my.kellner.team,lava.kellner.team"
     preBuildScripts:
       - name: Set BuildNumber to epochMinute
         basedOnDependencyAnalysis: false # run for each build
