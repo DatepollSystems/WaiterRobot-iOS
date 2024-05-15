@@ -3,6 +3,7 @@ concurrency: # Cancel currently running releases when a new one is started
   group: publish-android-${{ github.ref_name }}
   cancel-in-progress: true
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -11,37 +12,36 @@ on:
       - 'project.yml'
       - 'WaiterRobot/**'
       - 'TargetSpecificResources/**'
-      - '.github/workflows/publish.yml'
       - 'fastlane/**'
       - 'Gemfile'
       - 'Gemfile.lock'
 
 jobs:    
   publish:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
           
-      - name: Setup Ruby 3.2.1
+      - name: Setup Ruby 3.3.0
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.2.1'
+          ruby-version: '3.3.0'
           bundler-cache: true
       
-      - name: Netrc api.github.com
-        uses: extractions/netrc@v1
+      - name: Netrc maven.pkg.github.com
+        uses: extractions/netrc@v2
         with:
           machine: maven.pkg.github.com
-          username: ${{ secrets.NETRC_USERNAME }}
-          password: ${{ secrets.NETRC_TOKEN }}
-          
-      - name: Setup xcodegen and init xcode project
-        uses: xavierLowmiller/xcodegen-action@1.1.2
-        with:
-          spec: project.yml
-          use-cache: true
-      
+          username: cirunner
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run XcodeGen
+        run: swift run xcodegen
+
+      - name: Install xcodes
+        run: brew install xcodes
+
       - name: Run tests with fastlane
         run: bundle exec fastlane test
         

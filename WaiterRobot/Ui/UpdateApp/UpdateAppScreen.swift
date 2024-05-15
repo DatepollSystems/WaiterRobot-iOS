@@ -27,10 +27,8 @@ struct UpdateAppScreen: View {
     }
 }
 
-struct UpdateAppScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            UpdateAppScreen()
-        }
+#Preview {
+    NavigationView {
+        UpdateAppScreen()
     }
 }

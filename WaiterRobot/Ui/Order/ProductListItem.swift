@@ -12,7 +12,7 @@ struct ProductListItem: View {
         self.onClick = onClick
 
         var allergens = ""
-        self.product.allergens.forEach { allergen in
+        for allergen in self.product.allergens {
             allergens += "\(allergen.shortName), "
         }
 
@@ -41,7 +41,7 @@ struct ProductListItem: View {
                     }
                     Text(product.price.description())
                 }
-                .foregroundColor(Color("textColor"))
+                .foregroundColor(.blackWhite)
                 .frame(maxWidth: .infinity)
                 .padding(5)
             }
@@ -50,24 +50,22 @@ struct ProductListItem: View {
     }
 }
 
-struct ProductListItem_Previews: PreviewProvider {
-    static var previews: some View {
-        ProductListItem(
-            product: Product(
-                id: 2,
-                name: "Wine",
-                price: Money(cents: 290),
-                soldOut: true,
-                allergens: [
-                    Allergen(id: 1, name: "Egg", shortName: "E"),
-                    Allergen(id: 2, name: "Egg2", shortName: "A"),
-                    Allergen(id: 3, name: "Egg3", shortName: "B"),
-                    Allergen(id: 4, name: "Egg4", shortName: "C"),
-                    Allergen(id: 5, name: "Egg5", shortName: "D"),
-                ],
-                position: 1
-            ),
-            onClick: {}
-        )
-    }
+#Preview {
+    ProductListItem(
+        product: Product(
+            id: 2,
+            name: "Wine",
+            price: Money(cents: 290),
+            soldOut: true,
+            allergens: [
+                Allergen(id: 1, name: "Egg", shortName: "E"),
+                Allergen(id: 2, name: "Egg2", shortName: "A"),
+                Allergen(id: 3, name: "Egg3", shortName: "B"),
+                Allergen(id: 4, name: "Egg4", shortName: "C"),
+                Allergen(id: 5, name: "Egg5", shortName: "D"),
+            ],
+            position: 1
+        ),
+        onClick: {}
+    )
 }

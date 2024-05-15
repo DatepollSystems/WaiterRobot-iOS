@@ -31,6 +31,14 @@ Run all iOS unit and ui tests.
 
 Sync certificates
 
+### ios renew_certificates
+
+```sh
+[bundle exec] fastlane ios renew_certificates
+```
+
+Renew certificates and profiles
+
 ### ios releaseWaiterRobot_develop
 
 ```sh

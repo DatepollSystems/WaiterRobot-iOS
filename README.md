@@ -2,7 +2,12 @@
     <img src="documentation/wr-square-rounded.png" style="width:200px; border-radius: 15px;"/>
 </p>
 <h1 align="center">WaiterRobot</h1>
-<p align="center">Lightning fast and simple gastronomy</p>
+<div align="center">
+    <p>Lightning fast and simple gastronomy</p>
+    <a href="https://apps.apple.com/at/app/waiterrobot/id1610157234?itsct=apps_box_badge&amp;itscg=30200">
+      <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1660003200" alt="Download on the App Store" style="border-radius: 13px; width: 155px;">
+    </a>
+</div>
 
 # iOS
 
@@ -15,30 +20,41 @@ The KMM module is integrated as a Swift-Package (shared).
 
 This project uses XcodeGen for generating the Xcode project.
 
-1. Execute setup script
-```bash
-bash setup.sh
-```
+1. Xcodegen
 
-2. Generate the Xcode project (run in root folder, where the `project.yml` lives):
+Run in your terminal: 
 
 ```bash
-xcodegen
+swift run xcodegen
 ```
 
-This command must also be run after switching branches and it's advisable to also run it after a `git pull`
+> This command must also be run after switching branches and it's advisable to also run it after a `git pull`
 
-3. Open the `WaiterRobot.xcodeproj` in Xcode and start coding :)
+2. Git pre-commit hook
 
-> If the Build fails with an exception that the binaries for the shared library couldn't be downloaded, you need to add 
-> the following to your `~/.netrc` file (create the file if it doesn't exist) to allow accessing the GitHub API.
-> The personal access token can be created under [Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens](https://github.com/settings/tokens?type=beta). "Public Repositories (read-only)" permission should be enougth.
+To have unified formatting, we use SwiftFormat. The pre-commit hook can be installed if the code should be formatted automatically before every commit. Execute following command in your terminal:
+
+```bash
+bash install-git-hook.sh
+```
+
+
+3. Add credentials for the GitHub Maven Package Registry
+
+To be able to download the shared SPM package from the GitHub Package Registry you need to authenticate against GitHub.
+Therefore you need to add the following to your `~/.netrc` file (create the file if it doesn't exist).
+The personal access token can be created on GitHub under 
+[Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens -> Generate new token](https://github.com/settings/personal-access-tokens/new).
+The token just needs the "Public Repositories (read-only)" access. No additional permissions are needed.
 
 ```
 machine maven.pkg.github.com
   login [github username]
   password [your new personal access token]
 ```
+
+4. Open the `WaiterRobot.xcodeproj` in Xcode and start coding :)
+
 
 ## Dev with local KMM module version
 

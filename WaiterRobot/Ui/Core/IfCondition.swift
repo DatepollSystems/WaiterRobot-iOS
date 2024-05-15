@@ -1,4 +1,11 @@
-// see: https://www.avanderlee.com/swiftui/conditional-view-modifier/
+//
+//  IfCondition.swift
+//  WaiterRobot
+//
+//  Created by Alexander Kauer on 25.02.24.
+//
+
+import Foundation
 import SwiftUI
 
 extension View {
@@ -7,7 +14,7 @@ extension View {
     ///   - condition: The condition to evaluate.
     ///   - transform: The transform to apply to the source `View`.
     /// - Returns: Either the original `View` or the modified `View` if the condition is `true`.
-    @ViewBuilder func conditionalModifier(_ condition: Bool, transform: (Self) -> some View) -> some View {
+    @ViewBuilder func ifCondition(_ condition: Bool, transform: (Self) -> some View) -> some View {
         if condition {
             transform(self)
         } else {

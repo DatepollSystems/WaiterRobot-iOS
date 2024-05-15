@@ -2,14 +2,15 @@ import shared
 import SwiftUI
 
 struct TableGroupSection: View {
-    let groupWithTables: TableGroupWithTables
+    let tableGroup: TableGroup
     let onTableClick: (shared.Table) -> Void
 
     var body: some View {
         Section {
-            ForEach(groupWithTables.tables, id: \.id) { table in
-                Table(
+            ForEach(tableGroup.tables, id: \.id) { table in
+                TableView(
                     text: table.number.description,
+                    hasOrders: table.hasOrders,
                     onClick: {
                         onTableClick(table)
                     }
@@ -19,28 +20,32 @@ struct TableGroupSection: View {
         } header: {
             HStack {
                 Color(UIColor.lightGray).frame(height: 1)
-                Text(groupWithTables.group.name)
+                Text(tableGroup.name)
                 Color(UIColor.lightGray).frame(height: 1)
             }
         }
     }
 }
 
-struct TableGroupSection_Previews: PreviewProvider {
-    static var previews: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
-            TableGroupSection(
-                groupWithTables: TableGroupWithTables(
-                    group: TableGroup(id: 1, name: "Test Group"),
-                    tables: [
-                        shared.Table(id: 1, number: 1, groupName: "Test Group"),
-                        shared.Table(id: 2, number: 2, groupName: "Test Group"),
-                        shared.Table(id: 3, number: 3, groupName: "Test Group"),
-                        shared.Table(id: 4, number: 4, groupName: "Test Group"),
-                    ]
-                ),
-                onTableClick: { _ in }
-            )
-        }.padding()
-    }
+#Preview {
+    LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
+        TableGroupSection(
+            tableGroup: TableGroup(
+                id: 1,
+                name: "Test Group",
+                eventId: 1,
+                position: 1,
+                color: nil,
+                hidden: false,
+                tables: [
+                    shared.Table(id: 1, number: 1, groupName: "Test Group", hasOrders: true),
+                    shared.Table(id: 2, number: 2, groupName: "Test Group", hasOrders: false),
+                    shared.Table(id: 3, number: 3, groupName: "Test Group", hasOrders: false),
+                    shared.Table(id: 4, number: 4, groupName: "Test Group", hasOrders: true),
+                ]
+            ),
+            onTableClick: { _ in }
+        )
+
+    }.padding()
 }

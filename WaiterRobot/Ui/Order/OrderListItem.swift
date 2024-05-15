@@ -17,63 +17,47 @@ struct OrderListItem: View {
         Button {
             addOne()
         } label: {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("\(amount) x")
-                    Spacer()
-                    Text(name)
+            HStack {
+                VStack {
+                    HStack {
+                        Text("\(amount)x")
+                            .font(.title3)
+                            .frame(width: 40, alignment: .leading)
+                            .multilineTextAlignment(.leading)
 
+                        Text(name)
+                            .font(.title3)
+                            .multilineTextAlignment(.leading)
+
+                        Spacer()
+                    }
+
+                    if let note {
+                        Text(note)
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+
+                HStack {
                     Button {
                         editNote = true
                         editedNote = note ?? ""
                     } label: {
                         Image(systemName: "pencil")
-                            .imageScale(.large)
-                    }.foregroundColor(.accentColor)
+                            .padding(10)
+                    }
+                    .buttonStyle(.primary)
                 }
-
-                if let note = note {
-                    Text(note)
-                        .foregroundColor(.secondary)
-                        .font(.caption)
-                }
+                .padding(.vertical, 2)
+                .frame(maxHeight: .infinity, alignment: .center)
             }
-            .foregroundColor(Color("textColor"))
+
+            .foregroundColor(.blackWhite)
         }
         .sheet(isPresented: $editNote) {
-            NavigationView {
-                VStack {
-                    TextEditorWithPlaceholder(
-                        text: $editedNote,
-                        lable: localize.order.addNoteDialog.inputLabel(),
-                        placeHolder: localize.order.addNoteDialog.inputPlaceholder(),
-                        editorHeight: 110,
-                        maxLength: 120
-                    )
-
-                    HStack {
-                        Button(localize.dialog.cancel(), role: .cancel) {
-                            editNote = false
-                        }
-                        Spacer()
-                        Button(localize.dialog.clear()) {
-                            onSaveNote(nil)
-                            editNote = false
-                        }
-                        Spacer()
-                        Button(localize.dialog.save()) {
-                            onSaveNote(editedNote)
-                            editNote = false
-                        }
-                    }
-                    .padding(.top)
-
-                    Spacer()
-                }
-                .padding()
-                .navigationTitle(localize.order.addNoteDialog.title(value0: name))
-                .navigationBarTitleDisplayMode(.inline)
-            }
+            orderProductNote()
         }
         .swipeActions(edge: .trailing, allowsFullSwipe: true, content: {
             HStack {
@@ -103,10 +87,14 @@ struct OrderListItem: View {
             .tint(.green)
         })
     }
+
+    private func orderProductNote() -> some View {
+        OrderProductNoteView(name: name, noteText: $editedNote, onSaveNote: onSaveNote)
+    }
 }
 
-struct OrderListItem_Previews: PreviewProvider {
-    static var previews: some View {
+#Preview {
+    PreviewView {
         List {
             OrderListItem(
                 name: "Beer",
@@ -120,7 +108,7 @@ struct OrderListItem_Previews: PreviewProvider {
             OrderListItem(
                 name: "Wine",
                 amount: 20,
-                note: "1x without Tomatoe",
+                note: "1x without Tomato",
                 addOne: {},
                 removeOne: {},
                 removeAll: {},

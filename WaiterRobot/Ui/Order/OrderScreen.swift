@@ -7,74 +7,117 @@ struct OrderScreen: View {
 
     @State private var productName: String = ""
     @State private var showProductSearch: Bool
+    @State private var showAbortOrderConfirmationDialog = false
 
-    @StateObject private var strongVM: ObservableViewModel<OrderState, OrderEffect, OrderViewModel>
+    @StateObject private var viewModel: ObservableOrderViewModel
     private let table: shared.Table
 
     init(table: shared.Table, initialItemId: KotlinLong?) {
         self.table = table
-        _strongVM = StateObject(wrappedValue: ObservableViewModel(vm: koin.orderVM(table: table, initialItemId: initialItemId)))
+        _viewModel = StateObject(wrappedValue: ObservableOrderViewModel(table: table, initialItemId: initialItemId))
         showProductSearch = initialItemId == nil ? true : false
+
+        UIToolbar.appearance().barTintColor = UIColor.systemBackground // Background color
+        UIToolbar.appearance().tintColor = UIColor.blue // Tint color of buttons
     }
 
     var body: some View {
-        unowned let vm = strongVM
+        VStack {
+            switch onEnum(of: viewModel.state.currentOrder) {
+            case .loading:
+                ProgressView()
 
-        ScreenContainer(vm.state) {
-            ZStack {
-                VStack {
-                    if vm.state.currentOrder.isEmpty {
-                        Text(localize.order.addProduct())
-                            .multilineTextAlignment(.center)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                    } else {
-                        List {
-                            ForEach(vm.state.currentOrder, id: \.product.id) { orderItem in
-                                OrderListItem(
-                                    name: orderItem.product.name,
-                                    amount: orderItem.amount,
-                                    note: orderItem.note,
-                                    addOne: { vm.actual.addItem(product: orderItem.product, amount: 1) },
-                                    removeOne: { vm.actual.addItem(product: orderItem.product, amount: -1) },
-                                    removeAll: { vm.actual.removeAllOfProduct(productId: orderItem.product.id) },
-                                    onSaveNote: { note in
-                                        vm.actual.addItemNote(item: orderItem, note: note)
-                                    }
-                                )
-                            }
-                        }
-                    }
-                }
+            case let .error(error):
+                Text(error.userMessage)
 
-                EmbeddedFloatingActionButton(icon: "plus") {
-                    showProductSearch = true
+            case let .success(resource):
+                if let data = resource.data {
+                    currentOder(data)
                 }
             }
         }
         .navigationTitle(localize.order.title(value0: table.number.description, value1: table.groupName))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden()
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    vm.actual.sendOrder()
-                } label: {
-                    Image(systemName: "paperplane.fill")
-                }
-                .disabled(vm.state.currentOrder.isEmpty || vm.state.viewState != ViewState.Idle.shared)
+        .confirmationDialog(
+            localize.order.notSent.title(),
+            isPresented: $showAbortOrderConfirmationDialog,
+            titleVisibility: .visible
+        ) {
+            Button(localize.dialog.closeAnyway(), role: .destructive) {
+                viewModel.actual.abortOrder()
             }
-        }
-        .customBackNavigation(title: localize.dialog.cancel(), icon: "chevron.backward", action: vm.actual.goBack)
-        .confirmationDialog(localize.order.notSent.title(), isPresented: Binding.constant(vm.state.showConfirmationDialog), titleVisibility: .visible) {
-            Button(localize.dialog.closeAnyway(), role: .destructive, action: vm.actual.abortOrder)
-            Button(localize.order.keepOrder(), role: .cancel, action: vm.actual.keepOrder)
         } message: {
             Text(localize.order.notSent.desc())
         }
         .sheet(isPresented: $showProductSearch) {
-            ProductSearch(vm: vm)
+            ProductSearch(viewModel: viewModel)
         }
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
+    }
+
+    @ViewBuilder
+    private func currentOder(
+        _ currentOrderArray: KotlinArray<OrderItem>
+    ) -> some View {
+        let currentOrder = Array(currentOrderArray)
+
+        VStack(spacing: 0) {
+            if currentOrder.isEmpty {
+                Spacer()
+
+                Text(localize.order.addProduct())
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+
+                Spacer()
+            } else {
+                List {
+                    ForEach(currentOrder, id: \.product.id) { orderItem in
+                        OrderListItem(
+                            name: orderItem.product.name,
+                            amount: orderItem.amount,
+                            note: orderItem.note,
+                            addOne: { viewModel.actual.addItem(product: orderItem.product, amount: 1) },
+                            removeOne: { viewModel.actual.addItem(product: orderItem.product, amount: -1) },
+                            removeAll: { viewModel.actual.removeAllOfProduct(productId: orderItem.product.id) },
+                            onSaveNote: { note in
+                                viewModel.actual.addItemNote(item: orderItem, note: note)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+        .wrBottomBar {
+            Button {
+                viewModel.actual.sendOrder()
+            } label: {
+                Image(systemName: "paperplane.fill")
+                    .imageScale(.small)
+                    .padding(10)
+            }
+            .buttonStyle(.primary)
+            .disabled(currentOrder.isEmpty)
+
+            Spacer()
+
+            Button {
+                showProductSearch = true
+            } label: {
+                Image(systemName: "plus")
+                    .imageScale(.large)
+                    .padding()
+            }
+            .buttonStyle(.primary)
+        }
+        .customBackNavigation(title: localize.dialog.cancel(), icon: "chevron.backward") {
+            if currentOrder.isEmpty {
+                viewModel.actual.abortOrder()
+            } else {
+                showAbortOrderConfirmationDialog = true
+            }
+        }
     }
 }

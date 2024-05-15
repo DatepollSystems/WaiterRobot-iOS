@@ -5,52 +5,92 @@ import UIPilot
 struct TableDetailScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel>
+    @StateObject private var viewModel: ObservableTableDetailViewModel
     private let table: shared.Table
 
     init(table: shared.Table) {
         self.table = table
-        _strongVM = StateObject(wrappedValue: ObservableViewModel(vm: koin.tableDetailVM(table: table)))
+        _viewModel = StateObject(
+            wrappedValue: ObservableTableDetailViewModel(table: table)
+        )
     }
 
     var body: some View {
-        unowned let vm = strongVM
+        content()
+            .navigationTitle(localize.tableDetail.title(value0: table.number.description, value1: table.groupName))
+            .handleSideEffects(of: viewModel, navigator)
+    }
 
-        ScreenContainer(vm.state) {
-            ZStack {
+    // TODO: add refreshing and loading indicator (also check android)
+    private func content() -> some View {
+        VStack {
+            switch onEnum(of: viewModel.state.orderedItemsResource) {
+            case .loading:
+                ProgressView()
+
+            case let .error(error):
+                tableDetailsError(error)
+
+            case let .success(resource):
+                if let orderedItems = resource.data as? [OrderedItem] {
+                    tableDetails(orderedItems: orderedItems)
+                }
+            }
+        }
+        .onAppear {
+            viewModel.activate()
+        }
+        .onDisappear {
+            viewModel.deactivate()
+        }
+    }
+
+    private func tableDetails(orderedItems: [OrderedItem]) -> some View {
+        // TODO: we need KotlinArray here in shared
+        VStack {
+            if orderedItems.isEmpty {
+                Spacer()
+
+                Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+
+                Spacer()
+            } else {
                 List {
-                    if vm.state.orderedItems.isEmpty {
-                        Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
-                            .multilineTextAlignment(.center)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                    } else {
-                        ForEach(vm.state.orderedItems, id: \.id) { item in
-                            OrderedItemView(item: item) {
-                                vm.actual.openOrderScreen(initialItemId: item.id.toKotlinLong())
-                            }
+                    ForEach(orderedItems, id: \.virtualId) { item in
+                        OrderedItemView(item: item) {
+                            viewModel.actual.openOrderScreen(initialItemId: item.baseProductId.toKotlinLong())
                         }
                     }
                 }
+            }
+        }
+        .wrBottomBar {
+            Button {
+                viewModel.actual.openBillingScreen()
+            } label: {
+                Image(systemName: "creditcard")
+                    .padding(10)
+            }
+            .buttonStyle(.primary)
+            .disabled(orderedItems.isEmpty)
 
-                EmbeddedFloatingActionButton(icon: "plus") {
-                    vm.actual.openOrderScreen(initialItemId: nil)
-                }
+            Spacer()
+
+            Button {
+                viewModel.actual.openOrderScreen(initialItemId: nil)
+            } label: {
+                Image(systemName: "plus")
+                    .imageScale(.large)
+                    .padding()
             }
+            .buttonStyle(.primary)
         }
-        .refreshable {
-            vm.actual.loadOrder()
-        }
-        .navigationTitle(localize.tableDetail.title(value0: table.number.description, value1: table.groupName))
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    vm.actual.openBillingScreen()
-                } label: {
-                    Image(systemName: "creditcard")
-                }.disabled(vm.state.orderedItems.isEmpty)
-            }
-        }
-        .handleSideEffects(of: vm, navigator)
+    }
+
+    private func tableDetailsError(_ error: ResourceError<NSArray>) -> some View {
+        Text(error.userMessage)
     }
 }

@@ -10,7 +10,7 @@ struct ProducSearchTabBarHeader: View {
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(
-                        Array(zip(self.tabBarOptions.indices, self.tabBarOptions)),
+                        Array(zip(tabBarOptions.indices, tabBarOptions)),
                         id: \.0
                     ) { index, name in
 
@@ -33,7 +33,7 @@ struct ProducSearchTabBarHeader: View {
                                     Color.clear.frame(height: 2)
                                 }
                             }
-                            .animation(.spring(), value: self.currentTab)
+                            .animation(.spring(), value: currentTab)
                         }
                         .buttonStyle(.plain)
                         .padding(0)
@@ -49,10 +49,8 @@ struct ProducSearchTabBarHeader: View {
     }
 }
 
-struct ProducSearchTabBarHeader_Previews: PreviewProvider {
-    static var previews: some View {
-        ProducSearchTabBarHeader(
-            currentTab: .constant(4), tabBarOptions: ["All", "Food", "Drinks", "more", "One more"]
-        )
-    }
+#Preview {
+    ProducSearchTabBarHeader(
+        currentTab: .constant(4), tabBarOptions: ["All", "Food", "Drinks", "more", "One more"]
+    )
 }

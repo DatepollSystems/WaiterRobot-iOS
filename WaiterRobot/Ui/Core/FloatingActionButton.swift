@@ -45,7 +45,7 @@ struct FloatingActionButton: View {
                 Image(systemName: icon)
                     .imageScale(.large)
                     .foregroundColor(.white)
-                // .fontWeight(.semibold) // TODO enable when dropped ios 15
+                // .fontWeight(.semibold) // TODO: enable when dropped ios 15
             }
         }
         .buttonStyle(FloatingActionButtonStyle())
@@ -62,15 +62,13 @@ struct FloatingActionButtonStyle: ButtonStyle {
     }
 }
 
-struct FloatingActionButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            EmbeddedFloatingActionButton(
-                icon: "plus",
-                action: {
-                    print("Test")
-                }
-            )
-        }
+#Preview {
+    ZStack {
+        EmbeddedFloatingActionButton(
+            icon: "plus",
+            action: {
+                print("Test")
+            }
+        )
     }
 }

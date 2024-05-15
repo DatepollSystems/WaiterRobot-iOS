@@ -5,52 +5,70 @@ import UIPilot
 struct RegisterScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @StateObject private var strongVM = ObservableViewModel(vm: koin.registerVM())
+    @StateObject private var viewModel = ObservableRegisterViewModel()
 
     @State private var name: String = ""
-    let createToken: String
+
+    let deepLink: DeepLink.AuthRegisterLink
 
     var body: some View {
-        unowned let vm = strongVM
-
-        ScreenContainer(vm.state) {
-            VStack {
-                Text(localize.register_.name.desc())
-                    .font(.body)
-
-                TextField(localize.register_.name.title(), text: $name)
-                    .font(.body)
-                    .fixedSize()
-                    .padding()
-
-                HStack {
-                    Button {
-                        vm.actual.cancel()
-                    } label: {
-                        Text(localize.dialog.cancel())
-                    }
-
-                    Spacer()
-
-                    Button {
-                        vm.actual.onRegister(name: name, createToken: createToken)
-                    } label: {
-                        Text(localize.register_.login())
-                    }
+        switch viewModel.state.viewState {
+        case is ViewState.Loading:
+            ProgressView()
+        case is ViewState.Idle:
+            content()
+        case let error as ViewState.Error:
+            content()
+                .alert(isPresented: Binding.constant(true)) {
+                    Alert(
+                        title: Text(error.title),
+                        message: Text(error.message),
+                        dismissButton: .cancel(Text("OK"), action: error.onDismiss)
+                    )
                 }
+        default:
+            fatalError("Unexpected ViewState: \(viewModel.state.viewState.description)")
+        }
+    }
+
+    private func content() -> some View {
+        VStack {
+            Text(localize.register.name.desc())
+                .font(.body)
+
+            TextField(localize.register.name.title(), text: $name)
+                .font(.body)
+                .fixedSize()
                 .padding()
 
-                Label(localize.register_.alreadyRegisteredInfo(), systemImage: "info.circle.fill")
+            HStack {
+                Button {
+                    viewModel.actual.cancel()
+                } label: {
+                    Text(localize.dialog.cancel())
+                }
+
+                Spacer()
+
+                Button {
+                    viewModel.actual.onRegister(
+                        name: name,
+                        registerLink: deepLink
+                    )
+                } label: {
+                    Text(localize.register.login())
+                }
             }
             .padding()
+
+            Label(localize.register.alreadyRegisteredInfo(), systemImage: "info.circle.fill")
         }
+        .padding()
         .navigationBarHidden(true)
-        .handleSideEffects(of: vm, navigator)
+        .handleSideEffects(of: viewModel, navigator)
     }
 }
 
-struct RegisterScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterScreen(createToken: "")
-    }
+#Preview {
+    RegisterScreen(deepLink: DeepLink.AuthRegisterLink(token: "", apiBase: ""))
 }

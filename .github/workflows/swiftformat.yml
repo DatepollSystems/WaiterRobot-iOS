@@ -1,0 +1,17 @@
+name: SwiftFormat
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/swiftformat.yml'
+      - '.swiftformat'
+      - '**/*.swift'
+
+jobs:
+  format:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run SwiftFormat
+      run: swift run swiftformat . --lint
