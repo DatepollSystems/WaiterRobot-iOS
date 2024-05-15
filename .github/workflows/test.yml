@@ -29,11 +29,8 @@ jobs:
       - name: Install xcodes
         run: brew install xcodes
 
-      - name: Install XcodeGen
-        run: brew install xcodegen
-
       - name: Run XcodeGen
-        run: xcodegen
+        run: swift run xcodegen
 
       - name: Run tests with fastlane
         run: bundle exec fastlane test

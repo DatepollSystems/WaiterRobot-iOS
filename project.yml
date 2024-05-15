@@ -5,11 +5,13 @@ fileGroups:
   - .github
   - README.md
   - project.yml
+  - Package.swift
+  - Package.resolved
   - fastlane
   - Gemfile
   - command-line-tools
   - .swiftformat
-  - setup.sh
+  - install-git-hook.sh
   - renovate.json5
 
 packages:

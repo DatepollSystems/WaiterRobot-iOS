@@ -35,12 +35,9 @@ jobs:
           machine: maven.pkg.github.com
           username: cirunner
           password: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Install XcodeGen
-        run: brew install xcodegen
 
       - name: Run XcodeGen
-        run: xcodegen
+        run: swift run xcodegen
 
       - name: Install xcodes
         run: brew install xcodes
