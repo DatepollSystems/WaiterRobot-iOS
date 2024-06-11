@@ -56,6 +56,6 @@ struct LoginScreen: View {
 
             Spacer()
         }
-        .handleSideEffects(of: viewModel, navigator)
+        .withViewModel(viewModel, navigator)
     }
 }

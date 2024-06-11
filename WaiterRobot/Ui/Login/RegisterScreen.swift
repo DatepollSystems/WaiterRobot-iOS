@@ -65,7 +65,7 @@ struct RegisterScreen: View {
         }
         .padding()
         .navigationBarHidden(true)
-        .handleSideEffects(of: viewModel, navigator)
+        .withViewModel(viewModel, navigator)
     }
 }
 

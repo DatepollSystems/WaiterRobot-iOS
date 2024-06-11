@@ -39,7 +39,7 @@ public struct DynamicGrid: Layout, Sendable {
 
     public func placeSubviews(
         in bounds: CGRect,
-        proposal: ProposedViewSize,
+        proposal _: ProposedViewSize,
         subviews: Subviews,
         cache _: inout ()
     ) {

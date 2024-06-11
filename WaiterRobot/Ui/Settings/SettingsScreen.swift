@@ -95,6 +95,6 @@ struct SettingsScreen: View {
         } message: {
             Text(localize.settings.logout.desc(value0: CommonApp.shared.settings.organisationName))
         }
-        .handleSideEffects(of: viewModel, navigator)
+        .withViewModel(viewModel, navigator)
     }
 }

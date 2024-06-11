@@ -65,7 +65,7 @@ struct BillingScreen: View {
             .sheet(isPresented: $showPayDialog) {
                 PayDialog(viewModel: viewModel)
             }
-            .handleSideEffects(of: viewModel, navigator)
+            .withViewModel(viewModel, navigator)
     }
 
     @ViewBuilder
