@@ -29,11 +29,10 @@ struct OrderScreen: View {
 
             case let .error(error):
                 Text(error.userMessage)
+                currentOder(error.data)
 
             case let .success(resource):
-                if let data = resource.data {
-                    currentOder(data)
-                }
+                currentOder(resource.data)
             }
         }
         .navigationTitle(localize.order.title(value0: table.number.description, value1: table.groupName))
@@ -53,14 +52,14 @@ struct OrderScreen: View {
         .sheet(isPresented: $showProductSearch) {
             ProductSearch(viewModel: viewModel)
         }
-        .handleSideEffects(of: viewModel, navigator)
+        .withViewModel(viewModel, navigator)
     }
 
     @ViewBuilder
     private func currentOder(
-        _ currentOrderArray: KotlinArray<OrderItem>
+        _ currentOrderArray: KotlinArray<OrderItem>?
     ) -> some View {
-        let currentOrder = Array(currentOrderArray)
+        let currentOrder = currentOrderArray.map { Array($0) } ?? Array()
 
         VStack(spacing: 0) {
             if currentOrder.isEmpty {

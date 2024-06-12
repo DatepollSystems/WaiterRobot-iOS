@@ -18,7 +18,7 @@ struct TableDetailScreen: View {
     var body: some View {
         content()
             .navigationTitle(localize.tableDetail.title(value0: table.number.description, value1: table.groupName))
-            .handleSideEffects(of: viewModel, navigator)
+            .withViewModel(viewModel, navigator)
     }
 
     // TODO: add refreshing and loading indicator (also check android)
@@ -36,12 +36,6 @@ struct TableDetailScreen: View {
                     tableDetails(orderedItems: orderedItems)
                 }
             }
-        }
-        .onAppear {
-            viewModel.activate()
-        }
-        .onDisappear {
-            viewModel.deactivate()
         }
     }
 

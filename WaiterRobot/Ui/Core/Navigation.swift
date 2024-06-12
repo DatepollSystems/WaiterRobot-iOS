@@ -4,6 +4,7 @@ import SwiftUI
 import UIPilot
 
 extension UIPilot<Screen> {
+    @MainActor
     func navigate(_ navAction: NavAction) {
         koin.logger(tag: "Navigation").d { "Handle navigation: \(navAction.description)" }
 
@@ -61,28 +62,18 @@ extension View {
             }
     }
 
-    @MainActor
-    func handleSideEffects<S, E>(
-        of viewModel: some ObservableViewModel<S, E, some AbstractViewModel<S, E>>,
+    func handleSideEffects<State, SideEffect>(
+        of viewModel: some ObservableViewModel<State, SideEffect, some AbstractViewModel<State, SideEffect>>,
         _ navigator: UIPilot<Screen>,
-        handler: ((E) -> Bool)? = nil
-    ) -> some View where S: ViewModelState, E: ViewModelEffect {
-        handleSideEffects2(of: viewModel.actual, navigator, handler: handler)
-    }
-
-    @MainActor
-    func handleSideEffects2<E>(
-        of viewModel: some AbstractViewModel<some ViewModelState, E>,
-        _ navigator: UIPilot<Screen>,
-        handler: ((E) -> Bool)? = nil
-    ) -> some View where E: ViewModelEffect {
+        handler: ((SideEffect) -> Bool)? = nil
+    ) -> some View where State: ViewModelState, SideEffect: ViewModelEffect {
         task {
             let logger = koin.logger(tag: "handleSideEffects")
-            for await sideEffect in viewModel.container.sideEffectFlow {
+            for await sideEffect in viewModel.actual.container.refCountSideEffectFlow {
                 logger.d { "Got sideEffect: \(sideEffect)" }
-                switch onEnum(of: sideEffect as! NavOrViewModelEffect<E>) {
+                switch onEnum(of: sideEffect as! NavOrViewModelEffect<SideEffect>) {
                 case let .navEffect(navEffect):
-                    navigator.navigate(navEffect.action)
+                    await navigator.navigate(navEffect.action)
                 case let .vMEffect(effect):
                     if handler?(effect.effect) != true {
                         logger.w { "Side effect \(effect.effect) was not handled." }
@@ -92,17 +83,20 @@ extension View {
         }
     }
 
-    @MainActor
-    func observeState<S>(
-        of viewModel: some AbstractViewModel<S, some ViewModelEffect>,
-        stateBinding: Binding<S>
-    ) -> some View where S: ViewModelState {
+    func observeState<State, SideEffect>(
+        of viewModel: some ObservableViewModel<State, SideEffect, some AbstractViewModel<State, SideEffect>>
+    ) -> some View where State: ViewModelState, SideEffect: ViewModelEffect {
         task {
-            let logger = koin.logger(tag: "ObservableViewModel")
-            for await state in viewModel.container.stateFlow {
-                logger.d { "New state: \(state)" }
-                stateBinding.wrappedValue = state as! S
-            }
+            await viewModel.activate()
         }
+    }
+
+    func withViewModel<State, SideEffect>(
+        _ viewModel: some ObservableViewModel<State, SideEffect, some AbstractViewModel<State, SideEffect>>,
+        _ navigator: UIPilot<Screen>,
+        handler _: ((SideEffect) -> Bool)? = nil
+    ) -> some View where State: ViewModelState, SideEffect: ViewModelEffect {
+        handleSideEffects(of: viewModel, navigator)
+            .observeState(of: viewModel)
     }
 }

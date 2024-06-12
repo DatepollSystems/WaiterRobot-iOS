@@ -94,7 +94,7 @@ struct MainView: View {
                 .padding()
             }
         }
-        .handleSideEffects(of: viewModel, navigator) { effect in
+        .withViewModel(viewModel, navigator) { effect in
             switch onEnum(of: effect) {
             case let .showSnackBar(snackBar):
                 snackBarMessage = snackBar.message
