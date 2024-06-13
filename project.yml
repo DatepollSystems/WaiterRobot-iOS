@@ -86,19 +86,13 @@ targetTemplates:
           - UIInterfaceOrientationPortraitUpsideDown
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
-          
-    entitlements:
-      path: ".generated/${target_name}.entitlements"
-      properties:
-        com.apple.developer.associated-domains:
-          - "applinks:${deeplinkDomain}"
         
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: "${identifier}"
         INFOPLIST_FILE: ".generated/${target_name}.plist"
         CODE_SIGN_STYLE: "Manual"
-        CODE_SIGN_ENTITLEMENTS: ".generated/${target_name}.entitlements"
+        CODE_SIGN_ENTITLEMENTS: "WaiterRobot/Entitlements/${target_name}.entitlements"
         DEVELOPMENT_TEAM: "28TM58T3GZ"
         PRODUCT_NAME: "${displayName}"
         ENABLE_PREVIEWS: "YES"
@@ -121,7 +115,6 @@ targets:
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot"
       displayName: "kellner.team"
-      deeplinkDomain: "my.kellner.team"
       versionSuffix: ""
       allowedHosts: "my.kellner.team"
 
@@ -135,7 +128,6 @@ targets:
     templateAttributes:
       identifier: "org.datepollsystems.waiterrobot.beta"
       displayName: "lava.kellner.team"
-      deeplinkDomain: "lava.kellner.team"
       versionSuffix: "lava"
       allowedHosts: "*"
     preBuildScripts:

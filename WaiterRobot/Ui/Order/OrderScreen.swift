@@ -29,6 +29,8 @@ struct OrderScreen: View {
 
             case let .error(error):
                 Text(error.userMessage)
+                    .foregroundStyle(.red)
+
                 currentOder(error.data)
 
             case let .success(resource):
@@ -53,6 +55,7 @@ struct OrderScreen: View {
             ProductSearch(viewModel: viewModel)
         }
         .withViewModel(viewModel, navigator)
+        .animation(.default, value: viewModel.state.currentOrder)
     }
 
     @ViewBuilder
