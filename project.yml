@@ -48,7 +48,7 @@ targetTemplates:
     info:
       path: ".generated/${target_name}.plist"
       properties:
-        CFBundleShortVersionString: "2.2.0"
+        CFBundleShortVersionString: "2.2.1"
         # Generate VersionCode from VersionName (major * 10_000 + minor * 100 + patch, e.g. 1.2.3 -> 10203, 1.23.45 -> 12345)
         # Only used for prod releases. Lava uses epochMinute (same as on Android)
         CFBundleVersion: "20007"
