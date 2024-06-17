@@ -19,9 +19,16 @@ struct TableGroupSection: View {
             }
         } header: {
             HStack {
-                Color(UIColor.lightGray).frame(height: 1)
                 Text(tableGroup.name)
-                Color(UIColor.lightGray).frame(height: 1)
+                    .font(.title2)
+                    .foregroundStyle(.white)
+                    .padding(6)
+                    .background {
+                        RoundedRectangle(cornerRadius: 8.0)
+                            .foregroundStyle(Color(.main))
+                    }
+
+                Spacer()
             }
         }
     }
