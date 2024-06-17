@@ -18,7 +18,9 @@ struct BillingScreen: View {
     }
 
     var body: some View {
-        content()
+        let billItems = Array(viewModel.state.billItemsArray)
+
+        content(billItems: billItems)
             .navigationTitle(localize.billing.title(value0: table.number.description, value1: table.groupName))
             .navigationBarTitleDisplayMode(.inline)
             .customBackNavigation(
@@ -42,36 +44,35 @@ struct BillingScreen: View {
             } message: {
                 Text(localize.billing.notSent.desc())
             }
-//            TODO: Needs shared modification to be accessible from here
-//            .refreshable {
-//                viewModel.actual.loadBill()
-//            }
             .toolbar {
                 ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    Button {
-                        viewModel.actual.selectAll()
-                    } label: {
-                        Image(systemName: "checkmark")
+                    if !billItems.isEmpty {
+                        Button {
+                            viewModel.actual.selectAll()
+                        } label: {
+                            Image(systemName: "checkmark")
+                        }
                     }
 
-                    Button {
-                        viewModel.actual.unselectAll()
-                    } label: {
-                        Image(systemName: "xmark")
+                    if !billItems.isEmpty {
+                        Button {
+                            viewModel.actual.unselectAll()
+                        } label: {
+                            Image(systemName: "xmark")
+                        }
                     }
                 }
             }
+
             // TODO: make only half screen when ios 15 is dropped
             .sheet(isPresented: $showPayDialog) {
                 PayDialog(viewModel: viewModel)
             }
-            .handleSideEffects(of: viewModel, navigator)
+            .withViewModel(viewModel, navigator)
     }
 
     @ViewBuilder
-    private func content() -> some View {
-        let billItems = Array(viewModel.state.billItemsArray)
-
+    private func content(billItems: [BillItem]) -> some View {
         VStack {
             List {
                 if billItems.isEmpty {

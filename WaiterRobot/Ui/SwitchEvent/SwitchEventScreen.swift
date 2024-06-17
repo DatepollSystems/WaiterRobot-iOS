@@ -7,26 +7,26 @@ struct SwitchEventScreen: View {
 
     @StateObject private var viewModel = ObservableSwitchEventViewModel()
 
-    @SwiftUI.State private var selectedEvent: Event?
+    @State private var selectedEvent: Event?
 
     var body: some View {
-        switch viewModel.state.viewState {
-        case is ViewState.Loading:
-            ProgressView()
-        case is ViewState.Idle:
-            content()
-        case let error as ViewState.Error:
-            content()
-                .alert(isPresented: Binding.constant(true)) {
-                    Alert(
-                        title: Text(error.title),
-                        message: Text(error.message),
-                        dismissButton: .cancel(Text("OK"), action: error.onDismiss)
-                    )
-                }
-        default:
-            fatalError("Unexpected ViewState: \(viewModel.state.viewState.description)")
-        }
+        VStack {
+            switch onEnum(of: viewModel.state.viewState) {
+            case .loading:
+                ProgressView()
+            case .idle:
+                content()
+            case let .error(error):
+                content()
+                    .alert(isPresented: Binding.constant(true)) {
+                        Alert(
+                            title: Text(error.title),
+                            message: Text(error.message),
+                            dismissButton: .cancel(Text("OK"), action: error.onDismiss)
+                        )
+                    }
+            }
+        }.withViewModel(viewModel, navigator)
     }
 
     private func content() -> some View {
@@ -68,7 +68,6 @@ struct SwitchEventScreen: View {
                 viewModel.actual.loadEvents()
             }
         }
-        .handleSideEffects(of: viewModel, navigator)
     }
 }
 

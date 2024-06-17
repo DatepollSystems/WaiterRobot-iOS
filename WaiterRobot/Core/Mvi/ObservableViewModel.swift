@@ -12,54 +12,33 @@ class ObservableViewModel<State: ViewModelState, Effect: ViewModelEffect, ViewMo
 
     public let actual: ViewModel
 
-    private var task: Task<Void, Error>? = nil
-
-    init(viewModel: ViewModel, subscribe: Bool = true) {
+    init(viewModel: ViewModel) {
         actual = viewModel
         // This is save, as the constraint is required by the generics (S must be the state of the provided VM)
         state = actual.container.stateFlow.value as! State
-
-        if subscribe {
-            Task {
-                await activate()
-            }
-        }
     }
 
     @MainActor
-    func activate() {
-        guard task == nil else { return }
-        task = Task { [weak self] in
-            guard let stateFlow = self?.actual.container.stateFlow else { return }
-
-            for await state in stateFlow {
-                self?.state = state as! State
-            }
+    func activate() async {
+        for await state in actual.container.refCountStateFlow {
+            self.state = state as! State
         }
-    }
-
-    func deactivate() {
-        task?.cancel()
-        task = nil
     }
 
     deinit {
         actual.onCleared()
-
-        task?.cancel()
-        task = nil
     }
 }
 
 class ObservableTableListViewModel: ObservableViewModel<TableListState, TableListEffect, TableListViewModel> {
     init() {
-        super.init(viewModel: koin.tableListVM(), subscribe: false)
+        super.init(viewModel: koin.tableListVM())
     }
 }
 
 class ObservableTableDetailViewModel: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel> {
     init(table: Table) {
-        super.init(viewModel: koin.tableDetailVM(table: table), subscribe: false)
+        super.init(viewModel: koin.tableDetailVM(table: table))
     }
 }
 

@@ -25,7 +25,7 @@ struct ProductSearch: View {
                     productsGroupsList(productGroups: productGroups)
                 }
             }
-        }
+        }.observeState(of: viewModel)
     }
 
     @ViewBuilder

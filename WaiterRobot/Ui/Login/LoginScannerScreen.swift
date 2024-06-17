@@ -54,7 +54,7 @@ struct LoginScannerScreen: View {
                 Text(localize.dialog.cancel())
             }
         }
-        .handleSideEffects(of: viewModel, navigator)
+        .withViewModel(viewModel, navigator)
     }
 }
 
