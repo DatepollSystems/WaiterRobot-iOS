@@ -30,6 +30,7 @@ struct OrderScreen: View {
             case let .error(error):
                 Text(error.userMessage)
                     .foregroundStyle(.red)
+                    .padding(.horizontal)
 
                 currentOder(error.data)
 
