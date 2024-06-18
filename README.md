@@ -1,7 +1,7 @@
 <p align="center">
-    <img src="documentation/wr-square-rounded.png" style="width:200px; border-radius: 15px;"/>
+    <img src="documentation/wr-square-rounded.png" style="width:200px; border-radius: 15px;" alt="kellner.team logo"/>
 </p>
-<h1 align="center">WaiterRobot</h1>
+<h1 align="center">kellner.team</h1>
 <div align="center">
     <p>Lightning fast and simple gastronomy</p>
     <a href="https://apps.apple.com/at/app/waiterrobot/id1610157234?itsct=apps_box_badge&amp;itscg=30200">
@@ -11,7 +11,7 @@
 
 # iOS
 
-This Repository includes the iOS version of the WaiterRobot App. It is based on a shared Kotlin-Multiplatform (KMM)
+This Repository includes the iOS version of the kellner.team App. It is based on a shared Kotlin-Multiplatform (KMM)
 module, which can be found [here](https://github.com/DatepollSystems/waiterrobot-mobile_android-shared) (there you can
 also find the Android version of the app).
 The KMM module is integrated as a Swift-Package (shared).
@@ -61,7 +61,7 @@ machine maven.pkg.github.com
 For a guide to use a local version of the KMM module
 see [KMMBridge local dev spm](https://touchlab.github.io/KMMBridge/spm/IOS_LOCAL_DEV_SPM)
 
-### Short version
+### TLRD
 
 1. Run `./gradlew spmDevBuild` in the KMM project (must be run after each change in the KMM module)
 2. Drag the whole KMM project folder (top level git folder) into the WaiterRobot project in Xcode
@@ -73,14 +73,14 @@ see [KMMBridge local dev spm](https://touchlab.github.io/KMMBridge/spm/IOS_LOCAL
 
 Production release is triggered on push to main. The CI then builds the app and deploys it to
 TestFlight. After testing the app then must be released manually from there. A tag in the form of 
-`major.minor.patch` (e.g. android-1.0.0) is created. (see [publish.yml](.github/workflows/publish.yml))
+`major.minor.patch` (e.g. 1.0.0) is created. (see [publish.yml](.github/workflows/publish.yml))
 
 > Do not forget to bump the iOS app version ([project.yml](project.yml), CFBundleShortVersionString & CFBundleVersion) 
 > on the dev branch after a production release was made.
 
 On each push to develop also a lava (dev) build is triggered and published to TestFlight of
 the WaiterRobot Lava app. A tag in the form of `major.minor.patch-lava-epochMinutes` is created 
-(e.g. android-1.0.1-lava-27935730). (see [publish.yml](.github/workflows/publish.yml))
+(e.g. 1.0.1-lava-27935730). (see [publish.yml](.github/workflows/publish.yml))
 
 # Language, libraries and tools
 
