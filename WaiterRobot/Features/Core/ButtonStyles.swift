@@ -17,7 +17,7 @@ struct WRBorderedProminentButtonStyle: ButtonStyle {
             .background(
                 RoundedRectangle(cornerRadius: 10)
                     .ifCondition(isEnabled) { view in
-                        view.foregroundStyle(configuration.isPressed ? Color.main.opacity(0.6) : Color.main)
+                        view.foregroundStyle(configuration.isPressed ? Color.main.opacity(0.6) : Color.accentColor)
                     }
                     .ifCondition(!isEnabled) { view in
                         view.foregroundStyle(.gray)

@@ -18,4 +18,16 @@ public extension Color {
     static var whiteBlack: Color {
         Color(.whiteBlack)
     }
+
+    static var text: Color {
+        Color(.text)
+    }
+
+    static var title: Color {
+        Color(.title)
+    }
+
+    static var palletOrange: Color {
+        Color(.palletOrange)
+    }
 }

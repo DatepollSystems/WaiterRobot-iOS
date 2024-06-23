@@ -1,5 +1,6 @@
 import Foundation
 import shared
+import SharedUI
 import SwiftUI
 import WRCore
 
@@ -8,36 +9,18 @@ struct LaunchScreen: View {
     private let device = UIDevice.current.userInterfaceIdiom
 
     @State private var startupFinished = false
+    @State private var isVisible = false
 
     var body: some View {
         ZStack {
-            if case .phone = device {
-                VStack {
-                    Spacer()
-
-                    Image.logoLaunch
-                        .resizable()
-                        .scaledToFit()
-                }
-                .padding(.horizontal, -2)
-                .ignoresSafeArea()
-            } else {
-                ZStack {
-                    Image.logoLaunch
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 150)
-                        .padding()
-
-                    VStack {
-                        Spacer()
-
-                        ProgressView()
-                            .padding()
-                            .padding(.bottom)
-                    }
-                }
+            VStack {
+                Image.logoRounded
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                    .frame(maxWidth: 300)
             }
+            .padding()
 
             if startupFinished {
                 MainView()
@@ -57,6 +40,7 @@ struct LaunchScreen: View {
                 }
             }
         }
+        .animation(.spring, value: startupFinished)
     }
 
     private func delay() async {

@@ -20,7 +20,7 @@ public enum WrFont {
         case .h4:
             24
         case .body:
-            16
+            18
         case .caption1:
             14
         case .caption2:
@@ -31,6 +31,7 @@ public enum WrFont {
 
 private struct WrTextStyle: ViewModifier {
     let fontStyle: WrFont
+    let textColor: Color
 
     @ScaledMetric
     var fontSize: CGFloat
@@ -39,20 +40,22 @@ private struct WrTextStyle: ViewModifier {
         .system(size: fontSize)
     }
 
-    init(fontStyle: WrFont) {
+    init(fontStyle: WrFont, textColor: Color) {
         self.fontStyle = fontStyle
+        self.textColor = textColor
         _fontSize = ScaledMetric(wrappedValue: fontStyle.baseSize)
     }
 
     func body(content: Content) -> some View {
         content
             .font(font)
+            .foregroundStyle(textColor)
     }
 }
 
 public extension View {
-    func textStyle(_ font: WrFont) -> some View {
-        modifier(WrTextStyle(fontStyle: font))
+    func textStyle(_ font: WrFont, textColor: Color = .text) -> some View {
+        modifier(WrTextStyle(fontStyle: font, textColor: textColor))
     }
 }
 
