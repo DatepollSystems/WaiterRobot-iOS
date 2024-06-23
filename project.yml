@@ -76,7 +76,7 @@ targetTemplates:
         CFBundleName: "${target_name}"
         CFBundlePackageType: "$(PRODUCT_BUNDLE_PACKAGE_TYPE)"
         ITSAppUsesNonExemptEncryption: false
-        UILaunchScreen: {}
+        UILaunchStoryboardName: "LaunchScreen.storyboard"
         NSAppTransportSecurity:
           NSAllowsLocalNetworking: true
         NSCameraUsageDescription: "Camera is needed to scan QR-Codes"

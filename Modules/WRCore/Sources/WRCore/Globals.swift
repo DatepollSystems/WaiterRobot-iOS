@@ -1,5 +1,6 @@
 import Foundation
 import shared
+import SwiftUI
 import UIKit
 
 public var koin: IosKoinComponent { IosKoinComponent.shared }
@@ -36,9 +37,20 @@ public enum WRCore {
 
     private static func readFromInfoPlist(withKey key: String) -> String {
         guard let value = Bundle.main.infoDictionary?[key] as? String else {
+            print("ERROR")
             fatalError("Could not find key '\(key)' in info.plist file.")
         }
 
         return value
+    }
+}
+
+public extension EnvironmentValues {
+    var isPreview: Bool {
+        #if DEBUG
+            return ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+        #else
+            return false
+        #endif
     }
 }

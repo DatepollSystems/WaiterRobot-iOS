@@ -67,7 +67,6 @@ public struct DynamicGrid: Layout, Sendable {
                 maxYinRow = 0
             }
 
-//            print("Will place item \(index) at x:\(x) y:\(y)")
             subviews[index]
                 .place(
                     at: CGPoint(x: x, y: y),
@@ -81,40 +80,37 @@ public struct DynamicGrid: Layout, Sendable {
     }
 }
 
+@available(iOS 16.0, *)
 #Preview {
-    if #available(iOS 16, *) {
-        ScrollView {
-            VStack {
-                DynamicGrid(horizontalSpacing: 10, verticalSpacing: 10) {
-                    Rectangle()
-                        .foregroundColor(.brown)
-                        .frame(width: 100, height: 50)
-                    Rectangle()
-                        .foregroundColor(.yellow)
-                        .frame(width: 80, height: 20)
-                    Rectangle()
-                        .foregroundColor(.green)
-                        .frame(width: 100, height: 60)
-                    Rectangle()
-                        .foregroundColor(.brown)
-                        .frame(width: 100, height: 50)
-                    Rectangle()
-                        .foregroundColor(.yellow)
-                        .frame(width: 250, height: 20)
-                    Rectangle()
-                        .foregroundColor(.green)
-                        .frame(width: 100, height: 60)
-                    Rectangle()
-                        .foregroundColor(.blue)
-                        .frame(width: 200, height: 50)
-                    Rectangle()
-                        .foregroundColor(.gray)
-                        .frame(width: 200, height: 110)
-                }
+    ScrollView {
+        VStack {
+            DynamicGrid(horizontalSpacing: 10, verticalSpacing: 10) {
+                Rectangle()
+                    .foregroundColor(.brown)
+                    .frame(width: 100, height: 50)
+                Rectangle()
+                    .foregroundColor(.yellow)
+                    .frame(width: 80, height: 20)
+                Rectangle()
+                    .foregroundColor(.green)
+                    .frame(width: 100, height: 60)
+                Rectangle()
+                    .foregroundColor(.brown)
+                    .frame(width: 100, height: 50)
+                Rectangle()
+                    .foregroundColor(.yellow)
+                    .frame(width: 250, height: 20)
+                Rectangle()
+                    .foregroundColor(.green)
+                    .frame(width: 100, height: 60)
+                Rectangle()
+                    .foregroundColor(.blue)
+                    .frame(width: 200, height: 50)
+                Rectangle()
+                    .foregroundColor(.gray)
+                    .frame(width: 200, height: 110)
             }
-            .padding()
         }
-    } else {
-        EmptyView()
+        .padding()
     }
 }

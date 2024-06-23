@@ -89,7 +89,7 @@ struct LoginScreen: View {
         .padding()
         .task {
             do {
-                try await Task.sleep(seconds: 2)
+                try await Task.sleep(seconds: 1)
                 showGetStartedButton = true
             } catch {}
         }

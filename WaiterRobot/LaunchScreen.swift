@@ -5,42 +5,61 @@ import SwiftUI
 import WRCore
 
 struct LaunchScreen: View {
+    @Environment(\.isPreview) private var isPreview
+
     private let minimumOnScreenTimeSeconds = 3.0
-    private let device = UIDevice.current.userInterfaceIdiom
 
     @State private var startupFinished = false
-    @State private var isVisible = false
+    @State private var showProgressView = false
 
     var body: some View {
         ZStack {
-            VStack {
+            VStack(spacing: 0) {
                 Image.logoRounded
                     .resizable()
                     .scaledToFit()
-                    .padding()
-                    .frame(maxWidth: 300)
+                    .frame(width: 280, height: 280)
+                    .ignoresSafeArea()
+                    .padding(.bottom, 23)
+                    .transition(.slide)
+
+                if showProgressView {
+                    ProgressView()
+                        .padding()
+                        .foregroundStyle(.green)
+                }
             }
-            .padding()
 
             if startupFinished {
                 MainView()
             }
         }
-        .onAppear {
+        .animation(.spring, value: startupFinished)
+        .animation(.spring, value: showProgressView)
+        .task {
+            defer {
+                print("Show progress")
+                showProgressView = true
+            }
+
+            do {
+                try await Task.sleep(seconds: 0.1)
+            } catch {}
+        }
+        .task {
             // This is needed otherwise previews will crash randomly
-            if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" {
-                Task {
-                    async let setup: () = WRCore.setup()
-                    async let delay: () = delay()
+            if !isPreview {
+                async let setup: () = WRCore.setup()
+                async let delay: () = delay()
 
-                    await setup
-                    await delay
+                await setup
+                await delay
 
-                    startupFinished = true
-                }
+                startupFinished = true
+            } else {
+                print("Running from preview, skipping init")
             }
         }
-        .animation(.spring, value: startupFinished)
     }
 
     private func delay() async {
@@ -51,7 +70,7 @@ struct LaunchScreen: View {
 }
 
 #Preview {
-    PreviewView {
-        LaunchScreen()
-    }
+//    PreviewView {
+    LaunchScreen()
+//    }
 }

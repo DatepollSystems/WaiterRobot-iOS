@@ -38,7 +38,23 @@ struct TableListScreen: View {
                     }
             }
         }
-        .navigationTitle(CommonApp.shared.settings.eventName)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                VStack {
+                    HStack(spacing: 0) {
+                        Text("kellner.")
+                            .textStyle(.h4, textColor: .title)
+
+                        Text("team")
+                            .textStyle(.h4, textColor: .palletOrange)
+                    }
+
+                    Text(CommonApp.shared.settings.eventName)
+                        .textStyle(.caption1)
+                        .padding(.bottom, 6)
+                }
+            }
+        }
         .navigationBarTitleDisplayMode(.inline)
         .animation(.spring, value: viewModel.state.tableGroupsArray)
         .withViewModel(viewModel, navigator)
