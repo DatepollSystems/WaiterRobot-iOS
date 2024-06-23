@@ -1,6 +1,6 @@
 import shared
 
-extension KermitLogger {
+public extension KermitLogger {
     func d(message: @escaping () -> String) {
         d(throwable: nil, tag: tag, message: message)
     }

@@ -1,6 +1,7 @@
 import Foundation
 import shared
 import SwiftUI
+import WRCore
 
 struct LaunchScreen: View {
     private let minimumOnScreenTimeSeconds = 3.0
@@ -14,7 +15,7 @@ struct LaunchScreen: View {
                 VStack {
                     Spacer()
 
-                    Image(.launch)
+                    Image.logoLaunch
                         .resizable()
                         .scaledToFit()
                 }
@@ -22,7 +23,7 @@ struct LaunchScreen: View {
                 .ignoresSafeArea()
             } else {
                 ZStack {
-                    Image(.logoRounded)
+                    Image.logoLaunch
                         .resizable()
                         .scaledToFit()
                         .frame(width: 150)
@@ -46,7 +47,7 @@ struct LaunchScreen: View {
             // This is needed otherwise previews will crash randomly
             if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] != "1" {
                 Task {
-                    async let setup: () = WaiterRobotApp.setup()
+                    async let setup: () = WRCore.setup()
                     async let delay: () = delay()
 
                     await setup

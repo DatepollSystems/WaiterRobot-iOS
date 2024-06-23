@@ -1,5 +1,6 @@
 import shared
 import SwiftUI
+import WRCore
 
 struct SwitchThemeView: View {
     @State private var selectedTheme: AppTheme

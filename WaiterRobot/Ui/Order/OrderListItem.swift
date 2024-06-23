@@ -1,5 +1,6 @@
 import shared
 import SwiftUI
+import WRCore
 
 struct OrderListItem: View {
     let name: String

@@ -1,5 +1,6 @@
 import shared
 import SwiftUI
+import WRCore
 
 struct ProductSearch: View {
     @Environment(\.dismiss) private var dismiss

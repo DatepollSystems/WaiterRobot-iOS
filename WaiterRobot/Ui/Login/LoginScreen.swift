@@ -1,7 +1,9 @@
 import Foundation
 import shared
+import SharedUI
 import SwiftUI
 import UIPilot
+import WRCore
 
 struct LoginScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
@@ -32,7 +34,7 @@ struct LoginScreen: View {
         VStack {
             Spacer()
 
-            Image(.logoRounded)
+            Image.logoRounded
                 .resizable()
                 .scaledToFit()
                 .frame(maxWidth: 250)

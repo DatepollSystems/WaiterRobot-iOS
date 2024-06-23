@@ -1,5 +1,7 @@
 import shared
+import SharedUI
 import SwiftUI
+import WRCore
 
 struct TableGroupSection: View {
     let tableGroup: TableGroup
@@ -25,11 +27,13 @@ struct TableGroupSection: View {
                     .padding(6)
                     .background {
                         RoundedRectangle(cornerRadius: 8.0)
-                            .foregroundStyle(Color(.main))
+                            .foregroundStyle(Color.main)
                     }
 
                 Spacer()
             }
+            .padding(.vertical, 4)
+            .background(Color.whiteBlack)
         }
     }
 }
@@ -53,6 +57,6 @@ struct TableGroupSection: View {
             ),
             onTableClick: { _ in }
         )
-
-    }.padding()
+    }
+    .padding()
 }

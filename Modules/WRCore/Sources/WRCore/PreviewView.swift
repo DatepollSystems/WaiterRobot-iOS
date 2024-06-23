@@ -3,7 +3,7 @@ import SwiftUI
 import UIPilot
 
 /// Helper view which sets up everything needed for previewing content
-struct PreviewView<Content: View>: View {
+public struct PreviewView<Content: View>: View {
     @StateObject
     private var navigator = UIPilot<Screen>(initial: CommonApp.shared.getNextRootScreen(), debug: true)
 
@@ -12,16 +12,16 @@ struct PreviewView<Content: View>: View {
     @ViewBuilder
     private let content: Content
 
-    init(withUIPilot: Bool = true, @ViewBuilder content: () -> Content) {
+    public init(withUIPilot: Bool = true, @ViewBuilder content: () -> Content) {
         print("preview setup")
-        WaiterRobotApp.setup()
+        WRCore.setup()
 
         self.withUIPilot = withUIPilot
         self.content = content()
         print("preview done")
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             if withUIPilot {
                 UIPilotHost(navigator) { _ in

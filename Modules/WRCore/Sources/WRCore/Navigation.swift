@@ -34,7 +34,7 @@ extension UIPilot<Screen> {
     }
 }
 
-extension View {
+public extension View {
     func customBackNavigation(
         title: String = localize.navigation.back(),
         icon: String? = "chevron.left",
@@ -57,7 +57,7 @@ extension View {
                         }
                     }
                     .buttonStyle(.plain)
-                    .foregroundStyle(.main)
+                    .foregroundStyle(.primary)
                 }
             }
     }

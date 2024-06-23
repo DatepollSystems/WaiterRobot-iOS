@@ -1,6 +1,7 @@
 import shared
 import SwiftUI
 import UIPilot
+import WRCore
 
 struct OrderScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
@@ -55,8 +56,8 @@ struct OrderScreen: View {
         .sheet(isPresented: $showProductSearch) {
             ProductSearch(viewModel: viewModel)
         }
-        .withViewModel(viewModel, navigator)
         .animation(.default, value: viewModel.state.currentOrder)
+        .withViewModel(viewModel, navigator)
     }
 
     @ViewBuilder

@@ -1,15 +1,12 @@
 import shared
 import SwiftUI
 import UIPilot
+import WRCore
 
 struct TableListScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
     @StateObject private var viewModel = ObservableTableListViewModel()
-
-    private let layout = [
-        GridItem(.adaptive(minimum: 100)),
-    ]
 
     @State
     private var showFilters = false
@@ -84,14 +81,38 @@ struct TableListScreen: View {
     private func tableList(data: KotlinArray<TableGroup>) -> some View {
         let tableGroups = Array(data)
 
+        TableListView(
+            showFilters: $showFilters,
+            tableGroups: tableGroups,
+            onToggleFilter: { viewModel.actual.toggleFilter(tableGroup: $0) },
+            onSelectAll: { viewModel.actual.showAll() },
+            onUnselectAll: { viewModel.actual.hideAll() },
+            onTableSelect: { viewModel.actual.onTableClick(table: $0) }
+        )
+    }
+}
+
+struct TableListView: View {
+    @Binding var showFilters: Bool
+    let tableGroups: [TableGroup]
+    let onToggleFilter: (TableGroup) -> Void
+    let onSelectAll: () -> Void
+    let onUnselectAll: () -> Void
+    let onTableSelect: (shared.Table) -> Void
+
+    private let layout = [
+        GridItem(.adaptive(minimum: 100)),
+    ]
+
+    var body: some View {
         VStack(spacing: 0) {
             if tableGroups.count > 1, showFilters {
                 VStack {
                     TableListFilterRow(
                         tableGroups: tableGroups,
-                        onToggleFilter: { viewModel.actual.toggleFilter(tableGroup: $0) },
-                        onSelectAll: { viewModel.actual.showAll() },
-                        onUnselectAll: { viewModel.actual.hideAll() }
+                        onToggleFilter: onToggleFilter,
+                        onSelectAll: onSelectAll,
+                        onUnselectAll: onUnselectAll
                     )
                 }
                 .padding()
@@ -111,12 +132,15 @@ struct TableListScreen: View {
                 Spacer()
             } else {
                 ScrollView {
-                    LazyVGrid(columns: layout) {
+                    LazyVGrid(
+                        columns: layout,
+                        pinnedViews: [.sectionHeaders]
+                    ) {
                         ForEach(tableGroups.filter { !$0.hidden }, id: \.id) { group in
                             if !group.tables.isEmpty {
                                 TableGroupSection(
                                     tableGroup: group,
-                                    onTableClick: { viewModel.actual.onTableClick(table: $0) }
+                                    onTableClick: onTableSelect
                                 )
                             }
                         }
@@ -140,10 +164,24 @@ struct TableListScreen: View {
     }
 }
 
-#Preview {
+#Preview("TableListScreen") {
     PreviewView {
         NavigationView {
             TableListScreen()
+        }
+    }
+}
+
+#Preview("TableListView") {
+    PreviewView {
+        NavigationView {
+            TableListView(
+                showFilters: .constant(false),
+                tableGroups: Mock.tableGroups()
+            ) { _ in
+
+            } onSelectAll: {} onUnselectAll: {} onTableSelect: { _ in
+            }
         }
     }
 }

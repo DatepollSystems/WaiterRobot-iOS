@@ -1,3 +1,4 @@
+import SharedUI
 import SwiftUI
 
 struct TableView: View {
@@ -9,7 +10,7 @@ struct TableView: View {
         Button(action: onClick) {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(.blackWhite, lineWidth: 5)
+                    .stroke(Color.blackWhite, lineWidth: 5)
 
                 Text(text)
                     .font(.title)

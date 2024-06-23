@@ -5,6 +5,7 @@
 //  Created by Alexander Kauer on 25.02.24.
 //
 
+import SharedUI
 import SwiftUI
 
 struct WRBorderedProminentButtonStyle: ButtonStyle {
@@ -16,7 +17,7 @@ struct WRBorderedProminentButtonStyle: ButtonStyle {
             .background(
                 RoundedRectangle(cornerRadius: 10)
                     .ifCondition(isEnabled) { view in
-                        view.foregroundStyle(configuration.isPressed ? .main.opacity(0.6) : .main)
+                        view.foregroundStyle(configuration.isPressed ? Color.main.opacity(0.6) : Color.main)
                     }
                     .ifCondition(!isEnabled) { view in
                         view.foregroundStyle(.gray)
@@ -40,7 +41,7 @@ struct WRSecondaryBorderedProminentButtonStyle: ButtonStyle {
             .background(
                 RoundedRectangle(cornerRadius: 10)
                     .ifCondition(isEnabled) { view in
-                        view.foregroundStyle(configuration.isPressed ? .second : .second.opacity(0.8))
+                        view.foregroundStyle(configuration.isPressed ? Color.accent : Color.accent.opacity(0.8))
                     }
                     .ifCondition(!isEnabled) { view in
                         view.foregroundStyle(.gray)

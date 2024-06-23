@@ -14,7 +14,14 @@ fileGroups:
   - install-git-hook.sh
   - renovate.json5
 
+options:
+  localPackagesGroup: Modules
+
 packages:
+  SharedUI:
+    path: Modules/SharedUI
+  WRCore:
+    path: Modules/WRCore
   shared:
     url: https://github.com/DatepollSystems/WaiterRobot-Shared-Android.git
     version: 1.6.1
@@ -44,7 +51,9 @@ targetTemplates:
       - package: shared
       - package: UIPilot
       - package: CodeScanner
-    
+      - package: SharedUI
+      - package: WRCore
+
     info:
       path: ".generated/${target_name}.plist"
       properties:
@@ -96,7 +105,7 @@ targetTemplates:
         DEVELOPMENT_TEAM: "28TM58T3GZ"
         PRODUCT_NAME: "${displayName}"
         ENABLE_PREVIEWS: "YES"
-        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: "main"
+        #ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: "main"
       configs:
         RELEASE:
           ONLY_ACTIVE_ARCH: "NO"

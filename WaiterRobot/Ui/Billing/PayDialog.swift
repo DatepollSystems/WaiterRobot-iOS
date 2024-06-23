@@ -1,6 +1,7 @@
 import Combine
 import shared
 import SwiftUI
+import WRCore
 
 struct PayDialog: View {
     @Environment(\.dismiss) private var dismiss

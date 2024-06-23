@@ -1,6 +1,7 @@
 import shared
 import SwiftUI
 import UIPilot
+import WRCore
 
 struct TableDetailScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
