@@ -6,7 +6,6 @@ struct WaiterRobotApp: App {
     var body: some Scene {
         WindowGroup {
             LaunchScreen()
-                .tint(.accent)
         }
     }
 }

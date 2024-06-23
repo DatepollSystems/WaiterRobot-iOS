@@ -27,7 +27,7 @@ struct TableGroupSection: View {
                     .padding(6)
                     .background {
                         RoundedRectangle(cornerRadius: 8.0)
-                            .foregroundStyle(Color.main)
+                            .foregroundStyle(Color.accent)
                     }
 
                 Spacer()
