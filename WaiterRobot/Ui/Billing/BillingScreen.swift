@@ -21,7 +21,7 @@ struct BillingScreen: View {
         let billItems = Array(viewModel.state.billItemsArray)
 
         content(billItems: billItems)
-            .navigationTitle(localize.billing.title(value0: table.number.description, value1: table.groupName))
+            .navigationTitle(localize.billing.title(value0: table.groupName, value1: table.number.description))
             .navigationBarTitleDisplayMode(.inline)
             .customBackNavigation(
                 title: localize.dialog.cancel(),
@@ -63,7 +63,6 @@ struct BillingScreen: View {
                     }
                 }
             }
-
             // TODO: make only half screen when ios 15 is dropped
             .sheet(isPresented: $showPayDialog) {
                 PayDialog(viewModel: viewModel)
@@ -76,7 +75,7 @@ struct BillingScreen: View {
         VStack {
             List {
                 if billItems.isEmpty {
-                    Text(localize.billing.noOpenBill(value0: table.number.description, value1: table.groupName))
+                    Text(localize.billing.noOpenBill(value0: table.groupName, value1: table.number.description))
                         .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -124,6 +123,7 @@ struct BillingScreen: View {
                         .font(.system(.title))
                         .padding()
                         .tint(.white)
+                        .offset(x: -3)
                 }
                 .background(.blue)
                 .mask(Circle())

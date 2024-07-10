@@ -17,7 +17,7 @@ struct TableDetailScreen: View {
 
     var body: some View {
         content()
-            .navigationTitle(localize.tableDetail.title(value0: table.number.description, value1: table.groupName))
+            .navigationTitle(localize.tableDetail.title(value0: table.groupName, value1: table.number.description))
             .withViewModel(viewModel, navigator)
     }
 
@@ -45,7 +45,7 @@ struct TableDetailScreen: View {
             if orderedItems.isEmpty {
                 Spacer()
 
-                Text(localize.tableDetail.noOrder(value0: table.number.description, value1: table.groupName))
+                Text(localize.tableDetail.noOrder(value0: table.groupName, value1: table.number.description))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()

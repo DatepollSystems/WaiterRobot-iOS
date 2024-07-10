@@ -3,11 +3,12 @@ import SwiftUI
 
 struct ProductSearchGroupList: View {
     let products: [Product]
+    let backgroundColor: Color?
     let onProductClick: (Product) -> Void
 
     var body: some View {
         ForEach(products, id: \.id) { product in
-            ProductListItem(product: product) {
+            ProductListItem(product: product, backgroundColor: backgroundColor) {
                 onProductClick(product)
             }
             .foregroundColor(.blackWhite)
@@ -29,6 +30,7 @@ struct ProductSearchGroupList: View {
                     position: 1
                 ),
             ],
+            backgroundColor: .yellow,
             onProductClick: { _ in }
         )
     }
