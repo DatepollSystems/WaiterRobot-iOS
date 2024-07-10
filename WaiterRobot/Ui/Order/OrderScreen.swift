@@ -38,7 +38,7 @@ struct OrderScreen: View {
                 currentOder(resource.data)
             }
         }
-        .navigationTitle(localize.order.title(value0: table.number.description, value1: table.groupName))
+        .navigationTitle(localize.order.title(value0: table.groupName, value1: table.number.description))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden()
         .confirmationDialog(
