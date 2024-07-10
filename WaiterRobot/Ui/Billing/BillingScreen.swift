@@ -124,7 +124,7 @@ struct BillingScreen: View {
                         .font(.system(.title))
                         .padding()
                         .tint(.white)
-                        .offset(x: -)
+                        .offset(x: -3)
                 }
                 .background(.blue)
                 .mask(Circle())
