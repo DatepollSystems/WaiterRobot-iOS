@@ -63,7 +63,6 @@ struct BillingScreen: View {
                     }
                 }
             }
-
             // TODO: make only half screen when ios 15 is dropped
             .sheet(isPresented: $showPayDialog) {
                 PayDialog(viewModel: viewModel)

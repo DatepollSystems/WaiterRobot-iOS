@@ -14,6 +14,7 @@ struct ProductSearchAllTab: View {
                         Section {
                             ProductSearchGroupList(
                                 products: productGroup.products,
+                                backgroundColor: Color(hex: productGroup.color),
                                 onProductClick: onProductClick
                             )
                         } header: {
