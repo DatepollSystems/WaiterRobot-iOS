@@ -38,6 +38,7 @@ struct ProductSearchAllTab: View {
                 id: 1,
                 name: "Test Group 1",
                 position: 1,
+                color: "",
                 products: [
                     Product(
                         id: 1,

@@ -11,6 +11,7 @@ struct TableGroupSection: View {
                 TableView(
                     text: table.number.description,
                     hasOrders: table.hasOrders,
+                    backgroundColor: Color(hex: tableGroup.color),
                     onClick: {
                         onTableClick(table)
                     }
@@ -19,18 +20,26 @@ struct TableGroupSection: View {
             }
         } header: {
             HStack {
-                Text(tableGroup.name)
-                    .font(.title2)
-                    .foregroundStyle(.white)
-                    .padding(6)
-                    .background {
-                        RoundedRectangle(cornerRadius: 8.0)
-                            .foregroundStyle(Color(.main))
-                    }
+                if let background = Color(hex: tableGroup.color) {
+                    title(backgroundColor: background)
+                } else {
+                    title(backgroundColor: Color(.main))
+                }
 
                 Spacer()
             }
         }
+    }
+
+    private func title(backgroundColor: Color) -> some View {
+        Text(tableGroup.name)
+            .font(.title2)
+            .foregroundStyle(backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white))
+            .padding(6)
+            .background {
+                RoundedRectangle(cornerRadius: 8.0)
+                    .foregroundStyle(backgroundColor)
+            }
     }
 }
 
