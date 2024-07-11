@@ -23,7 +23,7 @@ struct TableGroupSection: View {
                 if let background = Color(hex: tableGroup.color) {
                     title(backgroundColor: background)
                 } else {
-                    title(backgroundColor: Color(.main))
+                    title(backgroundColor: .gray.opacity(0.3))
                 }
 
                 Spacer()
