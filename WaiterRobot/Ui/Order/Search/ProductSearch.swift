@@ -60,6 +60,7 @@ struct ProductSearch: View {
                             LazyVGrid(columns: layout, spacing: 0) {
                                 ProductSearchGroupList(
                                     products: groupWithProducts.products,
+                                    backgroundColor: Color(hex: groupWithProducts.color),
                                     onProductClick: {
                                         viewModel.actual.addItem(product: $0, amount: 1)
                                         dismiss()
