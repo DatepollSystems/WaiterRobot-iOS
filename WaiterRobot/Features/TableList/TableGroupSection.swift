@@ -13,6 +13,7 @@ struct TableGroupSection: View {
                 TableView(
                     text: table.number.description,
                     hasOrders: table.hasOrders,
+                    backgroundColor: Color(hex: tableGroup.color),
                     onClick: {
                         onTableClick(table)
                     }
@@ -21,20 +22,28 @@ struct TableGroupSection: View {
             }
         } header: {
             HStack {
-                Text(tableGroup.name)
-                    .font(.title2)
-                    .foregroundStyle(.white)
-                    .padding(6)
-                    .background {
-                        RoundedRectangle(cornerRadius: 8.0)
-                            .foregroundStyle(Color.accent)
-                    }
+                if let background = Color(hex: tableGroup.color) {
+                    title(backgroundColor: background)
+                } else {
+                    title(backgroundColor: .gray.opacity(0.3))
+                }
 
                 Spacer()
             }
             .padding(.vertical, 4)
             .background(Color.whiteBlack)
         }
+    }
+
+    private func title(backgroundColor: Color) -> some View {
+        Text(tableGroup.name)
+            .font(.title2)
+            .foregroundStyle(backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white))
+            .padding(6)
+            .background {
+                RoundedRectangle(cornerRadius: 8.0)
+                    .foregroundStyle(backgroundColor)
+            }
     }
 }
 
