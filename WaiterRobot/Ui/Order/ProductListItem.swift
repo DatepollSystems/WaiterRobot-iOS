@@ -31,13 +31,13 @@ struct ProductListItem: View {
 
     var foregroundColor: Color {
         if product.soldOut {
-            return .blackWhite
+            .blackWhite
         }
 
         if let backgroundColor {
-            return backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white)
+            backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white)
         } else {
-            return Color.blackWhite
+            Color.blackWhite
         }
     }
 
@@ -76,6 +76,7 @@ struct ProductListItem: View {
             name: "Wine",
             price: Money(cents: 290),
             soldOut: true,
+            color: nil,
             allergens: [
                 Allergen(id: 1, name: "Egg", shortName: "E"),
                 Allergen(id: 2, name: "Egg2", shortName: "A"),
@@ -98,6 +99,7 @@ struct ProductListItem: View {
             name: "Wine",
             price: Money(cents: 290),
             soldOut: false,
+            color: nil,
             allergens: [
                 Allergen(id: 1, name: "Egg", shortName: "E"),
                 Allergen(id: 2, name: "Egg2", shortName: "A"),
