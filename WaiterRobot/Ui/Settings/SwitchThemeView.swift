@@ -11,7 +11,7 @@ struct SwitchThemeView: View {
     }
 
     var body: some View {
-        Picker(localize.settings.darkMode.title(), selection: $selectedTheme) {
+        Picker(localize.settings.general.darkMode.title(), selection: $selectedTheme) {
             ForEach(AppTheme.companion.valueList(), id: \.name) { theme in
                 Text(theme.settingsText()).tag(theme)
             }

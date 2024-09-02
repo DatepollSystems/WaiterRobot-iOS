@@ -32,12 +32,10 @@ struct ProductListItem: View {
     var foregroundColor: Color {
         if product.soldOut {
             .blackWhite
-        }
-
-        if let backgroundColor {
+        } else if let backgroundColor {
             backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white)
         } else {
-            Color.blackWhite
+            .blackWhite
         }
     }
 
