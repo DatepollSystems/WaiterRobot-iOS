@@ -150,6 +150,27 @@ struct SettingsScreen: View {
                     viewModel.actual.toggleSkipMoneyBackDialog(value: nil, confirmed: false)
                 }
             )
+
+            SettingsItem(
+                icon: "checkmark.square",
+                title: localize.settings.payment.selectAllProductsByDefault.title(),
+                subtitle: localize.settings.payment.selectAllProductsByDefault.desc(),
+                action: {
+                    Toggle(
+                        isOn: .init(
+                            get: { viewModel.state.paymentSelectAllProductsByDefault },
+                            set: { newValue in
+                                let kotlinBool = KotlinBoolean(value: newValue)
+                                viewModel.actual.togglePaymentSelectAllProductsByDefault(value: kotlinBool)
+                            }
+                        ),
+                        label: {}
+                    ).labelsHidden()
+                },
+                onClick: {
+                    viewModel.actual.togglePaymentSelectAllProductsByDefault(value: nil)
+                }
+            )
         }
     }
 }
