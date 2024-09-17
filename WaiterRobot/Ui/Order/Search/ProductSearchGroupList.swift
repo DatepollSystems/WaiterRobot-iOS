@@ -26,6 +26,7 @@ struct ProductSearchGroupList: View {
                     name: "Beer",
                     price: Money(cents: 450),
                     soldOut: false,
+                    color: nil,
                     allergens: [],
                     position: 1
                 ),

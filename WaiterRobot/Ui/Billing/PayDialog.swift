@@ -55,9 +55,11 @@ struct PayDialog: View {
                         dismiss()
                     }
                 }
+            }
+            .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(localize.billing.pay()) {
-                        viewModel.actual.paySelection()
+                        viewModel.actual.paySelection(paymentSheetShown: true)
                         dismiss()
                     }
                 }
