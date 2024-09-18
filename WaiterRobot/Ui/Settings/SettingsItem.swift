@@ -1,14 +1,15 @@
 import SwiftUI
 
-struct SettingsItem: View {
+struct SettingsItem<Action: View>: View {
     let icon: String
     let title: String
     let subtitle: String
-    let action: () -> Void
+    @ViewBuilder let action: Action?
+    let onClick: () -> Void
 
     var body: some View {
         Button {
-            action()
+            onClick()
         } label: {
             HStack {
                 Image(systemName: icon)
@@ -25,9 +26,24 @@ struct SettingsItem: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
+
+                if let action {
+                    Spacer()
+                    action
+                }
             }
         }
         .padding([.bottom, .top], 1)
+    }
+}
+
+extension SettingsItem where Action == EmptyView {
+    init(icon: String, title: String, subtitle: String, onClick: @escaping () -> Void) {
+        self.icon = icon
+        self.title = title
+        self.subtitle = subtitle
+        action = nil
+        self.onClick = onClick
     }
 }
 
@@ -37,13 +53,22 @@ struct SettingsItem: View {
             icon: "rectangle.portrait.and.arrow.right",
             title: "Logout",
             subtitle: "Logout from this organisation",
-            action: {}
+            onClick: {}
         )
         SettingsItem(
             icon: "person.3",
             title: "Switch event",
             subtitle: "My Organisation / The Event",
-            action: {}
+            onClick: {}
+        )
+        SettingsItem(
+            icon: "dollarsign.arrow.circlepath",
+            title: "Toggle",
+            subtitle: "Some toggle able",
+            action: {
+                Toggle(isOn: .constant(true)) {}.labelsHidden()
+            },
+            onClick: {}
         )
     }
 }
