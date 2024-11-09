@@ -155,7 +155,7 @@ platform :ios do
     end
     
     desc "Send a notification to Slack"
-    lande :sendSlackMessage do |options|
+    lane :sendSlackMessage do |options|
       ensure_env_vars(
         env_vars: ["SLACK_WEBHOOK_URL"]
       )
