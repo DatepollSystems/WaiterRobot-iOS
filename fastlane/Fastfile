@@ -160,7 +160,7 @@ platform :ios do
         env_vars: ["SLACK_WEBHOOK_URL"]
       )
       
-      slack_webhook_url = ENV['SLACK_WEB_HOOK_URL']
+      slack_webhook_url = ENV['SLACK_WEBHOOK_URL']
       version = options[:version]
       environment = options[:env]
 
