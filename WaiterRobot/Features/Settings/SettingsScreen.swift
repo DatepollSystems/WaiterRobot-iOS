@@ -7,6 +7,7 @@ struct SettingsScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
     @State private var showConfirmLogout = false
+    @State private var showConfirmSkipMoneyBackDialog = false
 
     @StateObject private var viewModel = ObservableSettingsViewModel()
 
@@ -32,44 +33,12 @@ struct SettingsScreen: View {
 
     private func content() -> some View {
         List {
-            Section {
-                SettingsItem(
-                    icon: "rectangle.portrait.and.arrow.right",
-                    title: localize.settings.logout.action(),
-                    subtitle: "\"\(CommonApp.shared.settings.organisationName)\" / \"\(CommonApp.shared.settings.waiterName)\"",
-                    action: {
-                        showConfirmLogout = true
-                    }
-                )
+            general()
 
-                SettingsItem(
-                    icon: "arrow.triangle.2.circlepath",
-                    title: localize.settings.refresh.title(),
-                    subtitle: localize.settings.refresh.desc(),
-                    action: {
-                        viewModel.actual.refreshAll()
-                    }
-                )
+            payment()
 
-                SettingsItem(
-                    icon: "person.3",
-                    title: localize.switchEvent.title(),
-                    subtitle: CommonApp.shared.settings.eventName,
-                    action: {
-                        viewModel.actual.switchEvent()
-                    }
-                )
-            }
-
-            Section {
-                SwitchThemeView(
-                    initial: viewModel.state.currentAppTheme,
-                    onChange: viewModel.actual.switchTheme
-                )
-            }
-
-            Section {
-                Link(localize.settings.privacyPolicy(), destination: URL(string: CommonApp.shared.privacyPolicyUrl)!)
+            Section(header: Text(localize.settings.about.title())) {
+                Link(localize.settings.about.privacyPolicy(), destination: URL(string: CommonApp.shared.privacyPolicyUrl)!)
             }
 
             HStack {
@@ -90,12 +59,119 @@ struct SettingsScreen: View {
                 }
             }
         }
-        .confirmationDialog(localize.settings.logout.title(value0: CommonApp.shared.settings.organisationName), isPresented: $showConfirmLogout, titleVisibility: .visible) {
-            Button(localize.settings.logout.action(), role: .destructive, action: { viewModel.actual.logout() })
-            Button(localize.settings.keepLoggedIn(), role: .cancel, action: { showConfirmLogout = false })
+        .confirmationDialog(
+            localize.settings.general.logout.title(value0: CommonApp.shared.settings.organisationName),
+            isPresented: $showConfirmLogout,
+            titleVisibility: .visible
+        ) {
+            Button(localize.settings.general.logout.action(), role: .destructive, action: { viewModel.actual.logout() })
+            Button(localize.settings.general.keepLoggedIn(), role: .cancel, action: { showConfirmLogout = false })
         } message: {
-            Text(localize.settings.logout.desc(value0: CommonApp.shared.settings.organisationName))
+            Text(localize.settings.general.logout.desc(value0: CommonApp.shared.settings.organisationName))
         }
-        .withViewModel(viewModel, navigator)
+        .confirmationDialog(
+            localize.settings.payment.skipMoneyBackDialog.title(),
+            isPresented: $showConfirmSkipMoneyBackDialog,
+            titleVisibility: .visible
+        ) {
+            Button(localize.settings.payment.skipMoneyBackDialog.confirmAction(), role: .destructive) {
+                viewModel.actual.toggleSkipMoneyBackDialog(value: true, confirmed: true)
+            }
+            Button(localize.dialog.cancel(), role: .cancel) {
+                showConfirmSkipMoneyBackDialog = false
+            }
+        } message: {
+            Text(localize.settings.payment.skipMoneyBackDialog.confirmDesc())
+        }
+        .withViewModel(viewModel, navigator) { effect in
+            switch onEnum(of: effect) {
+            case .confirmSkipMoneyBackDialog:
+                showConfirmSkipMoneyBackDialog = true
+            }
+
+            return true
+        }
+    }
+
+    private func general() -> some View {
+        Section(header: Text(localize.settings.general.title())) {
+            SettingsItem(
+                icon: "rectangle.portrait.and.arrow.right",
+                title: localize.settings.general.logout.action(),
+                subtitle: "\"\(CommonApp.shared.settings.organisationName)\" / \"\(CommonApp.shared.settings.waiterName)\"",
+                onClick: {
+                    showConfirmLogout = true
+                }
+            )
+
+            SettingsItem(
+                icon: "person.3",
+                title: localize.switchEvent.title(),
+                subtitle: CommonApp.shared.settings.eventName,
+                onClick: {
+                    viewModel.actual.switchEvent()
+                }
+            )
+
+            SwitchThemeView(
+                initial: viewModel.state.currentAppTheme,
+                onChange: viewModel.actual.switchTheme
+            )
+
+            SettingsItem(
+                icon: "arrow.triangle.2.circlepath",
+                title: localize.settings.general.refresh.title(),
+                subtitle: localize.settings.general.refresh.desc(),
+                onClick: {
+                    viewModel.actual.refreshAll()
+                }
+            )
+        }
+    }
+
+    private func payment() -> some View {
+        Section(header: Text(localize.settings.payment.title())) {
+            SettingsItem(
+                icon: "dollarsign.arrow.circlepath",
+                title: localize.settings.payment.skipMoneyBackDialog.title(),
+                subtitle: localize.settings.payment.skipMoneyBackDialog.desc(),
+                action: {
+                    Toggle(
+                        isOn: .init(
+                            get: { viewModel.state.skipMoneyBackDialog },
+                            set: { newValue in
+                                let kotlinBool = KotlinBoolean(value: newValue)
+                                viewModel.actual.toggleSkipMoneyBackDialog(value: kotlinBool, confirmed: false)
+                            }
+                        ),
+                        label: {}
+                    ).labelsHidden()
+                },
+                onClick: {
+                    viewModel.actual.toggleSkipMoneyBackDialog(value: nil, confirmed: false)
+                }
+            )
+
+            SettingsItem(
+                icon: "checkmark.square",
+                title: localize.settings.payment.selectAllProductsByDefault.title(),
+                subtitle: localize.settings.payment.selectAllProductsByDefault.desc(),
+                action: {
+                    Toggle(
+                        isOn: .init(
+                            get: { viewModel.state.paymentSelectAllProductsByDefault },
+                            set: { newValue in
+                                let kotlinBool = KotlinBoolean(value: newValue)
+                                viewModel.actual.togglePaymentSelectAllProductsByDefault(value: kotlinBool)
+                            }
+                        ),
+                        label: {}
+                    ).labelsHidden()
+                },
+                onClick: {
+                    viewModel.actual.togglePaymentSelectAllProductsByDefault(value: nil)
+                }
+            )
+        }
     }
 }

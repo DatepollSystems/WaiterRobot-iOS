@@ -28,7 +28,7 @@ struct BillingScreen: View {
                 title: localize.dialog.cancel(),
                 icon: nil
             ) {
-                if viewModel.state.hasSelectedItems {
+                if viewModel.state.hasCustomSelection {
                     showAbortConfirmation = true
                 } else {
                     viewModel.actual.abortBill()
@@ -68,7 +68,16 @@ struct BillingScreen: View {
             .sheet(isPresented: $showPayDialog) {
                 PayDialog(viewModel: viewModel)
             }
-            .withViewModel(viewModel, navigator)
+            .withViewModel(viewModel, navigator) { effect in
+                switch onEnum(of: effect) {
+                case .showPaymentSheet:
+                    showPayDialog = true
+                case .toast:
+                    break // TODO: add "toast" support
+                }
+
+                return true
+            }
     }
 
     @ViewBuilder
@@ -118,7 +127,7 @@ struct BillingScreen: View {
             .padding()
             .overlay(alignment: .bottom) {
                 Button {
-                    showPayDialog = true
+                    viewModel.actual.paySelection(paymentSheetShown: false)
                 } label: {
                     Image(systemName: "eurosign")
                         .font(.system(.title))

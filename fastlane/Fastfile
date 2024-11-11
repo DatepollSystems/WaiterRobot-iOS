@@ -95,6 +95,7 @@ platform :ios do
     version_tag = version + "-lava-" + build_number.to_s
     add_git_tag(tag: version_tag)
     push_git_tags(tag: version_tag)
+    sendSlackMessage(version: version_tag, env: "lava")
   end
 
   desc "Push a new prod build to TestFlight"
@@ -123,6 +124,7 @@ platform :ios do
       # e.g. 2.0.2
       add_git_tag(tag: version)
       push_git_tags(tag: version)
+      sendSlackMessage(version: version, env: "production")
     end
     
     lane :setupFastlaneSecrets do |options|
@@ -150,5 +152,45 @@ platform :ios do
         issuer_id: ENV["FASTLANE_ISSUER_ID"],
         key_filepath: "./fastlane/.keys/api_key.p8",
       )
+    end
+    
+    desc "Send a notification to Slack"
+    lane :sendSlackMessage do |options|
+      ensure_env_vars(
+        env_vars: ["SLACK_WEBHOOK_URL"]
+      )
+      
+      slack_webhook_url = ENV['SLACK_WEBHOOK_URL']
+      version = options[:version]
+      environment = options[:env]
+
+      json_body = <<-JSON
+        {
+          "blocks": [
+            {
+              "type": "header",
+              "text": {
+                "type": "plain_text",
+                "text": "🚀 New iOS #{environment} version available on TestFlight",
+                "emoji": true
+              }
+            },
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "*Version:* `#{version}`"
+              }
+            },
+          ]
+        }
+      JSON
+
+      sh <<-EOS
+        curl -X POST \
+         --header 'Content-type: application/json' \
+         --url "#{slack_webhook_url}" \
+         --data '#{json_body}'
+      EOS
     end
 end

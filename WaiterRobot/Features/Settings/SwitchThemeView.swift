@@ -12,12 +12,22 @@ struct SwitchThemeView: View {
     }
 
     var body: some View {
-        Picker(localize.settings.darkMode.title(), selection: $selectedTheme) {
-            ForEach(AppTheme.companion.valueList(), id: \.name) { theme in
-                Text(theme.settingsText()).tag(theme)
+        HStack {
+            Image(systemName: "moon")
+                .symbolRenderingMode(.hierarchical)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: 25)
+                .padding(.trailing)
+                .foregroundColor(.blue)
+
+            Picker(localize.settings.general.darkMode.title(), selection: $selectedTheme) {
+                ForEach(AppTheme.companion.valueList(), id: \.name) { theme in
+                    Text(theme.settingsText()).tag(theme)
+                }
             }
+            .onChange(of: selectedTheme, perform: onChange)
         }
-        .onChange(of: selectedTheme, perform: onChange)
     }
 }
 

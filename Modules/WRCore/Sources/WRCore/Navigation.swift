@@ -94,9 +94,9 @@ public extension View {
     func withViewModel<State, SideEffect>(
         _ viewModel: some ObservableViewModel<State, SideEffect, some AbstractViewModel<State, SideEffect>>,
         _ navigator: UIPilot<Screen>,
-        handler _: ((SideEffect) -> Bool)? = nil
+        handler: ((SideEffect) -> Bool)? = nil
     ) -> some View where State: ViewModelState, SideEffect: ViewModelEffect {
-        handleSideEffects(of: viewModel, navigator)
+        handleSideEffects(of: viewModel, navigator, handler: handler)
             .observeState(of: viewModel)
     }
 }

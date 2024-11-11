@@ -23,12 +23,11 @@ public enum WRCore {
             phoneModel: UIDevice.current.model,
             os: OS.Ios(version: UIDevice.current.systemVersion),
             allowedHostsCsv: readFromInfoPlist(withKey: "ALLOWED_HOSTS"),
-            stripeProvider: nil
+            stripeProvider: nil,
+            koinPlatformDeclaration: nil
         )
 
-        KoinKt.doInitKoinIos()
         let logger = koin.logger(tag: "AppDelegate")
-        logger.d { "initialized Koin" }
 
         KMMResourcesLocalizationKt.localizationBundle = Bundle(for: shared.L.self)
         logger.d { "initialized localization bundle" }
