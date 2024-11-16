@@ -22,9 +22,6 @@ packages:
     path: Modules/SharedUI
   WRCore:
     path: Modules/WRCore
-  shared:
-    url: https://github.com/DatepollSystems/WaiterRobot-Shared-Android.git
-    version: 1.6.10
   UIPilot:
     url: https://github.com/canopas/UIPilot.git
     from: 1.3.1
@@ -51,7 +48,6 @@ targetTemplates:
         group: "WaiterRobot/Resources"
         
     dependencies:
-      - package: shared
       - package: UIPilot
       - package: CodeScanner
       - package: SharedUI
