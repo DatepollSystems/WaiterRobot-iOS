@@ -23,12 +23,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
           
-      - name: Setup Ruby 3.3.0
+      - name: Setup Ruby 3.3.6
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3.0'
+          ruby-version: '3.3.6'
           bundler-cache: true
-      
+
       - name: Netrc maven.pkg.github.com
         uses: extractions/netrc@v2
         with:
