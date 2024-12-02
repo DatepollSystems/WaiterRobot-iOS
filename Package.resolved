@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "graphviz",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SwiftDocOrg/GraphViz.git",
-      "state" : {
-        "revision" : "70bebcf4597b9ce33e19816d6bbd4ba9b7bdf038",
-        "version" : "0.2.0"
-      }
-    },
-    {
       "identity" : "jsonutilities",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/yonaskolb/JSONUtilities.git",
@@ -68,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/nicklockwood/SwiftFormat",
       "state" : {
-        "revision" : "ab238886b8b50f8b678b251f3c28c0c887305407",
-        "version" : "0.53.8"
+        "revision" : "86ed20990585f478c0daf309af645c2a528b59d8",
+        "version" : "0.54.6"
       }
     },
     {
@@ -86,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/yonaskolb/XcodeGen.git",
       "state" : {
-        "revision" : "9816466703aede482c7436fddc6535684a7a9168",
-        "version" : "2.40.1"
+        "revision" : "82c6ab9bbd5b6075fc0887d897733fc0c4ffc9ab",
+        "version" : "2.42.0"
       }
     },
     {
@@ -95,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/tuist/XcodeProj.git",
       "state" : {
-        "revision" : "6e60fb55271c80f83a186c9b1b4982fd991cfc0a",
-        "version" : "8.13.0"
+        "revision" : "447c159b0c5fb047a024fd8d942d4a76cf47dde0",
+        "version" : "8.16.0"
       }
     },
     {
