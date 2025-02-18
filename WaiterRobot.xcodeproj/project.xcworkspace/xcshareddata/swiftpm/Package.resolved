@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "codescanner",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/twostraws/CodeScanner",
+      "state" : {
+        "revision" : "34da57fb63b47add20de8a85da58191523ccce57",
+        "version" : "2.5.0"
+      }
+    },
+    {
+      "identity" : "sentry-cocoa",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/getsentry/sentry-cocoa.git",
+      "state" : {
+        "revision" : "5575af93efb776414f243e93d6af9f6258dc539a",
+        "version" : "8.36.0"
+      }
+    },
+    {
+      "identity" : "uipilot",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/canopas/UIPilot.git",
+      "state" : {
+        "revision" : "ff7e5f93897b1f639cd249b34ba49aec5c692c0f",
+        "version" : "1.3.1"
+      }
+    },
+    {
+      "identity" : "waiterrobot-shared-android",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/DatepollSystems/WaiterRobot-Shared-Android.git",
+      "state" : {
+        "revision" : "43ef7e427e6cfa46c81c526b5e0e291ca227f845",
+        "version" : "1.6.10"
+      }
+    }
+  ],
+  "version" : 2
+}
