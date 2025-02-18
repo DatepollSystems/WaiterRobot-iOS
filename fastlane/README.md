@@ -23,46 +23,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Run all iOS unit and ui tests.
 
-### ios sync_certificates
-
-```sh
-[bundle exec] fastlane ios sync_certificates
-```
-
-Sync certificates
-
-### ios renew_certificates
-
-```sh
-[bundle exec] fastlane ios renew_certificates
-```
-
-Renew certificates and profiles
-
-### ios releaseWaiterRobot_develop
-
-```sh
-[bundle exec] fastlane ios releaseWaiterRobot_develop
-```
-
-Push a new lava build to TestFlight
-
-### ios releaseWaiterRobot_main
-
-```sh
-[bundle exec] fastlane ios releaseWaiterRobot_main
-```
-
-Push a new prod build to TestFlight
-
-### ios setupFastlaneSecrets
-
-```sh
-[bundle exec] fastlane ios setupFastlaneSecrets
-```
-
-
-
 ### ios sendSlackMessage
 
 ```sh
