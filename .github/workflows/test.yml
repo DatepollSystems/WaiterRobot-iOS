@@ -26,11 +26,5 @@ jobs:
           username: cirunner
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install xcodes
-        run: brew install xcodes
-
-      - name: Run XcodeGen
-        run: swift run xcodegen
-
       - name: Run tests with fastlane
         run: bundle exec fastlane test
