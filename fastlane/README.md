@@ -63,6 +63,14 @@ Push a new prod build to TestFlight
 
 
 
+### ios sendSlackMessage
+
+```sh
+[bundle exec] fastlane ios sendSlackMessage
+```
+
+Send a notification to Slack
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
