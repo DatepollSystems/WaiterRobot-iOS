@@ -8,7 +8,7 @@ let package = Package(
         .macOS(.v10_15),
     ],
     dependencies: [
-        .package(url: "https://github.com/yonaskolb/XcodeGen.git", from: "2.40.0"),
-        .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.53.8"),
+        .package(url: "https://github.com/yonaskolb/XcodeGen.git", from: "2.42.0"),
+        .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.54.6"),
     ]
 )

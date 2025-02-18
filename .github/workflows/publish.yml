@@ -28,7 +28,7 @@ jobs:
         with:
           ruby-version: '3.3.6'
           bundler-cache: true
-      
+
       - name: Netrc maven.pkg.github.com
         uses: extractions/netrc@v2
         with:
