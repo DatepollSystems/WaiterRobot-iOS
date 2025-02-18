@@ -231,14 +231,6 @@
 					4E481FB65E091F7A1A12A5DD = {
 						TestTargetID = C201714A3A531C2B18B55E0C;
 					};
-					C201714A3A531C2B18B55E0C = {
-						DevelopmentTeam = 28TM58T3GZ;
-						ProvisioningStyle = Manual;
-					};
-					F343603AC32E990B90EB0750 = {
-						DevelopmentTeam = 28TM58T3GZ;
-						ProvisioningStyle = Manual;
-					};
 				};
 			};
 			buildConfigurationList = 1A0E05B4BC1CB0EF27BAC2DF /* Build configuration list for PBXProject "WaiterRobot" */;
@@ -345,11 +337,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WaiterRobot/Entitlements/WaiterRobotLava.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 28TM58T3GZ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Targets/Lava/WaiterRobotLava.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Lava kellner.team";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -357,7 +351,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.datepollsystems.waiterrobot.beta;
 				PRODUCT_NAME = lava.kellner.team;
-				PROVISIONING_PROFILE_SPECIFIER = "match Development org.datepollsystems.waiterrobot.beta";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -369,11 +363,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WaiterRobot/Entitlements/WaiterRobotLava.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 28TM58T3GZ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Targets/Lava/WaiterRobotLava.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Lava kellner.team";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -381,7 +377,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.datepollsystems.waiterrobot.beta;
 				PRODUCT_NAME = lava.kellner.team;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.datepollsystems.waiterrobot.beta";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -468,11 +464,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WaiterRobot/Entitlements/WaiterRobot.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 28TM58T3GZ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Targets/Prod/WaiterRobot.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = kellner.team;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -480,7 +478,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = org.datepollsystems.waiterrobot;
 				PRODUCT_NAME = kellner.team;
-				PROVISIONING_PROFILE_SPECIFIER = "match AppStore org.datepollsystems.waiterrobot";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -509,11 +507,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = WaiterRobot/Entitlements/WaiterRobot.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 28TM58T3GZ;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Targets/Prod/WaiterRobot.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = kellner.team;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -521,7 +521,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.datepollsystems.waiterrobot;
 				PRODUCT_NAME = kellner.team;
-				PROVISIONING_PROFILE_SPECIFIER = "match Development org.datepollsystems.waiterrobot";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
