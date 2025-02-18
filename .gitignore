@@ -244,14 +244,12 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/fastlane,xcode,intellij,appcode,macos
 
-# Xcodegen
-.generated/
-WaiterRobot.xcodeproj/*
-!WaiterRobot.xcodeproj/project.xcworkspace/xcshareddata/swiftpm
-
 .keys*
 .env.*
 !.env.example
 
 .idea
 fastlane/.env
+
+WaiterRobot.xcodeproj/project.xcworkspace/xcuserdata
+WaiterRobot.xcodeproj/xcuserdata

@@ -1,0 +1,724 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 70;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2518F8E494B3AF68133FE7A8 /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 9603F5DF319E397835ED07CF /* Sentry-Dynamic */; };
+		604A97194CDC4C491AB8FC8B /* SharedUI in Frameworks */ = {isa = PBXBuildFile; productRef = BABDBDDD081BD349A058BE89 /* SharedUI */; };
+		61A313900669DC487EA6863D /* SharedUI in Frameworks */ = {isa = PBXBuildFile; productRef = 55C201C10992ADF9DCF1AB1D /* SharedUI */; };
+		70671FD5C7F6B2CFD5B3C81B /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 9DEDC56556C4308CCDECB2F9 /* CodeScanner */; };
+		73FF2191C23572A5DFF9E957 /* UIPilot in Frameworks */ = {isa = PBXBuildFile; productRef = C109840ED6C429035266718E /* UIPilot */; };
+		7936C5E94AE48188F2ADFA8A /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = 37CBF231C369CD35ECC4385E /* CodeScanner */; };
+		7D707FDB5B95C572C974EC5E /* Sentry-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 43EED5F7BB605AA2D75C1887 /* Sentry-Dynamic */; };
+		C1135F54B24A6B86BDC6F769 /* WRCore in Frameworks */ = {isa = PBXBuildFile; productRef = B7E489280D66E5F0DD389817 /* WRCore */; };
+		DC97745CEB90B555448FA95F /* WRCore in Frameworks */ = {isa = PBXBuildFile; productRef = 169FFF39D770347AD66BA7D7 /* WRCore */; };
+		E8FE7DAD449CC3CE8386FA59 /* UIPilot in Frameworks */ = {isa = PBXBuildFile; productRef = 31066418D1485DF4475A6079 /* UIPilot */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C9B0B7C31B94895B59E15AC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52CBC7F10D93BB13D5065932 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C201714A3A531C2B18B55E0C;
+			remoteInfo = WaiterRobotLava;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		150FCA59370ECA6E035CC817 /* WaiterRobotTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WaiterRobotTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3051906575D9F78EC5C723A3 /* install-git-hook.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "install-git-hook.sh"; sourceTree = "<group>"; };
+		36AB5A225A4846F5C481DF79 /* SharedUI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SharedUI; path = Modules/SharedUI; sourceTree = SOURCE_ROOT; };
+		42B9ECF0CFED88271A5AF4A0 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
+		6819CC6EBD52B1CEAB4D92C1 /* kellner.team.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = kellner.team.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F409B484C54EA38AF4A71B3 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
+		A546B3D407374B188009CF24 /* renovate.json5 */ = {isa = PBXFileReference; lastKnownFileType = text; path = renovate.json5; sourceTree = "<group>"; };
+		A8204F732B8FD93EBB7E360E /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		A952F4BB224D5237592F4D35 /* Package.resolved */ = {isa = PBXFileReference; lastKnownFileType = text; path = Package.resolved; sourceTree = "<group>"; };
+		AF07F3A2F61F5C483A0AFE65 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		C499D63CB90F1FFC844F330E /* lava.kellner.team.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lava.kellner.team.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA5239AA380E7A56C54E19AC /* WRCore */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WRCore; path = Modules/WRCore; sourceTree = SOURCE_ROOT; };
+		F87396495BC0BE8285940A2F /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		82416F362D64F84C00B4FCCE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Prod/Images.xcassets,
+				Prod/WaiterRobot.plist,
+			);
+			target = F343603AC32E990B90EB0750 /* WaiterRobot */;
+		};
+		82416F372D64F84E00B4FCCE /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Lava/Images.xcassets,
+				Lava/WaiterRobotLava.plist,
+			);
+			target = C201714A3A531C2B18B55E0C /* WaiterRobotLava */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		82416F332D64F80A00B4FCCE /* Targets */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (82416F362D64F84C00B4FCCE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 82416F372D64F84E00B4FCCE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Targets; sourceTree = "<group>"; };
+		82416F762D64F85600B4FCCE /* WaiterRobot */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WaiterRobot; sourceTree = "<group>"; };
+		82416FDB2D64F86400B4FCCE /* fastlane */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = fastlane; sourceTree = "<group>"; };
+		82416FDD2D64F86900B4FCCE /* command-line-tools */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "command-line-tools"; sourceTree = "<group>"; };
+		82416FE22D64F87200B4FCCE /* .github */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = .github; sourceTree = "<group>"; };
+		82416FE42D64F87800B4FCCE /* WaiterRobotTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WaiterRobotTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		849BE04D5C6F481ED261FC99 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8FE7DAD449CC3CE8386FA59 /* UIPilot in Frameworks */,
+				7936C5E94AE48188F2ADFA8A /* CodeScanner in Frameworks */,
+				604A97194CDC4C491AB8FC8B /* SharedUI in Frameworks */,
+				DC97745CEB90B555448FA95F /* WRCore in Frameworks */,
+				2518F8E494B3AF68133FE7A8 /* Sentry-Dynamic in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EE8E9FC485BFB11435986301 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				73FF2191C23572A5DFF9E957 /* UIPilot in Frameworks */,
+				70671FD5C7F6B2CFD5B3C81B /* CodeScanner in Frameworks */,
+				61A313900669DC487EA6863D /* SharedUI in Frameworks */,
+				C1135F54B24A6B86BDC6F769 /* WRCore in Frameworks */,
+				7D707FDB5B95C572C974EC5E /* Sentry-Dynamic in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		16C4C84F786E4BF6ABEEB65D = {
+			isa = PBXGroup;
+			children = (
+				AF07F3A2F61F5C483A0AFE65 /* .gitignore */,
+				42B9ECF0CFED88271A5AF4A0 /* .swiftformat */,
+				6F409B484C54EA38AF4A71B3 /* Gemfile */,
+				A546B3D407374B188009CF24 /* renovate.json5 */,
+				A8204F732B8FD93EBB7E360E /* README.md */,
+				A952F4BB224D5237592F4D35 /* Package.resolved */,
+				3051906575D9F78EC5C723A3 /* install-git-hook.sh */,
+				F87396495BC0BE8285940A2F /* Package.swift */,
+				82416FE22D64F87200B4FCCE /* .github */,
+				82416FDD2D64F86900B4FCCE /* command-line-tools */,
+				82416FDB2D64F86400B4FCCE /* fastlane */,
+				D4F4C626424188D539C8809A /* Modules */,
+				82416F332D64F80A00B4FCCE /* Targets */,
+				82416F762D64F85600B4FCCE /* WaiterRobot */,
+				82416FE42D64F87800B4FCCE /* WaiterRobotTests */,
+				D20FD31A5075372C89FD743F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D20FD31A5075372C89FD743F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6819CC6EBD52B1CEAB4D92C1 /* kellner.team.app */,
+				C499D63CB90F1FFC844F330E /* lava.kellner.team.app */,
+				150FCA59370ECA6E035CC817 /* WaiterRobotTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D4F4C626424188D539C8809A /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				36AB5A225A4846F5C481DF79 /* SharedUI */,
+				CA5239AA380E7A56C54E19AC /* WRCore */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4E481FB65E091F7A1A12A5DD /* WaiterRobotTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7B7EA4A39EE1196FB614A98 /* Build configuration list for PBXNativeTarget "WaiterRobotTests" */;
+			buildPhases = (
+				FA85AD508C602CDF6620D3F3 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CEACA342507672FF87FB2792 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				82416FE42D64F87800B4FCCE /* WaiterRobotTests */,
+			);
+			name = WaiterRobotTests;
+			productName = WaiterRobotTests;
+			productReference = 150FCA59370ECA6E035CC817 /* WaiterRobotTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C201714A3A531C2B18B55E0C /* WaiterRobotLava */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 60349513182458A51949DF23 /* Build configuration list for PBXNativeTarget "WaiterRobotLava" */;
+			buildPhases = (
+				3373788ECCEFE183F0C29B83 /* Set BuildNumber to epochMinute */,
+				ADBAC7ADCDC436C4DA348DF2 /* Sources */,
+				40C1E9D09B43297FF0E234CC /* Resources */,
+				EE8E9FC485BFB11435986301 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				82416F762D64F85600B4FCCE /* WaiterRobot */,
+			);
+			name = WaiterRobotLava;
+			packageProductDependencies = (
+				C109840ED6C429035266718E /* UIPilot */,
+				9DEDC56556C4308CCDECB2F9 /* CodeScanner */,
+				55C201C10992ADF9DCF1AB1D /* SharedUI */,
+				B7E489280D66E5F0DD389817 /* WRCore */,
+				43EED5F7BB605AA2D75C1887 /* Sentry-Dynamic */,
+			);
+			productName = WaiterRobotLava;
+			productReference = C499D63CB90F1FFC844F330E /* lava.kellner.team.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F343603AC32E990B90EB0750 /* WaiterRobot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84B53686DDD2A6289194F3F2 /* Build configuration list for PBXNativeTarget "WaiterRobot" */;
+			buildPhases = (
+				CC0150DC6397C15A620ADF26 /* Sources */,
+				35A540AA506C44AA0778E09E /* Resources */,
+				849BE04D5C6F481ED261FC99 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				82416F762D64F85600B4FCCE /* WaiterRobot */,
+			);
+			name = WaiterRobot;
+			packageProductDependencies = (
+				31066418D1485DF4475A6079 /* UIPilot */,
+				37CBF231C369CD35ECC4385E /* CodeScanner */,
+				BABDBDDD081BD349A058BE89 /* SharedUI */,
+				169FFF39D770347AD66BA7D7 /* WRCore */,
+				9603F5DF319E397835ED07CF /* Sentry-Dynamic */,
+			);
+			productName = WaiterRobot;
+			productReference = 6819CC6EBD52B1CEAB4D92C1 /* kellner.team.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		52CBC7F10D93BB13D5065932 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					4E481FB65E091F7A1A12A5DD = {
+						TestTargetID = C201714A3A531C2B18B55E0C;
+					};
+				};
+			};
+			buildConfigurationList = 1A0E05B4BC1CB0EF27BAC2DF /* Build configuration list for PBXProject "WaiterRobot" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 16C4C84F786E4BF6ABEEB65D;
+			packageReferences = (
+				035550925EEDC82A97EDAA4E /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				41C3BBF4176E4ED04740B917 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				C238B2EE28985222F9A6AB7A /* XCRemoteSwiftPackageReference "UIPilot" */,
+				ED2DCE1705F5455A52D62F47 /* XCLocalSwiftPackageReference "Modules/SharedUI" */,
+				F7A9B4B06DB5FDEC25E63741 /* XCLocalSwiftPackageReference "Modules/WRCore" */,
+			);
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F343603AC32E990B90EB0750 /* WaiterRobot */,
+				C201714A3A531C2B18B55E0C /* WaiterRobotLava */,
+				4E481FB65E091F7A1A12A5DD /* WaiterRobotTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		35A540AA506C44AA0778E09E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		40C1E9D09B43297FF0E234CC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3373788ECCEFE183F0C29B83 /* Set BuildNumber to epochMinute */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Set BuildNumber to epochMinute";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Lava uses the epochMinute as buildNumber\n/usr/libexec/PlistBuddy -c \"Set CFBundleVersion $(($(date +\"%s\")/60))\" \"Targets/Lava/WaiterRobotLava.plist\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ADBAC7ADCDC436C4DA348DF2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC0150DC6397C15A620ADF26 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA85AD508C602CDF6620D3F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CEACA342507672FF87FB2792 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C201714A3A531C2B18B55E0C /* WaiterRobotLava */;
+			targetProxy = C9B0B7C31B94895B59E15AC6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		236DC7989F17AC6D76D6D63B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WaiterRobot/Entitlements/WaiterRobotLava.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28TM58T3GZ;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Targets/Lava/WaiterRobotLava.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Lava kellner.team";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.datepollsystems.waiterrobot.beta;
+				PRODUCT_NAME = lava.kellner.team;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2B983EAC56498844F3713062 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WaiterRobot/Entitlements/WaiterRobotLava.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28TM58T3GZ;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Targets/Lava/WaiterRobotLava.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Lava kellner.team";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.datepollsystems.waiterrobot.beta;
+				PRODUCT_NAME = lava.kellner.team;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		38A908BC2BC6B2D6B3ECCB9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		402914793E48DD4051D47D26 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lava.kellner.team.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lava.kellner.team";
+				TEST_TARGET_NAME = WaiterRobotLava;
+			};
+			name = Release;
+		};
+		44B7CE69862540345ADF321A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WaiterRobot/Entitlements/WaiterRobot.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28TM58T3GZ;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Targets/Prod/WaiterRobot.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = kellner.team;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.datepollsystems.waiterrobot;
+				PRODUCT_NAME = kellner.team;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BA1FEF364D4297DFC0649B54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lava.kellner.team.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/lava.kellner.team";
+				TEST_TARGET_NAME = WaiterRobotLava;
+			};
+			name = Debug;
+		};
+		BC262E433F206CA7F894B5C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WaiterRobot/Entitlements/WaiterRobot.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 28TM58T3GZ;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Targets/Prod/WaiterRobot.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = kellner.team;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.datepollsystems.waiterrobot;
+				PRODUCT_NAME = kellner.team;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EE115F820C751485D8ED5368 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1A0E05B4BC1CB0EF27BAC2DF /* Build configuration list for PBXProject "WaiterRobot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EE115F820C751485D8ED5368 /* Debug */,
+				38A908BC2BC6B2D6B3ECCB9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		60349513182458A51949DF23 /* Build configuration list for PBXNativeTarget "WaiterRobotLava" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				236DC7989F17AC6D76D6D63B /* Debug */,
+				2B983EAC56498844F3713062 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		84B53686DDD2A6289194F3F2 /* Build configuration list for PBXNativeTarget "WaiterRobot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC262E433F206CA7F894B5C3 /* Debug */,
+				44B7CE69862540345ADF321A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F7B7EA4A39EE1196FB614A98 /* Build configuration list for PBXNativeTarget "WaiterRobotTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA1FEF364D4297DFC0649B54 /* Debug */,
+				402914793E48DD4051D47D26 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		ED2DCE1705F5455A52D62F47 /* XCLocalSwiftPackageReference "Modules/SharedUI" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/SharedUI;
+		};
+		F7A9B4B06DB5FDEC25E63741 /* XCLocalSwiftPackageReference "Modules/WRCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Modules/WRCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		035550925EEDC82A97EDAA4E /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.1;
+			};
+		};
+		41C3BBF4176E4ED04740B917 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = exactVersion;
+				version = 8.36.0;
+			};
+		};
+		C238B2EE28985222F9A6AB7A /* XCRemoteSwiftPackageReference "UIPilot" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/canopas/UIPilot.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		169FFF39D770347AD66BA7D7 /* WRCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WRCore;
+		};
+		31066418D1485DF4475A6079 /* UIPilot */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C238B2EE28985222F9A6AB7A /* XCRemoteSwiftPackageReference "UIPilot" */;
+			productName = UIPilot;
+		};
+		37CBF231C369CD35ECC4385E /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 035550925EEDC82A97EDAA4E /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+		43EED5F7BB605AA2D75C1887 /* Sentry-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41C3BBF4176E4ED04740B917 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = "Sentry-Dynamic";
+		};
+		55C201C10992ADF9DCF1AB1D /* SharedUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedUI;
+		};
+		9603F5DF319E397835ED07CF /* Sentry-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 41C3BBF4176E4ED04740B917 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = "Sentry-Dynamic";
+		};
+		9DEDC56556C4308CCDECB2F9 /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 035550925EEDC82A97EDAA4E /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+		B7E489280D66E5F0DD389817 /* WRCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WRCore;
+		};
+		BABDBDDD081BD349A058BE89 /* SharedUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedUI;
+		};
+		C109840ED6C429035266718E /* UIPilot */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C238B2EE28985222F9A6AB7A /* XCRemoteSwiftPackageReference "UIPilot" */;
+			productName = UIPilot;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 52CBC7F10D93BB13D5065932 /* Project object */;
+}
