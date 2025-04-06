@@ -1,0 +1,11 @@
+appId: org.datepollsystems.waiterrobot.beta
+---
+- clearState
+- launchApp
+- tapOn: "Login with Qr-Code"
+- assertVisible: "To login scan the QR-Code you got from your organization administrator."
+- tapOn:
+    point: 30%, 50%
+- tapOn: "Heuriger 2022"
+- tapOn: "0"
+- assertVisible: "Table A - 0"

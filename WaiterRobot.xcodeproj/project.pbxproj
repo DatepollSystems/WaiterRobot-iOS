@@ -65,6 +65,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		820AF7402DA1C8E70070B398 /* maestro */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = maestro; sourceTree = "<group>"; };
 		82416F332D64F80A00B4FCCE /* Targets */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (82416F362D64F84C00B4FCCE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 82416F372D64F84E00B4FCCE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Targets; sourceTree = "<group>"; };
 		82416F762D64F85600B4FCCE /* WaiterRobot */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WaiterRobot; sourceTree = "<group>"; };
 		82416FDB2D64F86400B4FCCE /* fastlane */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = fastlane; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 		16C4C84F786E4BF6ABEEB65D = {
 			isa = PBXGroup;
 			children = (
+				820AF7402DA1C8E70070B398 /* maestro */,
 				AF07F3A2F61F5C483A0AFE65 /* .gitignore */,
 				42B9ECF0CFED88271A5AF4A0 /* .swiftformat */,
 				6F409B484C54EA38AF4A71B3 /* Gemfile */,
