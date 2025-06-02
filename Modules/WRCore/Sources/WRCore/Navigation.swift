@@ -36,7 +36,7 @@ extension UIPilot<Screen> {
 
 public extension View {
     func customBackNavigation(
-        title: String = localize.navigation.back(),
+        title: String = localize.navigation_back(),
         icon: String? = "chevron.left",
         action: @escaping () -> Void
     ) -> some View {
@@ -73,7 +73,7 @@ public extension View {
                 logger.d { "Got sideEffect: \(sideEffect)" }
                 switch onEnum(of: sideEffect as! NavOrViewModelEffect<SideEffect>) {
                 case let .navEffect(navEffect):
-                    await navigator.navigate(navEffect.action)
+                    navigator.navigate(navEffect.action)
                 case let .vMEffect(effect):
                     if handler?(effect.effect) != true {
                         logger.w { "Side effect \(effect.effect) was not handled." }

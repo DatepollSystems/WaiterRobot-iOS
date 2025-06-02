@@ -2,7 +2,7 @@ import shared
 import SwiftUI
 
 struct ProductSearchAllTab: View {
-    let productGroups: [ProductGroup]
+    let productGroups: [GroupedProducts]
     let columns: [GridItem]
     let onProductClick: (Product) -> Void
 
@@ -35,7 +35,7 @@ struct ProductSearchAllTab: View {
 #Preview {
     ProductSearchAllTab(
         productGroups: [
-            ProductGroup(
+            GroupedProducts(
                 id: 1,
                 name: "Test Group 1",
                 position: 1,

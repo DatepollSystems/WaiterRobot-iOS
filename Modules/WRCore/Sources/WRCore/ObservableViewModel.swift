@@ -60,6 +60,12 @@ public class ObservableOrderViewModel: ObservableViewModel<OrderState, OrderEffe
     }
 }
 
+public class ObservableProductListViewModel: ObservableViewModel<ProductListState, ProductListEffect, ProductListViewModel> {
+    public init() {
+        super.init(viewModel: koin.getProductListVM())
+    }
+}
+
 public class ObservableLoginScannerViewModel: ObservableViewModel<LoginScannerState, LoginScannerEffect, LoginScannerViewModel> {
     public init() {
         super.init(viewModel: koin.loginScannerVM())

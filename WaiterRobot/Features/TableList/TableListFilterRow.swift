@@ -106,8 +106,8 @@ struct TableListFilterRow: View {
 #Preview {
     TableListFilterRow(
         tableGroups: [
-            TableGroup(id: 1, name: "Test Group1", eventId: 1, position: 1, color: nil, hidden: true, tables: []),
-            TableGroup(id: 2, name: "Test Group2", eventId: 1, position: 1, color: nil, hidden: false, tables: []),
+            TableGroup(id: 1, name: "Test Group1", color: nil, hidden: true),
+            TableGroup(id: 2, name: "Test Group2", color: nil, hidden: false),
         ],
         onToggleFilter: { _ in },
         onSelectAll: {},

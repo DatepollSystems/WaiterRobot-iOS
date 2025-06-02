@@ -4,16 +4,16 @@ import SwiftUI
 import WRCore
 
 struct TableGroupSection: View {
-    let tableGroup: TableGroup
+    let groupedTables: GroupedTables
     let onTableClick: (shared.Table) -> Void
 
     var body: some View {
         Section {
-            ForEach(tableGroup.tables, id: \.id) { table in
+            ForEach(groupedTables.tables, id: \.id) { table in
                 TableView(
                     text: table.number.description,
                     hasOrders: table.hasOrders,
-                    backgroundColor: Color(hex: tableGroup.color),
+                    backgroundColor: Color(hex: groupedTables.color),
                     onClick: {
                         onTableClick(table)
                     }
@@ -22,7 +22,7 @@ struct TableGroupSection: View {
             }
         } header: {
             HStack {
-                if let background = Color(hex: tableGroup.color) {
+                if let background = Color(hex: groupedTables.color) {
                     title(backgroundColor: background)
                 } else {
                     title(backgroundColor: .gray.opacity(0.3))
@@ -36,7 +36,7 @@ struct TableGroupSection: View {
     }
 
     private func title(backgroundColor: Color) -> some View {
-        Text(tableGroup.name)
+        Text(groupedTables.name)
             .font(.title2)
             .foregroundStyle(backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white))
             .padding(6)
@@ -50,13 +50,11 @@ struct TableGroupSection: View {
 #Preview {
     LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
         TableGroupSection(
-            tableGroup: TableGroup(
+            groupedTables: GroupedTables(
                 id: 1,
                 name: "Test Group",
                 eventId: 1,
-                position: 1,
                 color: nil,
-                hidden: false,
                 tables: [
                     shared.Table(id: 1, number: 1, groupName: "Test Group", hasOrders: true),
                     shared.Table(id: 2, number: 2, groupName: "Test Group", hasOrders: false),

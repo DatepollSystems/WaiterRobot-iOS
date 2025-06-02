@@ -15,7 +15,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../SharedUI"),
-        .package(url: "https://github.com/DatepollSystems/WaiterRobot-Shared-Android.git", from: "1.6.1"),
+        .package(url: "https://github.com/DatepollSystems/WaiterRobot-Shared-Android.git", from: "1.7.3"),
     ],
     targets: [
         .target(

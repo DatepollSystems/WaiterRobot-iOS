@@ -8,7 +8,6 @@ struct BillingScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
     @State private var showPayDialog: Bool = false
-    @State private var showAbortConfirmation = false
 
     @StateObject private var viewModel: ObservableBillingViewModel
     private let table: shared.Table
@@ -19,92 +18,122 @@ struct BillingScreen: View {
     }
 
     var body: some View {
-        let billItems = Array(viewModel.state.billItemsArray)
+        BillingScreenView(
+            table: table,
+            state: viewModel.state,
+            abortBill: { viewModel.actual.abortBill() },
+            selectAll: { viewModel.actual.selectAll() },
+            unselectAll: { viewModel.actual.unselectAll() },
+            addItem: { viewModel.actual.addItem(baseProductId: $0, amount: $1) },
+            paySelection: { viewModel.actual.paySelection(paymentSheetShown: $0) }
+        )
+        // TODO: make only half screen when ios 15 is dropped
+        .sheet(isPresented: $showPayDialog) {
+            PayDialog(viewModel: viewModel)
+        }
+        .withViewModel(viewModel, navigator) { effect in
+            switch onEnum(of: effect) {
+            case .showPaymentSheet:
+                showPayDialog = true
+            case .toast:
+                break // TODO: add "toast" support
+            }
 
-        content(billItems: billItems)
-            .navigationTitle(localize.billing.title(value0: table.groupName, value1: table.number.description))
-            .navigationBarTitleDisplayMode(.inline)
-            .customBackNavigation(
-                title: localize.dialog.cancel(),
-                icon: nil
-            ) {
-                if viewModel.state.hasCustomSelection {
-                    showAbortConfirmation = true
+            return true
+        }
+    }
+}
+
+private struct BillingScreenView: View {
+    @State private var showPayDialog: Bool = false
+    @State private var showAbortConfirmation = false
+
+    let table: shared.Table
+    let state: BillingState
+    let abortBill: () -> Void
+    let selectAll: () -> Void
+    let unselectAll: () -> Void
+    let addItem: (_ baseProductId: Int64, _ amount: Int32) -> Void
+    let paySelection: (_ paymentSheetShown: Bool) -> Void
+
+    var body: some View {
+        ViewStateOverlayView(state: state.paymentState) {
+            let billItemsState = onEnum(of: state.billItems_)
+
+            if case let .loading(ressource) = billItemsState, ressource.data == nil {
+                ProgressView()
+            } else {
+                if case let .error(resource) = billItemsState {
+                    Text("Error \(resource.userMessage())")
+                }
+
+                if let billItems = Array(state.billItems_.data), !billItems.isEmpty {
+                    content(billItems: billItems)
                 } else {
-                    viewModel.actual.abortBill()
+                    Text(localize.billing_noOrder(table.groupName, table.number.description))
                 }
             }
-            .confirmationDialog(
-                localize.billing.notSent.title(),
-                isPresented: $showAbortConfirmation,
-                titleVisibility: .visible
-            ) {
-                Button(localize.dialog.closeAnyway(), role: .destructive) {
-                    viewModel.actual.abortBill()
-                }
-            } message: {
-                Text(localize.billing.notSent.desc())
+        }
+        .navigationTitle(localize.billing_title(table.groupName, table.number.description))
+        .navigationBarTitleDisplayMode(.inline)
+        .customBackNavigation(
+            title: localize.dialog_cancel(),
+            icon: nil
+        ) {
+            if state.hasCustomSelection {
+                showAbortConfirmation = true
+            } else {
+                abortBill()
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .navigationBarTrailing) {
-                    if !billItems.isEmpty {
-                        Button {
-                            viewModel.actual.selectAll()
-                        } label: {
-                            Image(systemName: "checkmark")
-                        }
-                    }
-
-                    if !billItems.isEmpty {
-                        Button {
-                            viewModel.actual.unselectAll()
-                        } label: {
-                            Image(systemName: "xmark")
-                        }
-                    }
-                }
+        }
+        .confirmationDialog(
+            localize.billing_notSent_title(),
+            isPresented: $showAbortConfirmation,
+            titleVisibility: .visible
+        ) {
+            Button(localize.dialog_closeAnyway(), role: .destructive) {
+                abortBill()
             }
-            // TODO: make only half screen when ios 15 is dropped
-            .sheet(isPresented: $showPayDialog) {
-                PayDialog(viewModel: viewModel)
-            }
-            .withViewModel(viewModel, navigator) { effect in
-                switch onEnum(of: effect) {
-                case .showPaymentSheet:
-                    showPayDialog = true
-                case .toast:
-                    break // TODO: add "toast" support
+        } message: {
+            Text(localize.billing_notSent_desc())
+        }
+        .toolbar {
+            ToolbarItemGroup(placement: .navigationBarTrailing) {
+                Button {
+                    selectAll()
+                } label: {
+                    Image(systemName: "checkmark")
                 }
 
-                return true
+                Button {
+                    unselectAll()
+                } label: {
+                    Image(systemName: "xmark")
+                }
             }
+        }
     }
 
     @ViewBuilder
-    private func content(billItems: [BillItem]) -> some View {
+    private func content(billItems: [BillItem]?) -> some View {
         VStack {
             List {
-                if billItems.isEmpty {
-                    Text(localize.billing.noOpenBill(value0: table.groupName, value1: table.number.description))
-                        .multilineTextAlignment(.center)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                } else {
+                if let billItems, !billItems.isEmpty {
                     Section {
-                        ForEach(billItems, id: \.virtualId) { item in
+                        ForEach(billItems, id: \.baseProductId) { item in
                             BillListItem(
                                 item: item,
                                 addOne: {
-                                    viewModel.actual.addItem(virtualId: item.virtualId, amount: 1)
+                                    addItem(item.baseProductId, 1)
                                 },
                                 addAll: {
-                                    viewModel.actual.addItem(virtualId: item.virtualId, amount: item.ordered - item.selectedForBill)
+                                    addItem(item.baseProductId, item.ordered - item.selectedForBill)
                                 },
                                 removeOne: {
-                                    viewModel.actual.addItem(virtualId: item.virtualId, amount: -1)
+                                    addItem(item.baseProductId, -1)
                                 },
                                 removeAll: {
-                                    viewModel.actual.addItem(virtualId: item.virtualId, amount: -item.selectedForBill)
+                                    addItem(item.baseProductId, -item.selectedForBill)
                                 }
                             )
                         }
@@ -115,19 +144,24 @@ struct BillingScreen: View {
                             Text("Selected")
                         }
                     }
+                } else {
+                    Text(localize.billing_noOrder(table.groupName, table.number.description))
+                        .multilineTextAlignment(.center)
+                        .frame(maxWidth: .infinity)
+                        .padding()
                 }
             }
 
             HStack {
-                Text("\(localize.billing.total()):")
+                Text("\(localize.billing_total()):")
                 Spacer()
-                Text("\(viewModel.state.priceSum)")
+                Text("\(state.priceSum)")
             }
             .font(.title2)
             .padding()
             .overlay(alignment: .bottom) {
                 Button {
-                    viewModel.actual.paySelection(paymentSheetShown: false)
+                    paySelection(false)
                 } label: {
                     Image(systemName: "eurosign")
                         .font(.system(.title))
@@ -138,7 +172,7 @@ struct BillingScreen: View {
                 .background(.blue)
                 .mask(Circle())
                 .shadow(color: Color.black.opacity(0.3), radius: 3, x: 3, y: 3)
-                .disabled(viewModel.state.viewState != ViewState.Idle.shared || !viewModel.state.hasSelectedItems)
+                .disabled(state.paymentState != ViewState.Idle.shared || !state.hasSelectedItems)
             }
         }
     }

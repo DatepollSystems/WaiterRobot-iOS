@@ -34,7 +34,8 @@ struct Event: View {
             endDate: nil,
             city: "Graz",
             organisationId: 1,
-            stripeSettings: shared.Event.StripeSettingsDisabled()
+            stripeSettings: shared.Event.StripeSettingsDisabled(),
+            isDemo: false
         )
     )
 }

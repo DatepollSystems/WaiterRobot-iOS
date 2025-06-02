@@ -4,8 +4,7 @@ import SwiftUI
 import UIKit
 
 public var koin: IosKoinComponent { IosKoinComponent.shared }
-
-public var localize: shared.L.Companion { shared.L.Companion.shared }
+public var localize: shared.MR.strings { shared.MR.strings() }
 
 public enum WRCore {
     /// Setup of frameworks and all the other related stuff which is needed everywhere in the app
@@ -29,7 +28,6 @@ public enum WRCore {
 
         let logger = koin.logger(tag: "AppDelegate")
 
-        KMMResourcesLocalizationKt.localizationBundle = Bundle(for: shared.L.self)
         logger.d { "initialized localization bundle" }
         print("finished app setup")
     }
@@ -51,5 +49,34 @@ public extension EnvironmentValues {
         #else
             return false
         #endif
+    }
+}
+
+public extension StringResource {
+    func callAsFunction() -> String {
+        desc().localized()
+    }
+
+    func callAsFunction(_ args: String...) -> String {
+        format(args: args).localized()
+    }
+}
+
+public extension StringDesc {
+    func callAsFunction() -> String {
+        localized()
+    }
+}
+
+public extension Skie.Shared.Resource.__Sealed {
+    var data: T? {
+        switch self {
+        case let .loading(resource):
+            resource.data
+        case let .error(resource):
+            resource.data
+        case let .success(resource):
+            resource.data
+        }
     }
 }

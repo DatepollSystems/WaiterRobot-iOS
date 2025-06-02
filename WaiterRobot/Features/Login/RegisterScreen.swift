@@ -21,11 +21,7 @@ struct RegisterScreen: View {
         case let error as ViewState.Error:
             content()
                 .alert(isPresented: Binding.constant(true)) {
-                    Alert(
-                        title: Text(error.title),
-                        message: Text(error.message),
-                        dismissButton: .cancel(Text("OK"), action: error.onDismiss)
-                    )
+                    Alert(error.dialog)
                 }
         default:
             fatalError("Unexpected ViewState: \(viewModel.state.viewState.description)")
@@ -34,10 +30,10 @@ struct RegisterScreen: View {
 
     private func content() -> some View {
         VStack {
-            Text(localize.register.name.desc())
+            Text(localize.register_name_desc())
                 .font(.body)
 
-            TextField(localize.register.name.title(), text: $name)
+            TextField(localize.register_name_title(), text: $name)
                 .font(.body)
                 .fixedSize()
                 .padding()
@@ -46,7 +42,7 @@ struct RegisterScreen: View {
                 Button {
                     viewModel.actual.cancel()
                 } label: {
-                    Text(localize.dialog.cancel())
+                    Text(localize.dialog_cancel())
                 }
 
                 Spacer()
@@ -57,12 +53,12 @@ struct RegisterScreen: View {
                         registerLink: deepLink
                     )
                 } label: {
-                    Text(localize.register.login())
+                    Text(localize.register_login())
                 }
             }
             .padding()
 
-            Label(localize.register.alreadyRegisteredInfo(), systemImage: "info.circle.fill")
+            Label(localize.register_alreadyRegisteredInfo(), systemImage: "info.circle.fill")
         }
         .padding()
         .navigationBarHidden(true)

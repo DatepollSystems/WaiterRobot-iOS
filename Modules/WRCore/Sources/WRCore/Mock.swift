@@ -14,18 +14,8 @@ public enum Mock {
         TableGroup(
             id: id,
             name: name,
-            eventId: 1,
-            position: Int32(id),
             color: "",
             hidden: false,
-            tables: [
-                table(with: 1),
-                table(with: 2, hasOrders: true),
-                table(with: 3),
-                table(with: 4),
-                table(with: 5),
-                table(with: 6),
-            ]
         )
     }
 
