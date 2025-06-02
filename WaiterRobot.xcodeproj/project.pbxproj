@@ -65,8 +65,8 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		8221B03D2DE8B448004B80AC /* ci_scripts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ci_scripts; sourceTree = "<group>"; };
 		820AF7402DA1C8E70070B398 /* maestro */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = maestro; sourceTree = "<group>"; };
+		8221B03D2DE8B448004B80AC /* ci_scripts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ci_scripts; sourceTree = "<group>"; };
 		82416F332D64F80A00B4FCCE /* Targets */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (82416F362D64F84C00B4FCCE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 82416F372D64F84E00B4FCCE /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Targets; sourceTree = "<group>"; };
 		82416F762D64F85600B4FCCE /* WaiterRobot */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = WaiterRobot; sourceTree = "<group>"; };
 		82416FDB2D64F86400B4FCCE /* fastlane */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = fastlane; sourceTree = "<group>"; };
@@ -106,7 +106,6 @@
 		16C4C84F786E4BF6ABEEB65D = {
 			isa = PBXGroup;
 			children = (
-				820AF7402DA1C8E70070B398 /* maestro */,
 				AF07F3A2F61F5C483A0AFE65 /* .gitignore */,
 				42B9ECF0CFED88271A5AF4A0 /* .swiftformat */,
 				6F409B484C54EA38AF4A71B3 /* Gemfile */,
@@ -119,11 +118,12 @@
 				8221B03D2DE8B448004B80AC /* ci_scripts */,
 				82416FDD2D64F86900B4FCCE /* command-line-tools */,
 				82416FDB2D64F86400B4FCCE /* fastlane */,
+				820AF7402DA1C8E70070B398 /* maestro */,
 				D4F4C626424188D539C8809A /* Modules */,
-				D20FD31A5075372C89FD743F /* Products */,
 				82416F332D64F80A00B4FCCE /* Targets */,
 				82416F762D64F85600B4FCCE /* WaiterRobot */,
 				82416FE42D64F87800B4FCCE /* WaiterRobotTests */,
+				D20FD31A5075372C89FD743F /* Products */,
 			);
 			sourceTree = "<group>";
 		};
