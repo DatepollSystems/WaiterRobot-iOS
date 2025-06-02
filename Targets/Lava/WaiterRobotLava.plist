@@ -26,7 +26,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>2.5.0</string>
 	<key>CFBundleVersion</key>
-	<string>28998383</string>
+	<string>29147581</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSAppTransportSecurity</key>
@@ -47,6 +47,13 @@
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+	</dict>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIImageName</key>
+		<string>LogoRounded</string>
+		<key>UIImageRespectsSafeAreaInsets</key>
 		<false/>
 	</dict>
 	<key>UILaunchStoryboardName</key>
