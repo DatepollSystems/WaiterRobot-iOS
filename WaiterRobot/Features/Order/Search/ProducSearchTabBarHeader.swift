@@ -13,7 +13,6 @@ struct ProducSearchTabBarHeader: View {
                         Array(zip(tabBarOptions.indices, tabBarOptions)),
                         id: \.0
                     ) { index, name in
-
                         Button {
                             currentTab = index
                         } label: {

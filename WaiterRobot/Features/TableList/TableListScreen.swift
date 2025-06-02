@@ -195,7 +195,6 @@ struct TableListView: View {
                 showFilters: .constant(false),
                 tableGroups: Mock.tableGroups()
             ) { _ in
-
             } onSelectAll: {} onUnselectAll: {} onTableSelect: { _ in
             }
         }
