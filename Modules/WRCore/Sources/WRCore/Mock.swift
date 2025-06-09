@@ -2,21 +2,31 @@ import Foundation
 import shared
 
 public enum Mock {
-    public static func tableGroups() -> [TableGroup] {
+    public static func groupedTables() -> [GroupedTables] {
         [
-            tableGroup(with: 1, name: "Hof"),
-            tableGroup(with: 2, name: "Terasse"),
-            tableGroup(with: 3, name: "Zimmer A"),
+            GroupedTables(
+                id: 1,
+                name: "Hof",
+                eventId: 1,
+                color: nil,
+                tables: [
+                    table(with: 1),
+                    table(with: 2),
+                    table(with: 3),
+                ]
+            ),
         ]
     }
 
-    public static func tableGroup(with id: Int64, name: String = "Hof") -> TableGroup {
-        TableGroup(
-            id: id,
-            name: name,
-            color: "",
-            hidden: false,
-        )
+    public static func tableGroups() -> [TableGroup] {
+        groupedTables().map {
+            TableGroup(
+                id: $0.id,
+                name: $0.name,
+                color: $0.color,
+                hidden: false,
+            )
+        }
     }
 
     public static func table(with id: Int64, hasOrders: Bool = false) -> shared.Table {

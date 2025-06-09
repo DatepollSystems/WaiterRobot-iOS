@@ -23,38 +23,27 @@ struct OrderScreen: View {
     }
 
     var body: some View {
-        VStack {
-            switch onEnum(of: viewModel.state.currentOrder) {
-            case .loading:
-                ProgressView()
-
-            case let .error(error):
-                Text(error.userMessage)
-                    .foregroundStyle(.red)
-                    .padding(.horizontal)
-
-                currentOder(error.data)
-
-            case let .success(resource):
-                currentOder(resource.data)
-            }
+        ViewStateOverlayView(state: viewModel.state.orderingState) {
+            currentOder(Array(viewModel.state.currentOrder))
         }
-        .navigationTitle(localize.order.title(value0: table.groupName, value1: table.number.description))
+        .navigationTitle(localize.order_title(table.groupName, table.number.description))
         .navigationBarTitleDisplayMode(.large)
         .navigationBarBackButtonHidden()
         .confirmationDialog(
-            localize.order.notSent.title(),
+            localize.order_notSent_title(),
             isPresented: $showAbortOrderConfirmationDialog,
             titleVisibility: .visible
         ) {
-            Button(localize.dialog.closeAnyway(), role: .destructive) {
+            Button(localize.dialog_closeAnyway(), role: .destructive) {
                 viewModel.actual.abortOrder()
             }
         } message: {
-            Text(localize.order.notSent.desc())
+            Text(localize.order_notSent_desc())
         }
         .sheet(isPresented: $showProductSearch) {
-            ProductSearch(viewModel: viewModel)
+            ProductSearch(
+                addItem: { viewModel.actual.addItem(product: $0, amount: $1) }
+            )
         }
         .animation(.default, value: viewModel.state.currentOrder)
         .withViewModel(viewModel, navigator)
@@ -62,15 +51,13 @@ struct OrderScreen: View {
 
     @ViewBuilder
     private func currentOder(
-        _ currentOrderArray: KotlinArray<OrderItem>?
+        _ currentOrder: [OrderItem]
     ) -> some View {
-        let currentOrder = currentOrderArray.map { Array($0) } ?? Array()
-
         VStack(spacing: 0) {
             if currentOrder.isEmpty {
                 Spacer()
 
-                Text(localize.order.addProduct())
+                Text(localize.order_product_add())
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -116,7 +103,7 @@ struct OrderScreen: View {
             }
             .buttonStyle(.primary)
         }
-        .customBackNavigation(title: localize.dialog.cancel(), icon: "chevron.backward") {
+        .customBackNavigation(title: localize.dialog_cancel(), icon: "chevron.backward") {
             if currentOrder.isEmpty {
                 viewModel.actual.abortOrder()
             } else {

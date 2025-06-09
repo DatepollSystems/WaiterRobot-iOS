@@ -35,15 +35,15 @@
 		<true/>
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>We don't use bluetooth</string>
+	<string>We don&apos;t use bluetooth</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera is needed to scan QR-Codes</string>
 	<key>NSContactsUsageDescription</key>
-	<string>We don't use your contacts</string>
+	<string>We don&apos;t use your contacts</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We don't use your location</string>
+	<string>We don&apos;t use your location</string>
 	<key>NSMotionUsageDescription</key>
-	<string>We don't use your motion sensors</string>
+	<string>We don&apos;t use your motion sensors</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -54,10 +54,8 @@
 		<key>UIImageName</key>
 		<string>LogoRounded</string>
 		<key>UIImageRespectsSafeAreaInsets</key>
-		<false/>
+		<true/>
 	</dict>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

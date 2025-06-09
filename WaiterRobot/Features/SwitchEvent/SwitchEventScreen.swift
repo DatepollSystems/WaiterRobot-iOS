@@ -12,48 +12,43 @@ struct SwitchEventScreen: View {
 
     var body: some View {
         VStack {
-            switch onEnum(of: viewModel.state.viewState) {
-            case .loading:
-                ProgressView()
-            case .idle:
-                content()
-            case let .error(error):
-                content()
-                    .alert(isPresented: Binding.constant(true)) {
-                        Alert(
-                            title: Text(error.title),
-                            message: Text(error.message),
-                            dismissButton: .cancel(Text("OK"), action: error.onDismiss)
-                        )
-                    }
-            }
-        }.withViewModel(viewModel, navigator)
-    }
-
-    private func content() -> some View {
-        VStack {
             Image(systemName: "person.3")
                 .resizable()
                 .scaledToFit()
                 .frame(maxHeight: 100)
                 .padding()
 
-            Text(localize.switchEvent.desc())
+            Text(localize.switchEvent_desc())
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
                 .padding()
 
             Divider()
 
-            ScrollView {
-                if viewModel.state.events.isEmpty {
-                    Text(localize.switchEvent.noEventFound())
+            content(viewModel.state.events)
+                .refreshable {
+                    try? await viewModel.actual.loadEvents().join()
+                }
+
+        }.withViewModel(viewModel, navigator)
+    }
+
+    private func content(_ eventResource: shared.Resource<KotlinArray<shared.Event>>) -> some View {
+        ScrollView {
+            let resource = onEnum(of: eventResource)
+
+            if case let .error(error) = resource {
+                ErrorBar(message: error.userMessage, retryAction: { viewModel.actual.loadEvents() })
+            }
+            if let events = Array(resource.data) {
+                if events.isEmpty {
+                    Text(localize.switchEvent_noEventFound())
                         .multilineTextAlignment(.center)
                         .frame(maxWidth: .infinity)
                         .padding()
                 } else {
                     LazyVStack {
-                        ForEach(viewModel.state.events, id: \.id) { event in
+                        ForEach(events, id: \.id) { event in
                             Button {
                                 viewModel.actual.onEventSelected(event: event)
                             } label: {
@@ -64,9 +59,8 @@ struct SwitchEventScreen: View {
                         }
                     }
                 }
-            }
-            .refreshable {
-                viewModel.actual.loadEvents()
+            } else {
+                ProgressView()
             }
         }
     }

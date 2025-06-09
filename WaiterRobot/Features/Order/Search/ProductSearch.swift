@@ -3,10 +3,11 @@ import SwiftUI
 import WRCore
 
 struct ProductSearch: View {
+    let addItem: (_ product: Product, _ amount: Int32) -> Void
+
     @Environment(\.dismiss) private var dismiss
 
-    @ObservedObject var viewModel: ObservableProductListViewModel
-    let addItem: (_ product: Product, _ amount: Int32) -> Void
+    @ObservedObject private var viewModel = ObservableProductListViewModel()
 
     @State private var search: String = ""
     @State private var selectedTab: Int = 0
@@ -17,22 +18,40 @@ struct ProductSearch: View {
 
     var body: some View {
         NavigationView {
-            switch onEnum(of: viewModel.state.productGroups) {
-            case .loading:
-                ProgressView()
-            case let .error(resource):
-                productGroupsError(error: resource)
-            case let .success(resource):
-                if let productGroups = resource.data {
-                    productsGroupsList(productGroups: productGroups)
+            content()
+                .observeState(of: viewModel)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(localize.dialog_cancel()) {
+                            dismiss()
+                        }
+                    }
                 }
-            }
-        }.observeState(of: viewModel)
+        }
     }
 
     @ViewBuilder
-    private func productsGroupsList(productGroups: KotlinArray<GroupedProducts>) -> some View {
-        if let productGroups = Array(productGroups), !productGroups.isEmpty {
+    private func content() -> some View {
+        switch onEnum(of: viewModel.state.productGroups) {
+        case .loading:
+            ProgressView()
+        case let .error(resource):
+            productGroupsError(error: resource)
+        case let .success(resource):
+            if let productGroups = Array(resource.data) {
+                productsGroupsList(productGroups: productGroups)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func productsGroupsList(productGroups: [GroupedProducts]) -> some View {
+        if productGroups.isEmpty {
+            Text(localize.productSearch_noProductFound())
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+                .padding()
+        } else {
             VStack {
                 ProducSearchTabBarHeader(currentTab: $selectedTab, tabBarOptions: getGroupNames(productGroups))
 
@@ -49,7 +68,7 @@ struct ProductSearch: View {
                     .padding()
 
                     let enumeratedProductGroups = Array(productGroups.enumerated())
-                    ForEach(enumeratedProductGroups, id: \.element.id) { index, _ in
+                    ForEach(enumeratedProductGroups, id: \.element.id) { index, groupedProducts in
                         ScrollView {
                             LazyVGrid(columns: layout, spacing: 0) {
                                 productGroup(groupedProducts: groupedProducts)
@@ -64,18 +83,6 @@ struct ProductSearch: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always))
             .onChange(of: search, perform: { viewModel.actual.filterProducts(filter: $0) })
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(localize.dialog_cancel()) {
-                        dismiss()
-                    }
-                }
-            }
-        } else {
-            Text(localize.productSearch_noProductFound())
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
-                .padding()
         }
     }
 

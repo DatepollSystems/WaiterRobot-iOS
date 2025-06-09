@@ -58,7 +58,7 @@ private struct BillingScreenView: View {
 
     var body: some View {
         ViewStateOverlayView(state: state.paymentState) {
-            let billItemsState = onEnum(of: state.billItems_)
+            let billItemsState = onEnum(of: state.billItems)
 
             if case let .loading(ressource) = billItemsState, ressource.data == nil {
                 ProgressView()
@@ -67,7 +67,7 @@ private struct BillingScreenView: View {
                     Text("Error \(resource.userMessage())")
                 }
 
-                if let billItems = Array(state.billItems_.data), !billItems.isEmpty {
+                if let billItems = Array(state.billItems.data), !billItems.isEmpty {
                     content(billItems: billItems)
                 } else {
                     Text(localize.billing_noOrder(table.groupName, table.number.description))

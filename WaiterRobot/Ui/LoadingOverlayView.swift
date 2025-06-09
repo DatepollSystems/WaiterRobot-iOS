@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct LoadingOverlayView<Content: View>: View {
+public struct LoadingOverlayView<Content: View>: View {
     let isLoading: Bool
     let content: () -> Content
 
@@ -9,7 +9,7 @@ struct LoadingOverlayView<Content: View>: View {
         self.content = content
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             content()
                 .opacity(isLoading ? 0.5 : 1.0)

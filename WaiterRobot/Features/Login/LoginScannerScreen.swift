@@ -20,11 +20,7 @@ struct LoginScannerScreen: View {
         case let error as ViewState.Error:
             content()
                 .alert(isPresented: Binding.constant(true)) {
-                    Alert(
-                        title: Text(error.title),
-                        message: Text(error.message),
-                        dismissButton: .cancel(Text("OK"), action: error.onDismiss)
-                    )
+                    Alert(error.dialog)
                 }
         default:
             fatalError("Unexpected ViewState: \(viewModel.state.viewState.description)")
@@ -45,14 +41,14 @@ struct LoginScannerScreen: View {
                 }
             }
 
-            Text(localize.login.scanner.desc())
+            Text(localize.login_scanner_desc())
                 .padding()
                 .multilineTextAlignment(.center)
 
             Button {
                 viewModel.actual.goBack()
             } label: {
-                Text(localize.dialog.cancel())
+                Text(localize.dialog_cancel())
             }
         }
         .withViewModel(viewModel, navigator)

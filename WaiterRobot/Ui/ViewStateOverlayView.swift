@@ -1,7 +1,7 @@
 import shared
 import SwiftUI
 
-struct ViewStateOverlayView<Content: View>: View {
+public struct ViewStateOverlayView<Content: View>: View {
     let state: Skie.Shared.ViewState.__Sealed
     let content: () -> Content
 
@@ -10,7 +10,7 @@ struct ViewStateOverlayView<Content: View>: View {
         self.content = content
     }
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             LoadingOverlayView(isLoading: isLoading) {
                 VStack(alignment: .leading) {

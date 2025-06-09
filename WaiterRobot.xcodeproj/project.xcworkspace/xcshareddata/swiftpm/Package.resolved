@@ -32,8 +32,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/DatepollSystems/WaiterRobot-Shared-Android.git",
       "state" : {
-        "revision" : "c01f764d92dcd7df8ee4ad4ecba55a9200ed7a00",
-        "version" : "1.7.3"
+        "revision" : "f2ff44dc52e8df3f4e68da4d05e27ad0b0487a33",
+        "version" : "1.7.6"
       }
     }
   ],

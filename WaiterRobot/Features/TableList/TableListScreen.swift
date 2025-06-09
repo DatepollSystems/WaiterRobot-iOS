@@ -18,6 +18,13 @@ struct TableListScreen: View {
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
                             Button {
+                                showFilters.toggle()
+                            } label: {
+                                Image(systemName: "line.3.horizontal.decrease")
+                            }
+                        }
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
                                 viewModel.actual.openSettings()
                             } label: {
                                 Image(systemName: "gear")
@@ -28,6 +35,13 @@ struct TableListScreen: View {
             } else {
                 content()
                     .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button {
+                                showFilters.toggle()
+                            } label: {
+                                Image(systemName: "line.3.horizontal.decrease")
+                            }
+                        }
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button {
                                 viewModel.actual.openSettings()
@@ -56,23 +70,31 @@ struct TableListScreen: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .animation(.spring, value: viewModel.state.tableGroupsArray)
+        .animation(.spring, value: viewModel.state.tableGroups)
+        .sheet(isPresented: $showFilters) {
+            TableGroupFilterSheet()
+        }
         .withViewModel(viewModel, navigator)
     }
 
     private func content() -> some View {
         ZStack {
-            if let data = viewModel.state.tableGroupsArray.data {
-                tableList(data: data)
+            if let tableGroups = Array(viewModel.state.tableGroups.data) {
+                TableListView(
+                    tableGroups: tableGroups,
+                    onTableSelect: { viewModel.actual.onTableClick(table: $0) }
+                )
+            } else {
+                ProgressView()
             }
 
-            switch onEnum(of: viewModel.state.tableGroupsArray) {
+            switch onEnum(of: viewModel.state.tableGroups) {
             case let .error(resource):
                 VStack {
                     Spacer()
 
                     HStack {
-                        Text(resource.userMessage)
+                        Text(resource.userMessage())
                             .padding()
 
                         Spacer()
@@ -92,28 +114,10 @@ struct TableListScreen: View {
             }
         }
     }
-
-    @ViewBuilder
-    private func tableList(data: KotlinArray<TableGroup>) -> some View {
-        let tableGroups = Array(data)
-
-        TableListView(
-            showFilters: $showFilters,
-            tableGroups: tableGroups,
-            onToggleFilter: { viewModel.actual.toggleFilter(tableGroup: $0) },
-            onSelectAll: { viewModel.actual.showAll() },
-            onUnselectAll: { viewModel.actual.hideAll() },
-            onTableSelect: { viewModel.actual.onTableClick(table: $0) }
-        )
-    }
 }
 
 struct TableListView: View {
-    @Binding var showFilters: Bool
-    let tableGroups: [TableGroup]
-    let onToggleFilter: (TableGroup) -> Void
-    let onSelectAll: () -> Void
-    let onUnselectAll: () -> Void
+    let tableGroups: [GroupedTables]
     let onTableSelect: (shared.Table) -> Void
 
     private let layout = [
@@ -122,25 +126,10 @@ struct TableListView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if tableGroups.count > 1, showFilters {
-                VStack {
-                    TableListFilterRow(
-                        tableGroups: tableGroups,
-                        onToggleFilter: onToggleFilter,
-                        onSelectAll: onSelectAll,
-                        onUnselectAll: onUnselectAll
-                    )
-                }
-                .padding()
-                .background(Color(UIColor.systemBackground))
-            }
-
-            Divider()
-
             if tableGroups.isEmpty {
                 Spacer()
 
-                Text(localize.tableList.noTableFound())
+                Text(localize.tableList_noTableFound())
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -152,10 +141,10 @@ struct TableListView: View {
                         columns: layout,
                         pinnedViews: [.sectionHeaders]
                     ) {
-                        ForEach(tableGroups.filter { !$0.hidden }, id: \.id) { group in
+                        ForEach(tableGroups, id: \.id) { group in
                             if !group.tables.isEmpty {
                                 TableGroupSection(
-                                    tableGroup: group,
+                                    groupedTables: group,
                                     onTableClick: onTableSelect
                                 )
                             }
@@ -163,20 +152,8 @@ struct TableListView: View {
                     }
                     .padding()
                 }
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        if tableGroups.count > 1 {
-                            Button {
-                                showFilters.toggle()
-                            } label: {
-                                Image(systemName: "slider.horizontal.3")
-                            }
-                        }
-                    }
-                }
             }
         }
-        .animation(.easeIn, value: showFilters)
     }
 }
 
@@ -192,11 +169,9 @@ struct TableListView: View {
     PreviewView {
         NavigationView {
             TableListView(
-                showFilters: .constant(false),
-                tableGroups: Mock.tableGroups()
-            ) { _ in
-            } onSelectAll: {} onUnselectAll: {} onTableSelect: { _ in
-            }
+                tableGroups: Mock.groupedTables(),
+                onTableSelect: { _ in }
+            )
         }
     }
 }

@@ -18,7 +18,7 @@ struct OrderProductNoteView: View {
     var body: some View {
         NavigationView {
             content()
-                .navigationTitle(localize.order.addNoteDialog.title(value0: name))
+                .navigationTitle(localize.order_add_note_title(name))
                 .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -26,16 +26,16 @@ struct OrderProductNoteView: View {
     @ViewBuilder
     private func content() -> some View {
         VStack {
-            Text(localize.order.addNoteDialog.inputLabel())
+            Text(localize.order_add_note_input_label())
 
             Group {
                 if #available(iOS 16, *) {
-                    TextField(localize.order.addNoteDialog.inputPlaceholder(), text: $noteText, axis: .vertical)
+                    TextField(localize.order_add_note_input_placeholder(), text: $noteText, axis: .vertical)
                         .lineLimit(5, reservesSpace: true)
                         .toolbarBackground(.visible, for: .bottomBar)
                 } else {
                     // TODO: Maybe change to TextEditor
-                    TextField(localize.order.addNoteDialog.inputPlaceholder(), text: $noteText)
+                    TextField(localize.order_add_note_input_placeholder(), text: $noteText)
                         .lineLimit(5)
                 }
             }
@@ -82,14 +82,14 @@ struct OrderProductNoteView: View {
 
     @ViewBuilder
     private func cancelButton() -> some View {
-        Button(localize.dialog.cancel(), role: .cancel) {
+        Button(localize.dialog_cancel(), role: .cancel) {
             dismiss()
         }
     }
 
     @ViewBuilder
     private func clearButton() -> some View {
-        Button(localize.dialog.clear(), role: .destructive) {
+        Button(localize.dialog_clear(), role: .destructive) {
             noteText = ""
             onSaveNote(nil)
             dismiss()
@@ -99,7 +99,7 @@ struct OrderProductNoteView: View {
 
     @ViewBuilder
     private func saveButton() -> some View {
-        Button(localize.dialog.save()) {
+        Button(localize.dialog_save()) {
             onSaveNote(noteText)
             dismiss()
         }
