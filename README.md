@@ -20,15 +20,13 @@ The KMM module is integrated as a Swift-Package (shared).
 
 This project uses XcodeGen for generating the Xcode project.
 
-1. Xcodegen
+1. Gems
 
 Run in your terminal: 
 
 ```bash
-swift run xcodegen
+bundle install
 ```
-
-> This command must also be run after switching branches and it's advisable to also run it after a `git pull`
 
 2. Git pre-commit hook
 
