@@ -35,14 +35,15 @@ struct TableListScreen: View {
             } else {
                 content()
                     .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
+                        ToolbarItem(placement: .topBarLeading) {
                             Button {
                                 showFilters.toggle()
                             } label: {
                                 Image(systemName: "line.3.horizontal.decrease")
                             }
                         }
-                        ToolbarItem(placement: .navigationBarTrailing) {
+
+                        ToolbarItem(placement: .topBarTrailing) {
                             Button {
                                 viewModel.actual.openSettings()
                             } label: {

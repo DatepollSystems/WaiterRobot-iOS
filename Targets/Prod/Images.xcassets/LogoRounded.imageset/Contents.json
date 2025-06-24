@@ -1,14 +1,12 @@
 {
-    "images":
-    [
-        {
-            "filename": "wr-round.svg",
-            "idiom": "universal"
-        }
-    ],
-    "info":
+  "images" : [
     {
-        "author": "xcode",
-        "version": 1
+      "filename" : "wr-round.svg",
+      "idiom" : "universal"
     }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
 }
