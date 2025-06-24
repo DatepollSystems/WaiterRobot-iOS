@@ -64,9 +64,10 @@ extension Color {
     }
 
     // Adjust color based on contrast
+    // TODO: this does not respect opacity
     func getContentColor(lightColorScheme: Color, darkColorScheme: Color) -> Color {
-        let lightContrast = contrastRatio(with: lightColorScheme)
-        let darkContrast = contrastRatio(with: darkColorScheme)
+        let lightContrast = lightColorScheme.contrastRatio(with: self)
+        let darkContrast = darkColorScheme.contrastRatio(with: self)
 
         return lightContrast > darkContrast ? lightColorScheme : darkColorScheme
     }

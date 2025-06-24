@@ -4,11 +4,15 @@ import SwiftUI
 struct TableView: View {
     let text: String
     let hasOrders: Bool
-    let backgroundColor: Color?
+    let backgroundColor: Color
     let onClick: () -> Void
 
-    @Environment(\.colorScheme)
-    var colorScheme
+    init(text: String, hasOrders: Bool, backgroundColor: Color?, onClick: @escaping () -> Void) {
+        self.text = text
+        self.hasOrders = hasOrders
+        self.backgroundColor = backgroundColor ?? .gray.opacity(0.3)
+        self.onClick = onClick
+    }
 
     var body: some View {
         Button(action: onClick) {
@@ -23,7 +27,7 @@ struct TableView: View {
                             Spacer()
 
                             Circle()
-                                .foregroundColor(backgroundColor?.getContentColor(lightColorScheme: Color(.darkRed), darkColorScheme: Color(.lightRed)))
+                                .foregroundColor(backgroundColor.getContentColor(lightColorScheme: Color(.darkRed), darkColorScheme: Color(.lightRed)))
                                 .frame(width: 12)
                         }
 
@@ -36,20 +40,21 @@ struct TableView: View {
         }
         .aspectRatio(1.0, contentMode: .fit)
         .background {
-            if let backgroundColor {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(backgroundColor)
-            } else {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundColor(.gray.opacity(0.3))
-            }
+            RoundedRectangle(cornerRadius: 20)
+                .foregroundColor(backgroundColor)
         }
-        .foregroundStyle(backgroundColor?.getContentColor(lightColorScheme: .black, darkColorScheme: .white) ?? .blackWhite)
+        .foregroundStyle(backgroundColor.getContentColor(lightColorScheme: .white, darkColorScheme: .black))
     }
 }
 
 #Preview {
     VStack {
+        TableView(text: "1", hasOrders: false, backgroundColor: .black) {}
+            .frame(maxWidth: 100)
+
+        TableView(text: "1", hasOrders: false, backgroundColor: .gray.opacity(0.1)) {}
+            .frame(maxWidth: 100)
+
         TableView(text: "1", hasOrders: false, backgroundColor: .green) {}
             .frame(maxWidth: 100)
 

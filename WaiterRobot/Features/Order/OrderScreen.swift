@@ -6,7 +6,6 @@ import WRCore
 struct OrderScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @State private var productName: String = ""
     @State private var showProductSearch: Bool
     @State private var showAbortOrderConfirmationDialog = false
 
@@ -110,5 +109,11 @@ struct OrderScreen: View {
                 showAbortOrderConfirmationDialog = true
             }
         }
+    }
+}
+
+#Preview {
+    PreviewView {
+        OrderScreen(table: Mock.table(with: 1), initialItemId: 1)
     }
 }

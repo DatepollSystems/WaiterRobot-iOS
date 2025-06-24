@@ -1,11 +1,16 @@
 import SwiftUI
 
-struct ProducSearchTabBarHeader: View {
+public struct TabBarHeader: View {
     @Namespace var namespace
     @Binding var currentTab: Int
     var tabBarOptions: [String]
 
-    var body: some View {
+    public init(currentTab: Binding<Int>, tabBarOptions: [String]) {
+        _currentTab = currentTab
+        self.tabBarOptions = tabBarOptions
+    }
+
+    public var body: some View {
         VStack(spacing: 0) {
             ScrollView(.horizontal) {
                 HStack {
@@ -48,8 +53,11 @@ struct ProducSearchTabBarHeader: View {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview {
-    ProducSearchTabBarHeader(
-        currentTab: .constant(4), tabBarOptions: ["All", "Food", "Drinks", "more", "One more"]
+    @Previewable @State var currentTab = 3
+    TabBarHeader(
+        currentTab: $currentTab,
+        tabBarOptions: ["All", "Food", "Drinks", "more", "One more"]
     )
 }

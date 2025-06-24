@@ -80,10 +80,7 @@ private struct TableGroupFilter: View {
 
 #Preview {
     TableGroupFilter(
-        groups: [
-            shared.TableGroup(id: 1, name: "Group 1", color: "ffaaff", hidden: false),
-            shared.TableGroup(id: 2, name: "Group 2", color: "aaffaa", hidden: false),
-        ],
+        groups: Mock.tableGroups(groups: 10),
         showAll: {},
         hideAll: {},
         onToggle: { _ in }
