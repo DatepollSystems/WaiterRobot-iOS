@@ -40,7 +40,7 @@ public struct ErrorBar: View {
         .padding(.top, 8)
         .padding(.trailing, retryAction == nil ? 16 : 8)
         .padding(.bottom, 8)
-        // .background(Color.errorContainer)
+        .background(Color.red)
         .onTapGesture {
             withAnimation {
                 expanded.toggle()

@@ -82,6 +82,7 @@ struct TableListScreen: View {
             if let tableGroups = Array(viewModel.state.tableGroups.data) {
                 TableListView(
                     tableGroups: tableGroups,
+                    isDemoEvent: viewModel.state.isDemoEvent,
                     onTableSelect: { viewModel.actual.onTableClick(table: $0) }
                 )
             } else {
@@ -118,6 +119,7 @@ struct TableListScreen: View {
 
 struct TableListView: View {
     let tableGroups: [GroupedTables]
+    let isDemoEvent: Bool
     let onTableSelect: (shared.Table) -> Void
 
     private let layout = [
@@ -153,6 +155,10 @@ struct TableListView: View {
                     .padding()
                 }
             }
+
+            if isDemoEvent {
+                ErrorBar(message: localize.tableList_demoEventWarning.desc(), initialLines: 1)
+            }
         }
     }
 }
@@ -170,6 +176,7 @@ struct TableListView: View {
         NavigationView {
             TableListView(
                 tableGroups: Mock.groupedTables(),
+                isDemoEvent: true,
                 onTableSelect: { _ in }
             )
         }
