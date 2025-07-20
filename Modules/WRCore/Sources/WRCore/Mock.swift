@@ -26,7 +26,7 @@ public enum Mock {
                 id: $0.id,
                 name: $0.name,
                 color: $0.color,
-                hidden: false,
+                hidden: false
             )
         }
     }
@@ -50,7 +50,7 @@ public enum Mock {
             allergens: allergens.enumerated().map { index, shortName in
                 Allergen(id: Int64(index), name: shortName.description, shortName: shortName.description)
             }.filter { $0.shortName.isEmpty == false },
-            position: Int32(id),
+            position: Int32(id)
         )
     }
 
@@ -70,7 +70,7 @@ public enum Mock {
                         allergenList.randomElement()!
                     }
                     return product(with: groupId * 10 + $0, soldOut: $0 % 5 == 2, allergens: Set(allergens))
-                },
+                }
             )
         }
     }
