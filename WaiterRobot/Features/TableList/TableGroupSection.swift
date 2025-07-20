@@ -4,6 +4,8 @@ import SwiftUI
 import WRCore
 
 struct TableGroupSection: View {
+    @Environment(\.self) var env
+
     let groupedTables: GroupedTables
     let onTableClick: (shared.Table) -> Void
 
@@ -25,7 +27,7 @@ struct TableGroupSection: View {
                 if let background = Color(hex: groupedTables.color) {
                     title(backgroundColor: background)
                 } else {
-                    title(backgroundColor: .gray.opacity(0.3))
+                    title(backgroundColor: .lightGray)
                 }
 
                 Spacer()
@@ -38,7 +40,7 @@ struct TableGroupSection: View {
     private func title(backgroundColor: Color) -> some View {
         Text(groupedTables.name)
             .font(.title2)
-            .foregroundStyle(backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white))
+            .foregroundStyle(backgroundColor.bestContrastColor(.black, .white, in: env))
             .padding(6)
             .background {
                 RoundedRectangle(cornerRadius: 8.0)

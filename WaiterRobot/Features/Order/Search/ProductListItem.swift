@@ -3,6 +3,8 @@ import SwiftUI
 import WRCore
 
 struct ProductListItem: View {
+    @Environment(\.self) var env
+
     let product: Product
     let backgroundColor: Color?
     let onClick: () -> Void
@@ -38,7 +40,7 @@ struct ProductListItem: View {
         if product.soldOut {
             .blackWhite
         } else if let backgroundColor {
-            backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white)
+            backgroundColor.bestContrastColor(.black, .white, in: env)
         } else {
             .blackWhite
         }
