@@ -31,7 +31,6 @@ struct TableListScreen: View {
                             }
                         }
                     }
-                    .toolbarBackground(.hidden, for: .navigationBar)
             } else {
                 content()
                     .toolbar {
