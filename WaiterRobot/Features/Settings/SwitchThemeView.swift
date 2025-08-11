@@ -21,9 +21,9 @@ struct SwitchThemeView: View {
                 .padding(.trailing)
                 .foregroundColor(.blue)
 
-            Picker(localize.settings.general.darkMode.title(), selection: $selectedTheme) {
+            Picker(localize.settings_general_darkMode_title(), selection: $selectedTheme) {
                 ForEach(AppTheme.companion.valueList(), id: \.name) { theme in
-                    Text(theme.settingsText()).tag(theme)
+                    Text(theme.settingsText().localized()).tag(theme)
                 }
             }
             .onChange(of: selectedTheme, perform: onChange)

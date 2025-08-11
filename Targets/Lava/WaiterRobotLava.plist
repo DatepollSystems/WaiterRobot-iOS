@@ -26,7 +26,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>2.5.0</string>
 	<key>CFBundleVersion</key>
-	<string>28998383</string>
+	<string>29178434</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSAppTransportSecurity</key>
@@ -54,10 +54,8 @@
 		<key>UIImageName</key>
 		<string>LogoRounded</string>
 		<key>UIImageRespectsSafeAreaInsets</key>
-		<false/>
+		<true/>
 	</dict>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

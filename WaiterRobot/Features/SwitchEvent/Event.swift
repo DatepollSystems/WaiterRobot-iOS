@@ -1,12 +1,29 @@
 import shared
 import SwiftUI
+import WRCore
 
 struct Event: View {
     let event: shared.Event
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(event.name)
+            HStack {
+                Text(event.name)
+
+                if event.isDemo {
+                    Spacer()
+
+                    Text(localize.switchEvent_demoEvent())
+                        .font(.caption)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 2)
+                        .background {
+                            Capsule()
+                                .fill(.darkRed)
+                        }
+                }
+            }
 
             HStack {
                 Text(event.city)
@@ -34,7 +51,8 @@ struct Event: View {
             endDate: nil,
             city: "Graz",
             organisationId: 1,
-            stripeSettings: shared.Event.StripeSettingsDisabled()
+            stripeSettings: shared.Event.StripeSettingsDisabled(),
+            isDemo: true
         )
     )
 }

@@ -13,22 +13,16 @@ struct LoginScreen: View {
     @State private var debugLoginLink = ""
 
     var body: some View {
-        switch viewModel.state.viewState {
-        case is ViewState.Loading:
+        switch onEnum(of: viewModel.state.viewState) {
+        case .loading:
             ProgressView()
-        case is ViewState.Idle:
+        case .idle:
             content()
-        case let error as ViewState.Error:
+        case let .error(error):
             content()
                 .alert(isPresented: Binding.constant(true)) {
-                    Alert(
-                        title: Text(error.title),
-                        message: Text(error.message),
-                        dismissButton: .cancel(Text("OK"), action: error.onDismiss)
-                    )
+                    Alert(error.dialog)
                 }
-        default:
-            fatalError("Unexpected ViewState: \(viewModel.state.viewState.description)")
         }
     }
 
@@ -44,11 +38,11 @@ struct LoginScreen: View {
                 .onLongPressGesture {
                     showLinkInput = true
                 }
-            Text(localize.login.title())
+            Text(localize.login_title())
                 .font(.title)
                 .padding()
 
-            Text(localize.login.desc())
+            Text(localize.login_desc())
                 .font(.body)
                 .padding()
                 .multilineTextAlignment(.center)
@@ -56,19 +50,19 @@ struct LoginScreen: View {
             Button {
                 viewModel.actual.openScanner()
             } label: {
-                Label(localize.login.withQrCode(), systemImage: "qrcode.viewfinder")
+                Label(localize.login_withQrCode(), systemImage: "qrcode.viewfinder")
                     .font(.title3)
             }
             .padding()
 
             Spacer()
         }
-        .alert(localize.login.title(), isPresented: $showLinkInput) {
-            TextField(localize.login.debugDialog.inputLabel(), text: $debugLoginLink)
-            Button(localize.dialog.cancel(), role: .cancel) {
+        .alert(localize.login_title(), isPresented: $showLinkInput) {
+            TextField(localize.login_scanner_debugDialog_inputLabel(), text: $debugLoginLink)
+            Button(localize.dialog_cancel(), role: .cancel) {
                 showLinkInput = false
             }
-            Button(localize.login.title()) {
+            Button(localize.login_title()) {
                 viewModel.actual.onDebugLogin(link: debugLoginLink)
             }
         }

@@ -63,7 +63,7 @@ struct MainView: View {
         .withViewModel(viewModel, navigator) { effect in
             switch onEnum(of: effect) {
             case let .showSnackBar(snackBar):
-                snackBarMessage = snackBar.message
+                snackBarMessage = snackBar.message()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                     snackBarMessage = nil
                 }
@@ -74,14 +74,14 @@ struct MainView: View {
             viewModel.actual.onDeepLink(url: url.absoluteString)
         }
         .alert(
-            localize.app.updateAvailable.title(),
+            localize.app_updateAvailable_title(),
             isPresented: $showUpdateAvailableAlert
         ) {
-            Button(localize.dialog.cancel(), role: .cancel) {
+            Button(localize.dialog_cancel(), role: .cancel) {
                 showUpdateAvailableAlert = false
             }
 
-            Button(localize.app.forceUpdate.openStore(value0: "App Store")) {
+            Button(localize.app_forceUpdate_openStore("App Store")) {
                 guard let storeUrl = VersionChecker.shared.storeUrl,
                       let url = URL(string: storeUrl)
                 else {
@@ -93,7 +93,7 @@ struct MainView: View {
                 }
             }
         } message: {
-            Text(localize.app.updateAvailable.message())
+            Text(localize.app_updateAvailable_message())
         }
         .onAppear {
             VersionChecker.shared.checkVersion {

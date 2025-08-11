@@ -12,44 +12,24 @@ struct SettingsScreen: View {
     @StateObject private var viewModel = ObservableSettingsViewModel()
 
     var body: some View {
-        switch viewModel.state.viewState {
-        case is ViewState.Loading:
-            ProgressView()
-        case is ViewState.Idle:
-            content()
-        case let error as ViewState.Error:
-            content()
-                .alert(isPresented: Binding.constant(true)) {
-                    Alert(
-                        title: Text(error.title),
-                        message: Text(error.message),
-                        dismissButton: .cancel(Text("OK"), action: error.onDismiss)
-                    )
-                }
-        default:
-            fatalError("Unexpected ViewState: \(viewModel.state.viewState.description)")
-        }
-    }
-
-    private func content() -> some View {
         List {
             general()
 
             payment()
 
-            Section(header: Text(localize.settings.about.title())) {
-                Link(localize.settings.about.privacyPolicy(), destination: URL(string: CommonApp.shared.privacyPolicyUrl)!)
+            Section(header: Text(localize.settings_about_title())) {
+                Link(localize.settings_about_privacyPolicy(), destination: URL(string: CommonApp.shared.privacyPolicyUrl)!)
             }
 
             HStack {
                 Spacer()
-                Text(viewModel.state.versionString)
+                Text(viewModel.state.versionString())
                     .font(.footnote)
                 Spacer()
             }
             .listRowBackground(Color.clear)
         }
-        .navigationTitle(localize.settings.title())
+        .navigationTitle(localize.settings_title())
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -60,28 +40,28 @@ struct SettingsScreen: View {
             }
         }
         .confirmationDialog(
-            localize.settings.general.logout.title(value0: CommonApp.shared.settings.organisationName),
+            localize.settings_general_logout_title(CommonApp.shared.settings.organisationName),
             isPresented: $showConfirmLogout,
             titleVisibility: .visible
         ) {
-            Button(localize.settings.general.logout.action(), role: .destructive, action: { viewModel.actual.logout() })
-            Button(localize.settings.general.keepLoggedIn(), role: .cancel, action: { showConfirmLogout = false })
+            Button(localize.settings_general_logout_action(), role: .destructive, action: { viewModel.actual.logout() })
+            Button(localize.settings_general_logout_cancel(), role: .cancel, action: { showConfirmLogout = false })
         } message: {
-            Text(localize.settings.general.logout.desc(value0: CommonApp.shared.settings.organisationName))
+            Text(localize.settings_general_logout_desc(CommonApp.shared.settings.organisationName))
         }
         .confirmationDialog(
-            localize.settings.payment.skipMoneyBackDialog.title(),
+            localize.settings_payment_skipMoneyBackDialog_title(),
             isPresented: $showConfirmSkipMoneyBackDialog,
             titleVisibility: .visible
         ) {
-            Button(localize.settings.payment.skipMoneyBackDialog.confirmAction(), role: .destructive) {
+            Button(localize.settings_payment_skipMoneyBackDialog_confirm_action(), role: .destructive) {
                 viewModel.actual.toggleSkipMoneyBackDialog(value: true, confirmed: true)
             }
-            Button(localize.dialog.cancel(), role: .cancel) {
+            Button(localize.dialog_cancel(), role: .cancel) {
                 showConfirmSkipMoneyBackDialog = false
             }
         } message: {
-            Text(localize.settings.payment.skipMoneyBackDialog.confirmDesc())
+            Text(localize.settings_payment_skipMoneyBackDialog_confirm_desc())
         }
         .withViewModel(viewModel, navigator) { effect in
             switch onEnum(of: effect) {
@@ -94,10 +74,10 @@ struct SettingsScreen: View {
     }
 
     private func general() -> some View {
-        Section(header: Text(localize.settings.general.title())) {
+        Section(header: Text(localize.settings_general_title())) {
             SettingsItem(
                 icon: "rectangle.portrait.and.arrow.right",
-                title: localize.settings.general.logout.action(),
+                title: localize.settings_general_logout_action(),
                 subtitle: "\"\(CommonApp.shared.settings.organisationName)\" / \"\(CommonApp.shared.settings.waiterName)\"",
                 onClick: {
                     showConfirmLogout = true
@@ -106,7 +86,7 @@ struct SettingsScreen: View {
 
             SettingsItem(
                 icon: "person.3",
-                title: localize.switchEvent.title(),
+                title: localize.switchEvent_title(),
                 subtitle: CommonApp.shared.settings.eventName,
                 onClick: {
                     viewModel.actual.switchEvent()
@@ -120,8 +100,8 @@ struct SettingsScreen: View {
 
             SettingsItem(
                 icon: "arrow.triangle.2.circlepath",
-                title: localize.settings.general.refresh.title(),
-                subtitle: localize.settings.general.refresh.desc(),
+                title: localize.settings_general_refresh_title(),
+                subtitle: localize.settings_general_refresh_desc(),
                 onClick: {
                     viewModel.actual.refreshAll()
                 }
@@ -130,11 +110,11 @@ struct SettingsScreen: View {
     }
 
     private func payment() -> some View {
-        Section(header: Text(localize.settings.payment.title())) {
+        Section(header: Text(localize.settings_payment_title())) {
             SettingsItem(
                 icon: "dollarsign.arrow.circlepath",
-                title: localize.settings.payment.skipMoneyBackDialog.title(),
-                subtitle: localize.settings.payment.skipMoneyBackDialog.desc(),
+                title: localize.settings_payment_skipMoneyBackDialog_title(),
+                subtitle: localize.settings_payment_skipMoneyBackDialog_desc(),
                 action: {
                     Toggle(
                         isOn: .init(
@@ -154,8 +134,8 @@ struct SettingsScreen: View {
 
             SettingsItem(
                 icon: "checkmark.square",
-                title: localize.settings.payment.selectAllProductsByDefault.title(),
-                subtitle: localize.settings.payment.selectAllProductsByDefault.desc(),
+                title: localize.settings_payment_selectAllProductsByDefault_title(),
+                subtitle: localize.settings_payment_selectAllProductsByDefault_desc(),
                 action: {
                     Toggle(
                         isOn: .init(

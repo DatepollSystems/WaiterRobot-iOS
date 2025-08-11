@@ -4,16 +4,19 @@ import SwiftUI
 import WRCore
 
 struct TableGroupSection: View {
-    let tableGroup: TableGroup
+    @Environment(\.self)
+    private var env
+
+    let groupedTables: GroupedTables
     let onTableClick: (shared.Table) -> Void
 
     var body: some View {
         Section {
-            ForEach(tableGroup.tables, id: \.id) { table in
+            ForEach(groupedTables.tables, id: \.id) { table in
                 TableView(
                     text: table.number.description,
                     hasOrders: table.hasOrders,
-                    backgroundColor: Color(hex: tableGroup.color),
+                    backgroundColor: Color(hex: groupedTables.color),
                     onClick: {
                         onTableClick(table)
                     }
@@ -22,10 +25,10 @@ struct TableGroupSection: View {
             }
         } header: {
             HStack {
-                if let background = Color(hex: tableGroup.color) {
+                if let background = Color(hex: groupedTables.color) {
                     title(backgroundColor: background)
                 } else {
-                    title(backgroundColor: .gray.opacity(0.3))
+                    title(backgroundColor: Color.lightGray)
                 }
 
                 Spacer()
@@ -36,9 +39,9 @@ struct TableGroupSection: View {
     }
 
     private func title(backgroundColor: Color) -> some View {
-        Text(tableGroup.name)
+        Text(groupedTables.name)
             .font(.title2)
-            .foregroundStyle(backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white))
+            .foregroundStyle(backgroundColor.bestContrastColor(.black, .white, in: env))
             .padding(6)
             .background {
                 RoundedRectangle(cornerRadius: 8.0)
@@ -50,20 +53,7 @@ struct TableGroupSection: View {
 #Preview {
     LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]) {
         TableGroupSection(
-            tableGroup: TableGroup(
-                id: 1,
-                name: "Test Group",
-                eventId: 1,
-                position: 1,
-                color: nil,
-                hidden: false,
-                tables: [
-                    shared.Table(id: 1, number: 1, groupName: "Test Group", hasOrders: true),
-                    shared.Table(id: 2, number: 2, groupName: "Test Group", hasOrders: false),
-                    shared.Table(id: 3, number: 3, groupName: "Test Group", hasOrders: false),
-                    shared.Table(id: 4, number: 4, groupName: "Test Group", hasOrders: true),
-                ]
-            ),
+            groupedTables: Mock.groupedTables().first!,
             onTableClick: { _ in }
         )
     }

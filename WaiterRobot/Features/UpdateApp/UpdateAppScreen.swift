@@ -5,7 +5,7 @@ import WRCore
 struct UpdateAppScreen: View {
     var body: some View {
         VStack {
-            Text(localize.app.forceUpdate.message())
+            Text(localize.app_forceUpdate_message())
                 .multilineTextAlignment(.center)
 
             Button {
@@ -19,11 +19,11 @@ struct UpdateAppScreen: View {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
             } label: {
-                Text(localize.app.forceUpdate.openStore(value0: "App Store"))
+                Text(localize.app_forceUpdate_openStore("App Store"))
             }.padding()
         }
         .padding()
-        .navigationTitle(localize.app.forceUpdate.title())
+        .navigationTitle(localize.app_forceUpdate_title())
         .navigationBarTitleDisplayMode(.inline)
     }
 }

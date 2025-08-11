@@ -15,14 +15,14 @@ struct PayDialog: View {
         NavigationView {
             VStack {
                 HStack {
-                    Text(localize.billing.total() + ":")
+                    Text(localize.billing_total() + ":")
                         .font(.title2)
                     Spacer()
                     Text(viewModel.state.priceSum.description)
                         .font(.title2)
                 }
 
-                TextField(localize.billing.given(), text: $moneyGiven)
+                TextField(localize.billing_given(), text: $moneyGiven)
                     .font(.title)
                     .keyboardType(.numbersAndPunctuation)
                     .onChange(of: moneyGiven) { value in
@@ -37,7 +37,7 @@ struct PayDialog: View {
                     )
 
                 HStack {
-                    Text(localize.billing.change() + ":")
+                    Text(localize.billing_change() + ":")
                         .font(.title2)
                     Spacer()
 
@@ -52,14 +52,14 @@ struct PayDialog: View {
             .padding()
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button(localize.dialog.cancel()) {
+                    Button(localize.dialog_cancel()) {
                         dismiss()
                     }
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(localize.billing.pay()) {
+                    Button(localize.billing_pay_cash()) {
                         viewModel.actual.paySelection(paymentSheetShown: true)
                         dismiss()
                     }

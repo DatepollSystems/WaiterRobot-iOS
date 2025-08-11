@@ -1,7 +1,10 @@
 import shared
 import SwiftUI
+import WRCore
 
 struct ProductListItem: View {
+    @Environment(\.self) var env
+
     let product: Product
     let backgroundColor: Color?
     let onClick: () -> Void
@@ -14,26 +17,30 @@ struct ProductListItem: View {
         onClick: @escaping () -> Void
     ) {
         self.product = product
-        self.backgroundColor = backgroundColor
-        self.onClick = onClick
+        if let color = product.color {
+            self.backgroundColor = Color(hex: color)
+        } else {
+            self.backgroundColor = backgroundColor
+        }
 
         var allergens = ""
         for allergen in self.product.allergens {
             allergens += "\(allergen.shortName), "
         }
-
         if allergens.count > 2 {
             self.allergens = String(allergens.prefix(allergens.count - 2))
         } else {
             self.allergens = ""
         }
+
+        self.onClick = onClick
     }
 
     var foregroundColor: Color {
         if product.soldOut {
             .blackWhite
         } else if let backgroundColor {
-            backgroundColor.getContentColor(lightColorScheme: .black, darkColorScheme: .white)
+            backgroundColor.bestContrastColor(.black, .white, in: env)
         } else {
             .blackWhite
         }
@@ -69,22 +76,8 @@ struct ProductListItem: View {
 
 #Preview {
     ProductListItem(
-        product: Product(
-            id: 2,
-            name: "Wine",
-            price: Money(cents: 290),
-            soldOut: true,
-            color: nil,
-            allergens: [
-                Allergen(id: 1, name: "Egg", shortName: "E"),
-                Allergen(id: 2, name: "Egg2", shortName: "A"),
-                Allergen(id: 3, name: "Egg3", shortName: "B"),
-                Allergen(id: 4, name: "Egg4", shortName: "C"),
-                Allergen(id: 5, name: "Egg5", shortName: "D"),
-            ],
-            position: 1
-        ),
-        backgroundColor: .yellow,
+        product: Mock.product(with: 1, soldOut: false, color: "ffaaee", allergens: ["A"]),
+        backgroundColor: .red,
         onClick: {}
     )
     .frame(maxWidth: 100, maxHeight: 100)
@@ -92,22 +85,8 @@ struct ProductListItem: View {
 
 #Preview {
     ProductListItem(
-        product: Product(
-            id: 2,
-            name: "Wine",
-            price: Money(cents: 290),
-            soldOut: false,
-            color: nil,
-            allergens: [
-                Allergen(id: 1, name: "Egg", shortName: "E"),
-                Allergen(id: 2, name: "Egg2", shortName: "A"),
-                Allergen(id: 3, name: "Egg3", shortName: "B"),
-                Allergen(id: 4, name: "Egg4", shortName: "C"),
-                Allergen(id: 5, name: "Egg5", shortName: "D"),
-            ],
-            position: 1
-        ),
-        backgroundColor: .yellow,
+        product: Mock.product(with: 1, soldOut: true, color: "ffaaee", allergens: ["A", "B"]),
+        backgroundColor: .red,
         onClick: {}
     )
     .frame(maxWidth: 100, maxHeight: 100)

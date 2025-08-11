@@ -30,4 +30,8 @@ public extension Color {
     static var palletOrange: Color {
         Color(.palletOrange)
     }
+
+    static var lightGray: Color {
+        Color(.lightGray)
+    }
 }

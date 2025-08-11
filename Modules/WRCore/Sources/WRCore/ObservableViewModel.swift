@@ -36,6 +36,12 @@ public class ObservableTableListViewModel: ObservableViewModel<TableListState, T
     }
 }
 
+public class ObservableTableGroupFilterViewModel: ObservableViewModel<TableGroupFilterState, TableGroupFilterEffect, TableGroupFilterViewModel> {
+    public init() {
+        super.init(viewModel: koin.tableGroupFilterVM())
+    }
+}
+
 public class ObservableTableDetailViewModel: ObservableViewModel<TableDetailState, TableDetailEffect, TableDetailViewModel> {
     public init(table: Table) {
         super.init(viewModel: koin.tableDetailVM(table: table))
@@ -57,6 +63,12 @@ public class ObservableBillingViewModel: ObservableViewModel<BillingState, Billi
 public class ObservableOrderViewModel: ObservableViewModel<OrderState, OrderEffect, OrderViewModel> {
     public init(table: Table, initialItemId: KotlinLong?) {
         super.init(viewModel: koin.orderVM(table: table, initialItemId: initialItemId))
+    }
+}
+
+public class ObservableProductListViewModel: ObservableViewModel<ProductListState, ProductListEffect, ProductListViewModel> {
+    public init() {
+        super.init(viewModel: koin.productListVM())
     }
 }
 

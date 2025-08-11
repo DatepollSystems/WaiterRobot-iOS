@@ -18,14 +18,14 @@ struct TableDetailScreen: View {
 
     var body: some View {
         content()
-            .navigationTitle(localize.tableDetail.title(value0: table.groupName, value1: table.number.description))
+            .navigationTitle(localize.tableDetail_title(table.groupName, table.number.description))
             .withViewModel(viewModel, navigator)
     }
 
     // TODO: add refreshing and loading indicator (also check android)
     private func content() -> some View {
         VStack {
-            switch onEnum(of: viewModel.state.orderedItemsResource) {
+            switch onEnum(of: viewModel.state.orderedItems) {
             case .loading:
                 ProgressView()
 
@@ -33,7 +33,7 @@ struct TableDetailScreen: View {
                 tableDetailsError(error)
 
             case let .success(resource):
-                if let orderedItems = resource.data as? [OrderedItem] {
+                if let orderedItems = Array(resource.data) {
                     tableDetails(orderedItems: orderedItems)
                 }
             }
@@ -41,12 +41,11 @@ struct TableDetailScreen: View {
     }
 
     private func tableDetails(orderedItems: [OrderedItem]) -> some View {
-        // TODO: we need KotlinArray here in shared
         VStack {
             if orderedItems.isEmpty {
                 Spacer()
 
-                Text(localize.tableDetail.noOrder(value0: table.groupName, value1: table.number.description))
+                Text(localize.tableDetail_noOrder(table.groupName, table.number.description))
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                     .padding()
@@ -85,7 +84,7 @@ struct TableDetailScreen: View {
         }
     }
 
-    private func tableDetailsError(_ error: ResourceError<NSArray>) -> some View {
-        Text(error.userMessage)
+    private func tableDetailsError(_ error: ResourceError<KotlinArray<OrderedItem>>) -> some View {
+        Text(error.userMessage())
     }
 }

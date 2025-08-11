@@ -26,7 +26,8 @@ struct OrderedItemView: View {
                 baseProductId: 1,
                 name: "Test",
                 amount: 1,
-                virtualId: 2
+                virtualId: 2,
+                note: ""
             ),
             tabbed: {}
         )
