@@ -2,7 +2,8 @@ import SharedUI
 import SwiftUI
 
 struct TableView: View {
-    @Environment(\.self) var env
+    @Environment(\.self) 
+    private var env
 
     let text: String
     let hasOrders: Bool

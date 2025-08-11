@@ -4,7 +4,8 @@ import SwiftUI
 import WRCore
 
 struct TableGroupSection: View {
-    @Environment(\.self) var env
+    @Environment(\.self) 
+    private var env
 
     let groupedTables: GroupedTables
     let onTableClick: (shared.Table) -> Void
