@@ -4,8 +4,8 @@
 <h1 align="center">kellner.team</h1>
 <div align="center">
     <p>Lightning fast and simple gastronomy</p>
-    <a href="https://apps.apple.com/at/app/waiterrobot/id1610157234?itsct=apps_box_badge&amp;itscg=30200">
-      <img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1660003200" alt="Download on the App Store" style="border-radius: 13px; width: 155px;">
+    <a href="https://apps.apple.com/at/app/waiterrobot/id1610157234?itsct=apps_box_badge&itscg=30200">
+      <img src="https://toolbox.marketingtools.apple.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&releaseDate=1660003200" alt="Download on the App Store" style="border-radius: 13px; width: 155px;">
     </a>
 </div>
 
@@ -20,15 +20,13 @@ The KMM module is integrated as a Swift-Package (shared).
 
 This project uses XcodeGen for generating the Xcode project.
 
-1. Xcodegen
+1. Gems
 
 Run in your terminal: 
 
 ```bash
-swift run xcodegen
+bundle install
 ```
-
-> This command must also be run after switching branches and it's advisable to also run it after a `git pull`
 
 2. Git pre-commit hook
 

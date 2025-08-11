@@ -8,15 +8,15 @@ on:
   
 jobs:
   test:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Setup Ruby 3.3.0
+      - name: Setup Ruby 3.3.6
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3.0'
+          ruby-version: '3.3.6'
           bundler-cache: true
 
       - name: Netrc api.github.com
@@ -28,9 +28,6 @@ jobs:
 
       - name: Install xcodes
         run: brew install xcodes
-
-      - name: Run XcodeGen
-        run: swift run xcodegen
-
+        
       - name: Run tests with fastlane
         run: bundle exec fastlane test

@@ -1,154 +1,52 @@
-# This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
-#
-# For a list of all available actions, check out
-#
-#     https://docs.fastlane.tools/actions
-#
-# For a list of all available plugins, check out
-#
-#     https://docs.fastlane.tools/plugins/available-plugins
-#
-
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
-
 default_platform(:ios)
 
 platform :ios do
-  before_all do
-    xcodes(version: "15.2", select_for_current_build_only: true)
-  end
-
-  desc "Run all iOS unit and ui tests."
-  lane :test do
-    run_tests(scheme: "WaiterRobotLava")
-  end
-  
-  desc "Sync certificates"
-  lane :sync_certificates do
-    if ENV["CI"]
-      match(
-        type: "appstore",
-        git_private_key: "./fastlane/.keys/github-deploy-key",
-        keychain_name: "WaiterRobot_iOS_keychain",
-        keychain_password: ENV["KEYCHAIN_PASSWORD"]
-      )
-      match(
-        type: "development",
-        git_private_key: "./fastlane/.keys/github-deploy-key",
-        keychain_name: "WaiterRobot_iOS_keychain",
-        keychain_password: ENV["KEYCHAIN_PASSWORD"]
-      )
-    else
-      match(
-        type: "appstore",
-        git_private_key: "./fastlane/.keys/github-deploy-key",
-      )
-      match(
-        type: "development",
-        git_private_key: "./fastlane/.keys/github-deploy-key",
-      )
+    before_all do
+        xcodes(version: "16.4", select_for_current_build_only: true)
     end
-  end
 
-  desc "Renew certificates and profiles"
-  lane :renew_certificates do
-      setupFastlaneSecrets
-      
-      match(
-        type: "appstore",
-        force: true
-      )
-      match(
-        type: "development",
-        force: true
-      )
-  end
-
-  desc "Push a new lava build to TestFlight"
-  lane :releaseWaiterRobot_develop do |options|
-    setupFastlaneSecrets
-    sync_certificates
-
-    build_app(
-        project: "WaiterRobot.xcodeproj",
-        scheme: "WaiterRobotLava",
-        output_name: "WaiterRobotLava.ipa",
-        output_directory: "./build/",
-        export_method: "app-store"
-    )
-
-    upload_to_testflight(
-      ipa: "./build/WaiterRobotLava.ipa",
-      skip_waiting_for_build_processing: true
-    )
-
-    version = get_version_number(
-      xcodeproj:"WaiterRobot.xcodeproj",
-      target:"WaiterRobotLava"
-    )
-    # Build number gets set to epochMinute by a preBuildScript (see project.yml)
-    build_number = get_ipa_info_plist_value(ipa: "build/WaiterRobotLava.ipa", key: "CFBundleVersion")
-
-    # e.g. 2.0.2-lava-27943760
-    version_tag = version + "-lava-" + build_number.to_s
-    add_git_tag(tag: version_tag)
-    push_git_tags(tag: version_tag)
-  end
-
-  desc "Push a new prod build to TestFlight"
-    lane :releaseWaiterRobot_main do |options|
-      setupFastlaneSecrets
-      sync_certificates
-
-      build_app(
-          project: "WaiterRobot.xcodeproj",
-          scheme: "WaiterRobot",
-          output_name: "WaiterRobot.ipa",
-          output_directory: "./build/",
-          export_method: "app-store"
-      )
-
-      upload_to_testflight(
-        ipa: "./build/WaiterRobot.ipa",
-        skip_waiting_for_build_processing: true
-      )
-
-      version = get_version_number(
-        xcodeproj:"WaiterRobot.xcodeproj",
-        target:"WaiterRobot"
-      )
-
-      # e.g. 2.0.2
-      add_git_tag(tag: version)
-      push_git_tags(tag: version)
+    desc "Run all iOS unit and ui tests."
+    lane :test do
+        run_tests(scheme: "WaiterRobotLava")
     end
     
-    lane :setupFastlaneSecrets do |options|
+    desc "Send a notification to Slack"
+    lane :sendSlackMessage do |options|
       ensure_env_vars(
-        env_vars: ["FASTLANE_APPLE_ID", "FASTLANE_CERTIFICATES_GIT_URL", "FASTLANE_KEY_ID", "FASTLANE_ISSUER_ID"]
+        env_vars: ["SLACK_WEBHOOK_URL"]
       )
+      
+      slack_webhook_url = ENV['SLACK_WEBHOOK_URL']
+      version = options[:version]
+      environment = options[:env]
 
-      if ENV["CI"]
-        ensure_env_vars(
-          env_vars: ["KEYCHAIN_PASSWORD"]
-        )
+      json_body = <<-JSON
+        {
+          "blocks": [
+            {
+              "type": "header",
+              "text": {
+                "type": "plain_text",
+                "text": "🚀 New iOS #{environment} version available on TestFlight",
+                "emoji": true
+              }
+            },
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "*Version:* `#{version}`"
+              }
+            },
+          ]
+        }
+      JSON
 
-        create_keychain(
-          name: "WaiterRobot_iOS_keychain",
-          password: ENV["KEYCHAIN_PASSWORD"],
-          default_keychain: true,
-          unlock: true,
-          timeout: 3600,
-          lock_when_sleeps: false
-        )
-      end
-
-      app_store_connect_api_key(
-        key_id: ENV["FASTLANE_KEY_ID"],
-        issuer_id: ENV["FASTLANE_ISSUER_ID"],
-        key_filepath: "./fastlane/.keys/api_key.p8",
-      )
+      sh <<-EOS
+        curl -X POST \
+         --header 'Content-type: application/json' \
+         --url "#{slack_webhook_url}" \
+         --data '#{json_body}'
+      EOS
     end
 end

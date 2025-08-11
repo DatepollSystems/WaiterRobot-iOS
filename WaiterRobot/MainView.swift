@@ -8,6 +8,7 @@
 import shared
 import SwiftUI
 import UIPilot
+import WRCore
 
 struct MainView: View {
     @State
@@ -35,42 +36,7 @@ struct MainView: View {
 
     var body: some View {
         ZStack {
-            UIPilotHost(navigator) { route in
-                switch onEnum(of: route) {
-                case .loginScreen:
-                    LoginScreen()
-
-                case .tableListScreen:
-                    TableListScreen()
-
-                case .switchEventScreen:
-                    SwitchEventScreen()
-
-                case .settingsScreen:
-                    SettingsScreen()
-
-                case let .registerScreen(screen):
-                    RegisterScreen(deepLink: screen.registerLink)
-
-                case .updateApp:
-                    UpdateAppScreen()
-
-                case let .tableDetailScreen(screen):
-                    TableDetailScreen(table: screen.table)
-
-                case let .orderScreen(screen):
-                    OrderScreen(table: screen.table, initialItemId: screen.initialItemId)
-
-                case let .billingScreen(screen):
-                    BillingScreen(table: screen.table)
-
-                case .loginScannerScreen:
-                    LoginScannerScreen()
-
-                case .stripeInitializationScreen:
-                    EmptyView()
-                }
-            }
+            resolvedView()
         }
         .preferredColorScheme(selectedScheme)
         .overlay(alignment: .bottom) {
@@ -97,7 +63,7 @@ struct MainView: View {
         .withViewModel(viewModel, navigator) { effect in
             switch onEnum(of: effect) {
             case let .showSnackBar(snackBar):
-                snackBarMessage = snackBar.message
+                snackBarMessage = snackBar.message()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
                     snackBarMessage = nil
                 }
@@ -108,14 +74,14 @@ struct MainView: View {
             viewModel.actual.onDeepLink(url: url.absoluteString)
         }
         .alert(
-            localize.app.updateAvailable.title(),
+            localize.app_updateAvailable_title(),
             isPresented: $showUpdateAvailableAlert
         ) {
-            Button(localize.dialog.cancel(), role: .cancel) {
+            Button(localize.dialog_cancel(), role: .cancel) {
                 showUpdateAvailableAlert = false
             }
 
-            Button(localize.app.forceUpdate.openStore(value0: "App Store")) {
+            Button(localize.app_forceUpdate_openStore("App Store")) {
                 guard let storeUrl = VersionChecker.shared.storeUrl,
                       let url = URL(string: storeUrl)
                 else {
@@ -127,11 +93,50 @@ struct MainView: View {
                 }
             }
         } message: {
-            Text(localize.app.updateAvailable.message())
+            Text(localize.app_updateAvailable_message())
         }
         .onAppear {
             VersionChecker.shared.checkVersion {
                 showUpdateAvailableAlert = true
+            }
+        }
+    }
+
+    private func resolvedView() -> some View {
+        UIPilotHost(navigator) { route in
+            switch onEnum(of: route) {
+            case .loginScreen:
+                LoginScreen()
+
+            case .tableListScreen:
+                TableListScreen()
+
+            case .switchEventScreen:
+                SwitchEventScreen()
+
+            case .settingsScreen:
+                SettingsScreen()
+
+            case let .registerScreen(screen):
+                RegisterScreen(deepLink: screen.registerLink)
+
+            case .updateApp:
+                UpdateAppScreen()
+
+            case let .tableDetailScreen(screen):
+                TableDetailScreen(table: screen.table)
+
+            case let .orderScreen(screen):
+                OrderScreen(table: screen.table, initialItemId: screen.initialItemId)
+
+            case let .billingScreen(screen):
+                BillingScreen(table: screen.table)
+
+            case .loginScannerScreen:
+                LoginScannerScreen()
+
+            case .stripeInitializationScreen:
+                EmptyView()
             }
         }
     }
