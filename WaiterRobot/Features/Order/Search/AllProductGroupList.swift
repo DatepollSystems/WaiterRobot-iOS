@@ -1,4 +1,5 @@
 import shared
+import SharedUI
 import SwiftUI
 import WRCore
 
@@ -18,9 +19,9 @@ struct AllProductGroupList: View {
                         )
                     } header: {
                         HStack {
-                            Color(UIColor.lightGray).frame(height: 1)
+                            Color.lightGray.frame(height: 1)
                             Text(productGroup.name)
-                            Color(UIColor.lightGray).frame(height: 1)
+                            Color.lightGray.frame(height: 1)
                         }
                     }
                 }

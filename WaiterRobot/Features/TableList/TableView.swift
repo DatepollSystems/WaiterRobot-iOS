@@ -2,7 +2,7 @@ import SharedUI
 import SwiftUI
 
 struct TableView: View {
-    @Environment(\.self) 
+    @Environment(\.self)
     private var env
 
     let text: String
@@ -13,7 +13,7 @@ struct TableView: View {
     init(text: String, hasOrders: Bool, backgroundColor: Color?, onClick: @escaping () -> Void) {
         self.text = text
         self.hasOrders = hasOrders
-        self.backgroundColor = backgroundColor ?? .lightGray
+        self.backgroundColor = backgroundColor ?? Color.lightGray
         self.onClick = onClick
     }
 

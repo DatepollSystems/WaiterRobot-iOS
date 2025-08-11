@@ -20,7 +20,6 @@ public struct ErrorBar: View {
             Text(message())
                 .lineLimit(expanded ? nil : initialLines)
                 .multilineTextAlignment(.leading)
-                // .foregroundColor(Color.onErrorContainer)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             if retryAction != nil {
@@ -33,7 +32,6 @@ public struct ErrorBar: View {
                         .multilineTextAlignment(.center)
                         .lineLimit(expanded ? nil : initialLines)
                 }
-                // .foregroundColor(Color.onErrorContainer)
             }
         }
         .padding(.leading, 16)
@@ -42,9 +40,7 @@ public struct ErrorBar: View {
         .padding(.bottom, 8)
         .background(Color.red)
         .onTapGesture {
-            withAnimation {
-                expanded.toggle()
-            }
+            expanded.toggle()
         }
         .animation(.default, value: expanded)
     }

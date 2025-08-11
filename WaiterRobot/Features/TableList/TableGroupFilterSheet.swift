@@ -13,7 +13,7 @@ struct TableGroupFilterSheet: View {
             content()
                 .observeState(of: viewModel)
                 .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
+                    ToolbarItem(placement: .cancellationAction) {
                         Button(localize.dialog_cancel()) {
                             dismiss()
                         }

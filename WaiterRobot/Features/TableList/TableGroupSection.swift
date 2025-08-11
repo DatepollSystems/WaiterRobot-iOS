@@ -4,7 +4,7 @@ import SwiftUI
 import WRCore
 
 struct TableGroupSection: View {
-    @Environment(\.self) 
+    @Environment(\.self)
     private var env
 
     let groupedTables: GroupedTables
@@ -28,7 +28,7 @@ struct TableGroupSection: View {
                 if let background = Color(hex: groupedTables.color) {
                     title(backgroundColor: background)
                 } else {
-                    title(backgroundColor: .lightGray)
+                    title(backgroundColor: Color.lightGray)
                 }
 
                 Spacer()

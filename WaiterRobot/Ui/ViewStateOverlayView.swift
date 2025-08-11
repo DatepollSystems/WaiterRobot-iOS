@@ -2,8 +2,8 @@ import shared
 import SwiftUI
 
 public struct ViewStateOverlayView<Content: View>: View {
-    let state: Skie.Shared.ViewState.__Sealed
-    let content: () -> Content
+    private let state: Skie.Shared.ViewState.__Sealed
+    private let content: () -> Content
 
     init(state: ViewState, @ViewBuilder content: @escaping () -> Content) {
         self.state = onEnum(of: state)

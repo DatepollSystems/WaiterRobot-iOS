@@ -8,10 +8,6 @@
 import SwiftUI
 
 extension Color {
-    static var lightGray: Color {
-        Color(hex: "#D1D1D6")
-    }
-
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
