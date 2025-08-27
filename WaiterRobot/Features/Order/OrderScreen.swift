@@ -6,16 +6,17 @@ import WRCore
 struct OrderScreen: View {
     @EnvironmentObject var navigator: UIPilot<Screen>
 
-    @State private var showProductSearch: Bool
+    @State private var showProductSearch: Bool = false
     @State private var showAbortOrderConfirmationDialog = false
 
     @StateObject private var viewModel: ObservableOrderViewModel
     private let table: shared.Table
+    private let initialItemId: KotlinLong?
 
     init(table: shared.Table, initialItemId: KotlinLong?) {
         self.table = table
         _viewModel = StateObject(wrappedValue: ObservableOrderViewModel(table: table, initialItemId: initialItemId))
-        showProductSearch = initialItemId == nil ? true : false
+        self.initialItemId = initialItemId
 
         UIToolbar.appearance().barTintColor = UIColor.systemBackground // Background color
         UIToolbar.appearance().tintColor = UIColor.blue // Tint color of buttons
@@ -46,6 +47,9 @@ struct OrderScreen: View {
         }
         .animation(.default, value: viewModel.state.currentOrder)
         .withViewModel(viewModel, navigator)
+        .onAppear {
+            showProductSearch = initialItemId == nil ? true : false
+        }
     }
 
     @ViewBuilder
