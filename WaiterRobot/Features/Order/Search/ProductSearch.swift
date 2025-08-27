@@ -43,7 +43,7 @@ struct ProductSearch: View {
                     }
                 )
                 .searchable(text: $search, placement: .navigationBarDrawer(displayMode: .always))
-                .onChange(of: search, perform: { viewModel.actual.filterProducts(filter: $0) })
+                .onChange(of: search) { viewModel.actual.filterProducts(filter: search) }
             }
         }
     }
