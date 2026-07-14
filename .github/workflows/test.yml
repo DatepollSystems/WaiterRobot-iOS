@@ -8,19 +8,19 @@ on:
   
 jobs:
   test:
-    runs-on: macos-15
+    runs-on: macos-26
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
 
       - name: Setup Ruby 3.3.6
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '3.3.6'
+          ruby-version: '4.0.6'
           bundler-cache: true
 
       - name: Netrc api.github.com
-        uses: extractions/netrc@v2
+        uses: extractions/netrc@v3
         with:
           machine: maven.pkg.github.com
           username: cirunner
